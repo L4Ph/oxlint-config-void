@@ -57,11 +57,11 @@ Docs contradiction: the CLI reference says `void db status` shows applied and pe
 
 Each of these acts on the database named by `.env` for PostgreSQL and MySQL. If that `DATABASE_URL` is the deployment's (for example after `void db connect`), the command acts on deployed data. Print the host of `DATABASE_URL` before running one.
 
-| Command | Destroys | Read |
-| --- | --- | --- |
-| `void db reset [--yes]` | every table (PostgreSQL: tables, views, sequences, custom types of `public`; MySQL: tables and views), then re-applies migrations | `seed-and-reset.md` |
-| `void db seed [--file <path>] [--yes]` | everything `reset` destroys, then runs the seed file | `seed-and-reset.md` |
-| `void db push` | rewrites the dev schema to match the code without a migration record | `push-and-execute.md` |
-| `void db execute <sql>` | whatever the SQL changes | `push-and-execute.md` |
+| Command                                | Destroys                                                                                                                          | Read                  |
+| -------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- | --------------------- |
+| `void db reset [--yes]`                | every table (PostgreSQL: tables, views, sequences, custom types of `public`; MySQL: tables and views), then re-applies migrations | `seed-and-reset.md`   |
+| `void db seed [--file <path>] [--yes]` | everything `reset` destroys, then runs the seed file                                                                              | `seed-and-reset.md`   |
+| `void db push`                         | rewrites the dev schema to match the code without a migration record                                                              | `push-and-execute.md` |
+| `void db execute <sql>`                | whatever the SQL changes                                                                                                          | `push-and-execute.md` |
 
 Lint companion: the `database` rule family holds file shapes (`rules/plan.json`); this skill holds the order and the review.

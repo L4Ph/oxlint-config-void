@@ -7,14 +7,14 @@ Void reads the project to decide the app type and which Cloudflare resources to 
 
 ## 1. Pick the shape
 
-| Shape | Layout |
-|---|---|
-| API-only | `routes/` alone |
-| SPA + API | frontend in `src/`, handlers in `routes/` |
-| Pages mode | server-rendered `pages/` with `.server.ts` companions |
-| Meta framework | the framework's own layout; detected from its package in `package.json` dependencies or devDependencies |
-| SPA, no backend | detected when `vite` is a dependency and no backend files exist |
-| Static site | detected from a known static-site generator dependency, or deployed with `--dir` |
+| Shape           | Layout                                                                                                  |
+| --------------- | ------------------------------------------------------------------------------------------------------- |
+| API-only        | `routes/` alone                                                                                         |
+| SPA + API       | frontend in `src/`, handlers in `routes/`                                                               |
+| Pages mode      | server-rendered `pages/` with `.server.ts` companions                                                   |
+| Meta framework  | the framework's own layout; detected from its package in `package.json` dependencies or devDependencies |
+| SPA, no backend | detected when `vite` is a dependency and no backend files exist                                         |
+| Static site     | detected from a known static-site generator dependency, or deployed with `--dir`                        |
 
 Choose one of the first three for a native Void app. Detected packages for meta frameworks: `@tanstack/react-start`, `@react-router/dev`, `@sveltejs/kit`, `nuxt`, `@analogjs/platform`, `astro` (Astro needs v7 or later).
 

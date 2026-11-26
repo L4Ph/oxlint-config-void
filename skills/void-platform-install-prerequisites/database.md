@@ -4,10 +4,10 @@ Read this when you create the database with PlanetScale or Neon, size connection
 
 ## Provider connection settings
 
-| Provider | Setting |
-| --- | --- |
+| Provider             | Setting                                                                                                                                                                                                                                                                                  |
+| -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | PlanetScale Postgres | Choose **Postgres**, not Vitess/MySQL. In **Connect**, create role credentials and use the direct primary connection on port `5432`, not PgBouncer on `6432`, with `sslmode=verify-full`. The role password is shown once: save it and the **DATABASE URL** before closing the terminal. |
-| Neon | In **Connect**, select the database and owner role and turn **connection pooling off**. Keep the connection unpooled, with TLS verification (`--ssl verify-full`). |
+| Neon                 | In **Connect**, select the database and owner role and turn **connection pooling off**. Keep the connection unpooled, with TLS verification (`--ssl verify-full`).                                                                                                                       |
 
 Done when the URL names the direct (unpooled) primary and carries its SSL settings.
 

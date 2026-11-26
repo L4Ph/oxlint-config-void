@@ -16,13 +16,13 @@ description: Repairs and recovers a self-hosted Void platform - `void platform r
 
 ## Pick the situation
 
-| Symptom | Go to |
-| --- | --- |
-| Install stopped, or a command was interrupted | Resume or rerun |
-| Resources missing, or the platform needs recreating | Repair |
-| Administrator cannot sign in, setup code expired, login settings wrong, error 1050 | `administrator-login.md` |
-| Maintenance asks to replace Worker configuration | Workers changed outside Void |
-| New machine, lost local records or keychain, restore from backup | `another-machine-and-restore.md` |
+| Symptom                                                                            | Go to                            |
+| ---------------------------------------------------------------------------------- | -------------------------------- |
+| Install stopped, or a command was interrupted                                      | Resume or rerun                  |
+| Resources missing, or the platform needs recreating                                | Repair                           |
+| Administrator cannot sign in, setup code expired, login settings wrong, error 1050 | `administrator-login.md`         |
+| Maintenance asks to replace Worker configuration                                   | Workers changed outside Void     |
+| New machine, lost local records or keychain, restore from backup                   | `another-machine-and-restore.md` |
 
 `void platform status <id>` prints the locally saved progress before checking the live API. The checkpoint can be out of date if another administrator acted, and a failed live check still exits with an error without confirming availability.
 
@@ -46,6 +46,7 @@ Repair recreates missing infrastructure the installer owns. It does not restore 
    ```
 
    Done when the plan names each missing resource and nothing unexpected.
+
 3. **[REMOTE]** Confirm with the operator, then run `void platform repair [id]` (`--yes` in scripts). Recreating a Worker needs its original secrets (`another-machine-and-restore.md`).
 
 Done when the command exits 0 and `void platform system health` exits 0. Repair is no substitute for a backup: data it cannot restore stays lost.

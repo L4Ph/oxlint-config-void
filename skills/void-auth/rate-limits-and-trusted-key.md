@@ -13,14 +13,14 @@ Done when `void db generate` wrote a new migration file and it is committed.
 Two setups share one IP and hit the limits: a server that calls your auth endpoints for its users (backend-for-frontend, a Vercel or nginx rewrite, another Worker) and end-to-end tests against a deployed app. `x-forwarded-for` is client-controlled, so a secret header identifies the trusted caller instead:
 
 ```ts
-import { defineAuth } from 'void/auth';
+import { defineAuth } from "void/auth";
 
 export default defineAuth(({ defaults, env }) => ({
   ...defaults,
   rateLimit: {
     customRules: {
-      '/**': (request, rule) =>
-        env.AUTH_TRUSTED_KEY && request.headers.get('x-auth-trusted-key') === env.AUTH_TRUSTED_KEY
+      "/**": (request, rule) =>
+        env.AUTH_TRUSTED_KEY && request.headers.get("x-auth-trusted-key") === env.AUTH_TRUSTED_KEY
           ? false
           : rule,
     },

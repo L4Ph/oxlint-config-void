@@ -9,10 +9,10 @@ Every deploy-side command reads the target that `void connect` saved. Do this sk
 
 ## 1. Choose the target
 
-| Target | What it is |
-|---|---|
+| Target            | What it is                                                                                                             |
+| ----------------- | ---------------------------------------------------------------------------------------------------------------------- |
 | Direct Cloudflare | Your own account. No project registry, no team features. Worker name comes from `cloudflare.name` in `void.config.ts`. |
-| Void platform | A team platform at a URL your administrator gives you. Has projects, roles, retained logs. |
+| Void platform     | A team platform at a URL your administrator gives you. Has projects, roles, retained logs.                             |
 
 `void connect` with no arguments asks. `void connect <url>` selects a platform. `--platform cloudflare|void` selects the kind (`void` offers saved platforms plus "enter another URL").
 

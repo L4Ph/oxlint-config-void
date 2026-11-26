@@ -6,14 +6,14 @@ Read when `void deploy --platform cloudflare` runs in CI, or when Cloudflare Acc
 
 Store tokens as CI secrets so the provider masks them; keep credentials out of build commands. The `platform` lint family catches credentials in source and workflow code.
 
-| Name | Set when |
-|---|---|
-| `CLOUDFLARE_API_TOKEN` | Always. Permissions: `SKILL.md`, step 1. |
-| `CLOUDFLARE_ACCOUNT_ID` | The token can reach several accounts. |
-| `DATABASE_URL` | PostgreSQL or MySQL provisioning and migrations. |
-| `CLOUDFLARE_WORKERS_SUBDOMAIN` | Fresh CI, workers.dev enabled, and the version has no preview URL. `my-team` or `my-team.workers.dev`; cached locally after a deploy. Does nothing when `workers_dev` is false. |
-| `CF_ACCESS_CLIENT_ID`, `CF_ACCESS_CLIENT_SECRET` | Cloudflare Access protects the readiness URL. |
-| `CF_ACCESS_READINESS_ORIGIN` | Access protects a route or Custom Domain and `workers_dev` is false. |
+| Name                                             | Set when                                                                                                                                                                        |
+| ------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `CLOUDFLARE_API_TOKEN`                           | Always. Permissions: `SKILL.md`, step 1.                                                                                                                                        |
+| `CLOUDFLARE_ACCOUNT_ID`                          | The token can reach several accounts.                                                                                                                                           |
+| `DATABASE_URL`                                   | PostgreSQL or MySQL provisioning and migrations.                                                                                                                                |
+| `CLOUDFLARE_WORKERS_SUBDOMAIN`                   | Fresh CI, workers.dev enabled, and the version has no preview URL. `my-team` or `my-team.workers.dev`; cached locally after a deploy. Does nothing when `workers_dev` is false. |
+| `CF_ACCESS_CLIENT_ID`, `CF_ACCESS_CLIENT_SECRET` | Cloudflare Access protects the readiness URL.                                                                                                                                   |
+| `CF_ACCESS_READINESS_ORIGIN`                     | Access protects a route or Custom Domain and `workers_dev` is false.                                                                                                            |
 
 Make the first deploy and commit `void.lock.json` from one machine before CI runs.
 

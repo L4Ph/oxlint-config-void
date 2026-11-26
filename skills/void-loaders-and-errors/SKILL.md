@@ -17,11 +17,11 @@ Done when a `Date` or `Map` returned by the loader is still a `Date` or `Map` in
 
 ## 2. Pick the failure mode
 
-| Situation | Write | The visitor sees |
-| --- | --- | --- |
-| Page renders, status is an error (503, 403) | `c.status(503)` then return props | The requested page, the HTTP status, normal props |
-| Record is missing | `return c.notFound()` (or throw `HTTPException(404)`) | `_not-found` in the layout |
-| Page must be replaced by an explanation | `throw new HTTPException(403, { message })` (from `hono/http-exception`) | `_error` with `{ status, message }` |
+| Situation                                   | Write                                                                    | The visitor sees                                  |
+| ------------------------------------------- | ------------------------------------------------------------------------ | ------------------------------------------------- |
+| Page renders, status is an error (503, 403) | `c.status(503)` then return props                                        | The requested page, the HTTP status, normal props |
+| Record is missing                           | `return c.notFound()` (or throw `HTTPException(404)`)                    | `_not-found` in the layout                        |
+| Page must be replaced by an explanation     | `throw new HTTPException(403, { message })` (from `hono/http-exception`) | `_error` with `{ status, message }`               |
 
 - Put only text that is safe to show visitors in an `HTTPException` message. Without an exception, production shows a generic message and logs the detail.
 - In middleware, `c.notFound()` shows the root `_not-found` without running the loader; `return c.text('Not Found', 404)` sends a custom body instead.

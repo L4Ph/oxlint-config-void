@@ -15,13 +15,13 @@ Done when the app is a native Void app with an `email/` directory at its root.
 
 A file name selects the recipient local part (before `@`, case-insensitive). The default export is `defineEmail(handler)`.
 
-| File | Handles |
-| --- | --- |
-| `support.ts` | `support@` |
-| `support+vip.ts` | exactly `support+vip@` |
-| `support+[ticket].ts` | `support+anything@`, `info.params.ticket` |
+| File                           | Handles                                     |
+| ------------------------------ | ------------------------------------------- |
+| `support.ts`                   | `support@`                                  |
+| `support+vip.ts`               | exactly `support+vip@`                      |
+| `support+[ticket].ts`          | `support+anything@`, `info.params.ticket`   |
 | `[user].ts`, `[user]+[tag].ts` | any local part, `info.params.user` / `.tag` |
-| `_default.ts` | everything else |
+| `_default.ts`                  | everything else                             |
 
 Most specific wins: `support+vip`, `support+[ticket]`, `support`, `[user]+vip`, `[user]+[tag]`, `[user]`, `_default`. Within one shape files are tried alphabetically and the first match wins, so avoid two files of the same shape that can match one address. Without `_default.ts`, unmatched mail returns to Cloudflare and the sender gets a non-delivery report.
 

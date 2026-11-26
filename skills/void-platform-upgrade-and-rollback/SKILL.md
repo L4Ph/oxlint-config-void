@@ -80,6 +80,7 @@ A rollback restores an earlier runtime. It does not reverse PostgreSQL migration
    ```
 
    Done when the plan prints without an incompatibility refusal.
+
 4. **[REMOTE]** Apply with the same command without `--plan` (`--yes` in scripts). Traffic may pause as for an upgrade.
 5. If it fails, resolve the reported problem and resume with the same runtime files; for a custom rollback, keep the source runtime files too.
 6. Finish the follow-ups in `rollback.md` (proxy-token rotations). Done when `void platform system health` exits 0 and `rotate-proxy-tokens --plan` shows nothing pending or failed.

@@ -1,0 +1,7 @@
+{
+  "name": "without-hono",
+  "private": true,
+  "dependencies": {
+    "void": "1.11.0"
+  }
+}

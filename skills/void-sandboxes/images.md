@@ -7,9 +7,9 @@ Read this when `sandbox` in `void.config.ts` needs a custom `image`, `platformIm
 ```ts
 export default defineConfig({
   sandbox: {
-    image: './Dockerfile.sandbox',
-    platformImage: 'registry.cloudflare.com/<account-id>/sandbox@sha256:<digest>',
-    instanceType: 'standard-1',
+    image: "./Dockerfile.sandbox",
+    platformImage: "registry.cloudflare.com/<account-id>/sandbox@sha256:<digest>",
+    instanceType: "standard-1",
   },
 });
 ```

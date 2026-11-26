@@ -6,13 +6,13 @@ Read this when writing `defineLiveStream` options: `onSubscribe`, `identifyConne
 
 ```ts
 export const live = defineLiveStream({
-  id: 'app',
+  id: "app",
   async onSubscribe(ctx) {
     const post = /^post:(.+)$/.exec(ctx.topic);
     if (post && (await canReadPost(ctx.env, ctx.user, post[1]))) return;
     const inbox = /^user:(.+):inbox$/.exec(ctx.topic);
     if (inbox && ctx.owner === `user:${inbox[1]}`) return;
-    return new Response('Forbidden', { status: 403 });
+    return new Response("Forbidden", { status: 403 });
   },
 });
 ```
@@ -23,7 +23,7 @@ Return nothing to allow, a `Response` to reject. Deny by default: end with the 4
 
 ```ts
 defineLiveStream({
-  id: 'app',
+  id: "app",
   async identifyConnection(ctx) {
     const session = await getSession(ctx.request);
     return session ? `user:${session.userId}` : null;
@@ -36,5 +36,5 @@ defineLiveStream({
 ## Limits
 
 ```ts
-defineLiveStream({ id: 'app', limits: { maxSubscriptionsPerTopic: 64 } });
+defineLiveStream({ id: "app", limits: { maxSubscriptionsPerTopic: 64 } });
 ```

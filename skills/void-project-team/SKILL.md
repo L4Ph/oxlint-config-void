@@ -11,12 +11,12 @@ Project-scoped commands take `--project <slug>`, then `VOID_PROJECT`, then the l
 
 ## Roles
 
-| Role | Can do |
-|---|---|
-| Reader | View the project, usage, resources, deployments, builds, logs and roster. Cannot deploy. |
-| Collaborator | Reader, plus deploy, rollback, cancel, migrations, secrets, database configuration and deploy prerequisites. |
+| Role                          | Can do                                                                                                       |
+| ----------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| Reader                        | View the project, usage, resources, deployments, builds, logs and roster. Cannot deploy.                     |
+| Collaborator                  | Reader, plus deploy, rollback, cancel, migrations, secrets, database configuration and deploy prerequisites. |
 | Admin (project administrator) | Collaborator, plus domains, email destinations, GitHub configuration, invitations, roles and member removal. |
-| Owner | Admin, plus project deletion. |
+| Owner                         | Admin, plus project deletion.                                                                                |
 
 An admin has no platform-wide access. The owner's plan, limits and suspension govern the project; acting through a collaborator does not bypass an owner suspension.
 

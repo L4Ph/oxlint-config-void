@@ -23,9 +23,9 @@ Hazard: if `.env` holds the deployment's URL, `void db reset` and `void db seed`
 
 Production reaches the database through a Hyperdrive that Void provisions from the connection string. The string is not written to project config.
 
-| Deploy target | How the URL gets there |
-| --- | --- |
-| Void platform | `void deploy` prompts for it, or run `void db set-url` |
+| Deploy target                               | How the URL gets there                                                                                  |
+| ------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| Void platform                               | `void deploy` prompts for it, or run `void db set-url`                                                  |
 | Direct Cloudflare (`--platform cloudflare`) | export `DATABASE_URL` in the shell or CI step that runs `void deploy`; in CI make it a protected secret |
 
 - Direct Cloudflare also needs an API token with Hyperdrive edit permission for the first provisioning. Alternative: create the Hyperdrive in Cloudflare and put its ID in `cloudflare.hyperdrive`; an existing binding works with a browser login.

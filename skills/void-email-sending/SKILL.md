@@ -7,11 +7,11 @@ description: Sends transactional email from a Void app with sendEmail - sender c
 
 ## Pick the sender
 
-| Deployment | Sender | Who may receive |
-| --- | --- | --- |
-| Email-enabled Void platform | shared sender `<slug>+noreply@<mail-domain>` | verified recipients only |
-| Platform, own domain registered | any address on that domain | all, once outbound is ready |
-| Own Cloudflare account | `email.from` in `void.config.ts` | registered recipients; any recipient with Workers Paid and Email Sending onboarding |
+| Deployment                      | Sender                                       | Who may receive                                                                     |
+| ------------------------------- | -------------------------------------------- | ----------------------------------------------------------------------------------- |
+| Email-enabled Void platform     | shared sender `<slug>+noreply@<mail-domain>` | verified recipients only                                                            |
+| Platform, own domain registered | any address on that domain                   | all, once outbound is ready                                                         |
+| Own Cloudflare account          | `email.from` in `void.config.ts`             | registered recipients; any recipient with Workers Paid and Email Sending onboarding |
 
 The shared sender suits team alerts, project notifications and replies to inbound mail. For mail to arbitrary users register your own domain, use your own Cloudflare account on Workers Paid, or call another provider from the handler.
 

@@ -7,11 +7,11 @@ Read this when `ai.provider()` needs more than a chat call: a provider outside V
 A provider missing from Void's key map needs its secret name and header:
 
 ```ts
-ai.provider('custom-provider', {
-  apiKeyEnv: 'CUSTOM_PROVIDER_API_KEY',
-  apiKeyHeader: 'x-api-key',
-  apiKeyPrefix: '',
-}).fetch('/v1/respond', { body: { prompt: 'Hello' } });
+ai.provider("custom-provider", {
+  apiKeyEnv: "CUSTOM_PROVIDER_API_KEY",
+  apiKeyHeader: "x-api-key",
+  apiKeyPrefix: "",
+}).fetch("/v1/respond", { body: { prompt: "Hello" } });
 ```
 
 Defaults: OpenAI-style providers send `Authorization: Bearer <key>`; Google AI Studio sends `x-goog-api-key`.

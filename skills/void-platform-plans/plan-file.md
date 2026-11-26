@@ -2,13 +2,13 @@
 
 Read this when writing the JSON file for `plans add` or `plans set`. All fields are optional; omitted ones keep their current or copied values.
 
-| Field | Values |
-| --- | --- |
-| `name` | display name |
-| `limits` | partial object of the limits below, each a nonnegative whole number |
-| `buildInstanceType` | `standard-3` (2 vCPU, 8 GiB) or `standard-4` (4 vCPU, 12 GiB) |
-| `allowShortSlugs` | `true` permits future project slugs of five characters or fewer; `false` requires longer. Existing URLs are kept. Copies inherit it; built-in `free` disables it, other built-ins enable it |
-| `aiLogging` | `off`, `metadata`, `full`, or `inherit` (clears the plan's override) |
+| Field               | Values                                                                                                                                                                                      |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `name`              | display name                                                                                                                                                                                |
+| `limits`            | partial object of the limits below, each a nonnegative whole number                                                                                                                         |
+| `buildInstanceType` | `standard-3` (2 vCPU, 8 GiB) or `standard-4` (4 vCPU, 12 GiB)                                                                                                                               |
+| `allowShortSlugs`   | `true` permits future project slugs of five characters or fewer; `false` requires longer. Existing URLs are kept. Copies inherit it; built-in `free` disables it, other built-ins enable it |
+| `aiLogging`         | `off`, `metadata`, `full`, or `inherit` (clears the plan's override)                                                                                                                        |
 
 Limits: `requestsPerMonth`, `cpuMsPerRequest`, `maxCpuMsPerRequest`, `subRequestsPerInvocation`, `deploysPerDay`, `aiNeuronsPerMonth`, `retainedDeployments`, `sandboxRuntimeSecondsPerMonth`, `sandboxMaxConcurrentInstances`, `concurrentBuilds`, `buildTimeoutMinutes`.
 

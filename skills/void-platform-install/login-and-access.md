@@ -54,9 +54,21 @@ In an account with Default-Deny, public apps get per-app Access rules (and rules
 `--auth-config <path>` takes a JSON file. Keep only nonsecret configuration in it and name secrets by environment variable (`clientSecretEnv`, `tokenEnv`); supply the secrets from your secret manager when you apply. `--plan` reads the file without the secrets. Pass the same file to the plan and the install. Skeleton, with `connections`, `administratorConnectionId` and `admission`:
 
 ```json
-{ "connections": [{ "configuration": { "id": "google", "kind": "google", "label": "Company Google", "clientId": "<id>" }, "clientSecretEnv": "GOOGLE_CLIENT_SECRET" }],
+{
+  "connections": [
+    {
+      "configuration": {
+        "id": "google",
+        "kind": "google",
+        "label": "Company Google",
+        "clientId": "<id>"
+      },
+      "clientSecretEnv": "GOOGLE_CLIENT_SECRET"
+    }
+  ],
   "administratorConnectionId": "google",
-  "admission": { "mode": "company", "connections": ["google"], "access": false } }
+  "admission": { "mode": "company", "connections": ["google"], "access": false }
+}
 ```
 
 Add `"protection": true` and a `cloudflareAccess` block (`mode: "create"`, `identityProviderIds`, `policyIds`) for Access protection; add `appAccess` for app access.

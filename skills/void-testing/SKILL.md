@@ -27,9 +27,9 @@ Do not mock `void/email`: use the harness in section 3.
 
 `void/email/testing` captures sent and received mail. Pick the harness:
 
-| Under test | Harness |
-| --- | --- |
-| Code that calls `sendEmail` | `createEmailTestHarness()` records every sent message in `inbox.messages` until `inbox.dispose()`; `clear()` empties the list and keeps the sink. Call `dispose()` in every test (`afterEach`) |
+| Under test                        | Harness                                                                                                                                                                                                                 |
+| --------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Code that calls `sendEmail`       | `createEmailTestHarness()` records every sent message in `inbox.messages` until `inbox.dispose()`; `clear()` empties the list and keeps the sink. Call `dispose()` in every test (`afterEach`)                          |
 | An inbound handler under `email/` | `createInboundTestHarness({ routes: { 'support+[ticket]': handler, _default: defaultHandler } })`, then `await harness.deliver({ from, to, subject, text })`; read `result.handler`, `result.params`, `harness.rejects` |
 
 For `deliver`, `to` is the full address including the project prefix on shared platform mail (`acme+support+abc-123@acme.dev`). On direct Cloudflare mail pass `slug: null` to `createInboundTestHarness` and use the plain address (`support+abc-123@mail.acme.com`). The harness matches handlers in the same order as deployed email routes.

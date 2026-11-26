@@ -14,11 +14,11 @@ void platform repair [id] --plan                                            # wh
 1. Set `VOID_PLATFORM_DATABASE_URL` (migrations and administrator coordination).
 2. Supply what recreating a Worker needs, from your secret manager. Cloudflare cannot return these values. An upgrade that preserves every deployed Worker needs none of them.
 
-   | Recreating | Needs |
-   | --- | --- |
-   | Email gateway | `VOID_PLATFORM_EMAIL_SIGNING_SECRET` only (no Cloudflare runtime token, no JWT key) |
-   | Proxy | Runtime token (`VOID_PLATFORM_RUNTIME_CLOUDFLARE_API_TOKEN`), JWT signing key (`VOID_PLATFORM_JWT_SECRET`), and the email key when email is on |
-   | API | Original runtime token, R2 keys, JWT secret and project-encryption values through `VOID_PLATFORM_*`; the email key when email is on; a GitHub-only install also its original GitHub OAuth values |
+   | Recreating    | Needs                                                                                                                                                                                            |
+   | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+   | Email gateway | `VOID_PLATFORM_EMAIL_SIGNING_SECRET` only (no Cloudflare runtime token, no JWT key)                                                                                                              |
+   | Proxy         | Runtime token (`VOID_PLATFORM_RUNTIME_CLOUDFLARE_API_TOKEN`), JWT signing key (`VOID_PLATFORM_JWT_SECRET`), and the email key when email is on                                                   |
+   | API           | Original runtime token, R2 keys, JWT secret and project-encryption values through `VOID_PLATFORM_*`; the email key when email is on; a GitHub-only install also its original GitHub OAuth values |
 
 3. Project-encryption key not rotated: `VOID_PLATFORM_PROJECT_SECRET_KEY`. After a rotation: `VOID_PLATFORM_PROJECT_SECRET_KEYS_JSON` with every retained key and `VOID_PLATFORM_PROJECT_SECRET_ACTIVE_KEY_VERSION` with the active key's name. Keep older keys that existing project secrets still need. These values recreate a missing API Worker; they do not replace live keys in an ordinary upgrade.
 

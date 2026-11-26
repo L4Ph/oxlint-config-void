@@ -4,11 +4,11 @@ Read this when `email.from` is on a subdomain (`mail.acme.com`) and `email/` han
 
 With `email.from` on `mail.acme.com`, handlers receive:
 
-| Handler | Subdomain address | Zone apex address |
-| --- | --- | --- |
+| Handler                             | Subdomain address       | Zone apex address  |
+| ----------------------------------- | ----------------------- | ------------------ |
 | `support.ts`, `support+[ticket].ts` | `support@mail.acme.com` | `support@acme.com` |
-| `_default.ts` | no catch-all rule | `*@acme.com` |
-| `[user].ts`, `[user]+[tag].ts` | not supported | `*@acme.com` |
+| `_default.ts`                       | no catch-all rule       | `*@acme.com`       |
+| `[user].ts`, `[user]+[tag].ts`      | not supported           | `*@acme.com`       |
 
 Cloudflare catch-alls cover only a zone apex. On a subdomain, `_default.ts` handles only mail admitted by an explicit rule; it cannot receive arbitrary addresses. Use explicit handlers (`support.ts`) or put `email.from` on the apex.
 

@@ -7,11 +7,11 @@ Lint (`realtime` and `server-client-boundary` families) checks imports, the conn
 
 ## Choose the transport
 
-| Need | Use |
-| --- | --- |
-| One request produces the whole stream (AI tokens, progress, logs) | `void/sse` |
-| Other requests, jobs or queues publish to connected browsers; several topics over one connection | `void/live` |
-| Two-way messages | WebSockets (`void-websockets` skill) |
+| Need                                                                                             | Use                                  |
+| ------------------------------------------------------------------------------------------------ | ------------------------------------ |
+| One request produces the whole stream (AI tokens, progress, logs)                                | `void/sse`                           |
+| Other requests, jobs or queues publish to connected browsers; several topics over one connection | `void/live`                          |
+| Two-way messages                                                                                 | WebSockets (`void-websockets` skill) |
 
 Done when the transport is named with the row that justified it.
 

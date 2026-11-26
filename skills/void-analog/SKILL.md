@@ -17,14 +17,14 @@ Done when both packages are in `devDependencies`.
 
 ```ts
 export default defineConfig({
-  resolve: { mainFields: ['module'] },
+  resolve: { mainFields: ["module"] },
   plugins: [
     analog({
       ssr: true,
       nitro: {
-        preset: 'cloudflare-module',
-        cloudflareDev: { configPath: './.void-wrangler.jsonc' },
-        modules: ['nitro-cloudflare-dev', 'void/nitro'],
+        preset: "cloudflare-module",
+        cloudflareDev: { configPath: "./.void-wrangler.jsonc" },
+        modules: ["nitro-cloudflare-dev", "void/nitro"],
       },
     }),
     voidPlugin(),
@@ -43,9 +43,9 @@ Done when `nitro.modules` holds both entries in that order, `cloudflareDev.confi
 ```ts
 export default defineConfig({
   cloudflare: {
-    name: 'my-app',
-    compatibility_date: '2026-02-24',
-    compatibility_flags: ['nodejs_compat', 'nodejs_als'],
+    name: "my-app",
+    compatibility_date: "2026-02-24",
+    compatibility_flags: ["nodejs_compat", "nodejs_als"],
   },
 });
 ```

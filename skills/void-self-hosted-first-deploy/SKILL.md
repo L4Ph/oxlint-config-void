@@ -40,11 +40,11 @@ Done when `git status` shows `.void/project.json` as a tracked or new file.
 
 The core platform runs the same application APIs as direct Cloudflare: static sites, SPAs, Pages SSR, routing, WebSockets, queues, cron, ISR, D1, KV, R2, Workers AI, Durable State, with retained logs and deployments in place of the live tail and Worker versions. Beyond that:
 
-| You want | State on a standard install |
-|---|---|
+| You want                              | State on a standard install                                                                                                                                                                       |
+| ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | User dashboard, managed GitHub builds | Not included. A custom platform build provides them (`guide/platform-development`). No `void github` managed builds; deploy from your own CI with a project token (`void-ci-deploy-credentials`). |
-| Email | The operator must configure a shared mail domain and zone. |
-| Custom domains | The operator must install with `--custom-domains`. |
-| Sandboxes | The platform account must be on Workers Paid. |
+| Email                                 | The operator must configure a shared mail domain and zone.                                                                                                                                        |
+| Custom domains                        | The operator must install with `--custom-domains`.                                                                                                                                                |
+| Sandboxes                             | The platform account must be on Workers Paid.                                                                                                                                                     |
 
 Features depend on the installation's configuration, so when one is missing ask the administrator which of these the installation enables before changing app code. The platform itself needs Workers for Platforms and the documented Cloudflare infrastructure; that is the administrator's side.

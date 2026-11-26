@@ -19,13 +19,13 @@ D1 only. PostgreSQL and MySQL have no sessions or bookmarks. Lint holds the conf
 
 ## 2. Pick the tool for each read
 
-| Need | Use |
-| --- | --- |
-| Later queries in the same request see earlier ones | nothing; the request session does it |
-| Latest primary data for one read (a permission check, a post-write read) | `createDb(env.DB, { session: 'first-primary' })`, created inside the request |
-| A read in a later request sees an earlier save | carry a bookmark: `bookmark-transports.md` |
-| The page after a redirect must be fresh | a primary-first session on the destination (cookies can be overwritten out of order) |
-| Another D1 binding | `createDb(env.MY_OTHER_DB)` |
+| Need                                                                     | Use                                                                                  |
+| ------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ |
+| Later queries in the same request see earlier ones                       | nothing; the request session does it                                                 |
+| Latest primary data for one read (a permission check, a post-write read) | `createDb(env.DB, { session: 'first-primary' })`, created inside the request         |
+| A read in a later request sees an earlier save                           | carry a bookmark: `bookmark-transports.md`                                           |
+| The page after a redirect must be fresh                                  | a primary-first session on the destination (cookies can be overwritten out of order) |
+| Another D1 binding                                                       | `createDb(env.MY_OTHER_DB)`                                                          |
 
 `'first-unconstrained'` is the default and lets the first query use a replica. Authentication checks already use the primary. Done when each consistency-critical read matches a row of this table.
 

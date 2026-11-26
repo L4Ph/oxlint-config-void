@@ -23,11 +23,11 @@ You may edit the rules of a selected reusable policy in Cloudflare. The change r
 
 ## Repair commands
 
-| Command | Scope | Who |
-| --- | --- | --- |
-| `void platform zero-trust reconcile` | platform and all projects | installation administrators |
-| `void platform zero-trust project-reconcile <project-id>` | one project | installation administrators |
-| `void project zero-trust reconcile [--project <slug>]` | linked project or `--project` | project owner, project administrators |
+| Command                                                   | Scope                         | Who                                   |
+| --------------------------------------------------------- | ----------------------------- | ------------------------------------- |
+| `void platform zero-trust reconcile`                      | platform and all projects     | installation administrators           |
+| `void platform zero-trust project-reconcile <project-id>` | one project                   | installation administrators           |
+| `void project zero-trust reconcile [--project <slug>]`    | linked project or `--project` | project owner, project administrators |
 
 All three **CHANGE** remote state and are not destructive. Project reconciliation needs platform status `ready`; when it is not, reconcile the platform first. Void also retries failed projects every hour.
 

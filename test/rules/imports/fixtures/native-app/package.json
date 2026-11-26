@@ -1,0 +1,7 @@
+{
+  "name": "native-app",
+  "private": true,
+  "dependencies": {
+    "void": "1.11.0"
+  }
+}

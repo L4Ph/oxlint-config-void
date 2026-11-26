@@ -8,7 +8,7 @@ Three places hold a setting, each with one job: `env.ts` (checked in) declares n
 ## 1. Declare the key in env.ts
 
 ```ts
-import { defineEnv, string, url } from 'void/env';
+import { defineEnv, string, url } from "void/env";
 export default defineEnv({ STRIPE_KEY: string(), VITE_API_ORIGIN: url() });
 ```
 

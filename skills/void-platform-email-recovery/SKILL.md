@@ -11,11 +11,11 @@ Void stops an email operation whose outcome is unknown and never replays it, bec
 
 ## 1. Find what is interrupted
 
-| Kind | List | Resolve |
-| --- | --- | --- |
-| A send stopped after a provider call began | `void platform email attempts [--project <id\|slug>]` (ID, start time, earliest resolution time) | `attempt-resolve <attempt-id> --ended --reason <text>` |
-| A Cloudflare routing, Worker, secret, catch-all or Sending mutation timed out | the operation ID in the blocked command's output or `system events` | `operation-resolve <operation-id> --ended --outcome <applied\|not-applied> --reason <text>` |
-| A shared inbound recipient creation of unknown outcome (includes projects awaiting deletion) | `void platform email shared-recipients [--project <id\|slug>]` (rule names, IDs, intents) | `shared-recipient-resolve <recipient-id> --ended --outcome <applied\|not-applied> --reason <text>` |
+| Kind                                                                                         | List                                                                                             | Resolve                                                                                            |
+| -------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------- |
+| A send stopped after a provider call began                                                   | `void platform email attempts [--project <id\|slug>]` (ID, start time, earliest resolution time) | `attempt-resolve <attempt-id> --ended --reason <text>`                                             |
+| A Cloudflare routing, Worker, secret, catch-all or Sending mutation timed out                | the operation ID in the blocked command's output or `system events`                              | `operation-resolve <operation-id> --ended --outcome <applied\|not-applied> --reason <text>`        |
+| A shared inbound recipient creation of unknown outcome (includes projects awaiting deletion) | `void platform email shared-recipients [--project <id\|slug>]` (rule names, IDs, intents)        | `shared-recipient-resolve <recipient-id> --ended --outcome <applied\|not-applied> --reason <text>` |
 
 Done when you have one ID and its kind.
 

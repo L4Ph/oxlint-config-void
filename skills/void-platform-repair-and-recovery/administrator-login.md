@@ -14,14 +14,14 @@ Done when the administrator is signed in.
 
 The page shows the reason and an error code, and the callback URL the provider must have when a provider setting may be the cause.
 
-| Error code | Check |
-| --- | --- |
-| `github_incorrect_client_credentials`, `github_failed`, `oidc_token_failed` | Client ID, client secret, and that the provider has the callback URL |
-| `github_redirect_uri_mismatch` | The callback URL registered in the GitHub OAuth app |
-| `oidc_discovery_failed` | The issuer URL, exactly, including any trailing slash |
-| `github_unverified_user_email` | Verify the primary email of the GitHub account |
-| `google_domain_not_allowed`, `oidc_group_not_allowed` | Sign in with an allowed account, or change the allowed domains or groups |
-| `login_denied`, `github_bad_verification_code` | Start a new sign-in |
+| Error code                                                                  | Check                                                                    |
+| --------------------------------------------------------------------------- | ------------------------------------------------------------------------ |
+| `github_incorrect_client_credentials`, `github_failed`, `oidc_token_failed` | Client ID, client secret, and that the provider has the callback URL     |
+| `github_redirect_uri_mismatch`                                              | The callback URL registered in the GitHub OAuth app                      |
+| `oidc_discovery_failed`                                                     | The issuer URL, exactly, including any trailing slash                    |
+| `github_unverified_user_email`                                              | Verify the primary email of the GitHub account                           |
+| `google_domain_not_allowed`, `oidc_group_not_allowed`                       | Sign in with an allowed account, or change the allowed domains or groups |
+| `login_denied`, `github_bad_verification_code`                              | Start a new sign-in                                                      |
 
 If the provider shows its own error page, register exactly the callback URL printed with your setup code.
 

@@ -1,0 +1,8 @@
+{
+  "name": "with-hono",
+  "private": true,
+  "dependencies": {
+    "@hono/zod-validator": "^0.4.0",
+    "hono": "^4.0.0"
+  }
+}

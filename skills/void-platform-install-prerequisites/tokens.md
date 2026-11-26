@@ -12,24 +12,24 @@ Read this when you create or edit the management or runtime token, or when Void 
 
 Cloudflare labels write access **Edit** or **Write** depending on the screen.
 
-| Scope | Permission | Management | Runtime |
-| --- | --- | --- | --- |
-| Account | Account Settings | Read | Read |
-| Account | Workers Scripts | Edit | Edit |
-| Account | Workers Tail | Read | Read |
-| Account | D1 | Edit | Edit |
-| Account | Workers KV Storage | Edit | Edit |
-| Account | Workers R2 Storage | Edit | Edit |
-| Account | Queues | Edit | Edit |
-| Account | Hyperdrive | Write | Write |
-| Account | Account Analytics | Read | Read |
-| Account | AI Gateway | Edit | Edit (table: only when installing with browser login) |
-| Account | Containers | - | Edit |
-| Account | Cloudchamber | - | Edit |
-| Zone | Zone | Read | - |
-| Zone | DNS | Edit | - |
-| Zone | Workers Routes | Edit | - |
-| Zone | Cache Purge | - | Purge |
+| Scope   | Permission         | Management | Runtime                                               |
+| ------- | ------------------ | ---------- | ----------------------------------------------------- |
+| Account | Account Settings   | Read       | Read                                                  |
+| Account | Workers Scripts    | Edit       | Edit                                                  |
+| Account | Workers Tail       | Read       | Read                                                  |
+| Account | D1                 | Edit       | Edit                                                  |
+| Account | Workers KV Storage | Edit       | Edit                                                  |
+| Account | Workers R2 Storage | Edit       | Edit                                                  |
+| Account | Queues             | Edit       | Edit                                                  |
+| Account | Hyperdrive         | Write      | Write                                                 |
+| Account | Account Analytics  | Read       | Read                                                  |
+| Account | AI Gateway         | Edit       | Edit (table: only when installing with browser login) |
+| Account | Containers         | -          | Edit                                                  |
+| Account | Cloudchamber       | -          | Edit                                                  |
+| Zone    | Zone               | Read       | -                                                     |
+| Zone    | DNS                | Edit       | -                                                     |
+| Zone    | Workers Routes     | Edit       | -                                                     |
+| Zone    | Cache Purge        | -          | Purge                                                 |
 
 Extra permissions, by feature:
 

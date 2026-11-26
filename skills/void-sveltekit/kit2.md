@@ -6,16 +6,15 @@ Read this when `@sveltejs/kit` is 2.x. Docs: `integrations/frameworks/sveltekit.
 2. Add Void's tsconfig hook to the `sveltekit()` options:
 
 ```ts
-import { withVoidTSConfig } from 'void/sveltekit';
+import { withVoidTSConfig } from "void/sveltekit";
 
 sveltekit({
-  adapter: adapter({ /* same options as Kit 3 */ }),
+  adapter: adapter({/* same options as Kit 3 */}),
   typescript: { config: withVoidTSConfig() },
 });
 ```
 
-   If the app has `svelte.config.js` or `svelte.config.ts`, keep it and put `typescript.config: withVoidTSConfig()` under `kit`.
-3. Keep the Kit 2 tsconfig instead of the Kit 3 one:
+If the app has `svelte.config.js` or `svelte.config.ts`, keep it and put `typescript.config: withVoidTSConfig()` under `kit`. 3. Keep the Kit 2 tsconfig instead of the Kit 3 one:
 
 ```json
 {

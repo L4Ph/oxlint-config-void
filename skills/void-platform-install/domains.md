@@ -50,6 +50,7 @@ The API's `/admin/` pages are part of the core install. A separately deployed us
   ```
 
   `upgrade --dashboard-url` works the same way. Omit the flag to keep the saved origin.
+
 - The origin is HTTPS with no credentials, path, query or fragment.
 - Deploy the dashboard yourself from the source app's standalone dashboard instructions, with an unused Worker name, your hostname, and the installed API Worker as its `API` service binding. Set `API_URL` (public API origin), `DASHBOARD_URL` (dashboard origin) and `SITE_DOMAIN` (the application domain).
 - If Access protects the platform, its application must cover the dashboard origin: configure the origin when installing protection. To change it on a protected platform, remove protection through the authentication configuration, apply the origin, then enable protection again; choose a separate admission rule first if signup depends on the Access gate. Maintenance stops while the origin is outside the active coverage.

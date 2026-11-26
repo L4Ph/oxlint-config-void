@@ -8,7 +8,7 @@ Choose one:
 
 ```ts
 export default defineConfig({
-  inference: { appType: 'void', build: 'vitepress build && vite build' },
+  inference: { appType: "void", build: "vitepress build && vite build" },
 });
 ```
 
@@ -16,7 +16,7 @@ export default defineConfig({
 // root vite.config.ts
 export default defineConfig({
   plugins: [voidPlugin()],
-  publicDir: '.vitepress/dist', // the generator output becomes the static assets
+  publicDir: ".vitepress/dist", // the generator output becomes the static assets
 });
 ```
 

@@ -25,16 +25,16 @@ Done when the build exits 0 and `curl http://localhost:3000/` (or `$PORT`) answe
 
 Importing `void/db`, `void/kv`, `void/storage`, `void/auth`, `void/ai`, `void/sandbox` or `void/env` is a compile-time error on these targets. Cloudflare bindings (D1, KV, R2, Workers AI) do not exist. Work through each row and leave none unanswered:
 
-| Cloudflare feature | On node / bun / deno |
-| --- | --- |
-| `void/db`, `void/kv`, `void/storage` | An external provider through standard libraries |
-| `void/env` schema and secrets | The host's environment: `process.env` (Node, Bun) or `Deno.env.get()` (Deno). Browser code: `import.meta.env.VITE_*` (embedded at build time, never secrets) |
-| `void/auth`, `void/client` auth, `auth.ts` | Better Auth directly. Enabling auth through these fails the build |
-| `*.ws.ts` WebSocket routes | None (they compile to Durable Objects). `void/ws` browser `connect()` still works against a separately hosted server |
-| `crons/` | Files compile into the bundle but nothing runs them. Trigger the exported handler from `node-cron`, systemd timers or the host's cron |
-| Inbound email, `sendEmail` | An external mail provider |
-| Edge prerendering | Build-time static generation (`guide/ssg.md`) |
-| `void deploy` | Not used. Run `vite build` and deploy `dist/` through the host's workflow |
+| Cloudflare feature                         | On node / bun / deno                                                                                                                                         |
+| ------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `void/db`, `void/kv`, `void/storage`       | An external provider through standard libraries                                                                                                              |
+| `void/env` schema and secrets              | The host's environment: `process.env` (Node, Bun) or `Deno.env.get()` (Deno). Browser code: `import.meta.env.VITE_*` (embedded at build time, never secrets) |
+| `void/auth`, `void/client` auth, `auth.ts` | Better Auth directly. Enabling auth through these fails the build                                                                                            |
+| `*.ws.ts` WebSocket routes                 | None (they compile to Durable Objects). `void/ws` browser `connect()` still works against a separately hosted server                                         |
+| `crons/`                                   | Files compile into the bundle but nothing runs them. Trigger the exported handler from `node-cron`, systemd timers or the host's cron                        |
+| Inbound email, `sendEmail`                 | An external mail provider                                                                                                                                    |
+| Edge prerendering                          | Build-time static generation (`guide/ssg.md`)                                                                                                                |
+| `void deploy`                              | Not used. Run `vite build` and deploy `dist/` through the host's workflow                                                                                    |
 
 Void warns and ignores `inference.bindings`, `remote`, `worker` and `routing.revalidate` in `void.config.ts` on these targets. Delete them.
 

@@ -13,11 +13,11 @@ Read `void-meta-framework-basics` first (runtime wiring, caching, deploy, where 
 
 ```ts
 export default defineNuxtConfig({
-  alias: { '@schema': resolve(import.meta.dirname, 'db/schema.ts') },
+  alias: { "@schema": resolve(import.meta.dirname, "db/schema.ts") },
   nitro: {
-    preset: 'cloudflare-module',
-    modules: ['void/nitro'],
-    cloudflare: { dev: { configPath: './.void-wrangler.jsonc' } },
+    preset: "cloudflare-module",
+    modules: ["void/nitro"],
+    cloudflare: { dev: { configPath: "./.void-wrangler.jsonc" } },
     // Required for Nuxt 4.6.0 on Windows.
     externals: { inline: [/[\\/]node_modules[\\/]nuxt[\\/]dist[\\/]/] },
   },
@@ -37,9 +37,9 @@ Done when `nuxt.config.ts` has the alias, `void/nitro` in `nitro.modules`, `conf
 ```ts
 export default defineConfig({
   cloudflare: {
-    name: 'my-app',
-    compatibility_date: '2026-02-24',
-    compatibility_flags: ['nodejs_compat', 'nodejs_als'],
+    name: "my-app",
+    compatibility_date: "2026-02-24",
+    compatibility_flags: ["nodejs_compat", "nodejs_als"],
   },
 });
 ```
@@ -57,6 +57,7 @@ Use `void/db`, `void/kv`, `void/storage`, `void/ai` in server routes, API handle
 Declare keys in `env.ts`; read them with `import { env } from "void/env"`. This page says `void/env` replaces `useRuntimeConfig()` and `event.context.cloudflare.env` for env-var access; `overview.md` lists only TanStack Start, React Router and vinext for `void/env` (basics skill, "Where the docs disagree").
 
 Keep two things as they are:
+
 - `event.context.cloudflare.env` for raw bindings (D1, KV, R2): `const { DB } = event.context.cloudflare.env;`
 - `useRuntimeConfig()` for non-env runtime config.
 

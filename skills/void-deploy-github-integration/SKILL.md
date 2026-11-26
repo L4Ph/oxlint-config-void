@@ -7,11 +7,11 @@ description: "Connects a Void project to GitHub so pushes deploy, covering `void
 
 Pick by target first:
 
-| Target | Route |
-|---|---|
-| Void platform with managed GitHub builds | `void github ...` below. The platform builds, or a workflow you authorize does. |
-| Void platform, core self-hosted install | Not available (no managed builds, no OIDC workflow). Deploy from your own CI: `void-ci-deploy-credentials`. |
-| Direct Cloudflare | `void init --github` writes a workflow; see step 5. |
+| Target                                   | Route                                                                                                       |
+| ---------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| Void platform with managed GitHub builds | `void github ...` below. The platform builds, or a workflow you authorize does.                             |
+| Void platform, core self-hosted install  | Not available (no managed builds, no OIDC workflow). Deploy from your own CI: `void-ci-deploy-credentials`. |
+| Direct Cloudflare                        | `void init --github` writes a workflow; see step 5.                                                         |
 
 `void github connect` and `disconnect` change what happens on every push to a production project. Run them only when the user asked for that, with the branch and repository stated.
 

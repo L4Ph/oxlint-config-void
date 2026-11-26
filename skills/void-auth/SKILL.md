@@ -53,8 +53,11 @@ Done when `tsc` resolves `@auth-schema`, and for a direct Cloudflare deploy `git
 ## 7. Customize in auth.ts
 
 ```ts
-import { defineAuth } from 'void/auth';
-export default defineAuth(({ defaults }) => ({ ...defaults, trustedOrigins: ['https://app.example.com'] }));
+import { defineAuth } from "void/auth";
+export default defineAuth(({ defaults }) => ({
+  ...defaults,
+  trustedOrigins: ["https://app.example.com"],
+}));
 ```
 
 - Spread `defaults`; Void does not deep-merge.

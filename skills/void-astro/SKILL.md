@@ -19,7 +19,7 @@ Done when `package.json` has `astro` >= 7.
 
 ```js
 export default defineConfig({
-  adapter: cloudflare({ configPath: './.void-wrangler.jsonc' }),
+  adapter: cloudflare({ configPath: "./.void-wrangler.jsonc" }),
   vite: { plugins: [voidPlugin()] },
 });
 ```
@@ -29,9 +29,9 @@ and in `void.config.ts`:
 ```ts
 export default defineConfig({
   cloudflare: {
-    name: 'my-app',
-    compatibility_date: '2026-02-24',
-    compatibility_flags: ['nodejs_als'],
+    name: "my-app",
+    compatibility_date: "2026-02-24",
+    compatibility_flags: ["nodejs_als"],
   },
 });
 ```

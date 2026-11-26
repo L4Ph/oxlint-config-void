@@ -1,0 +1,8 @@
+{
+  "name": "auth-app",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "void": "1.11.0"
+  }
+}

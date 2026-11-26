@@ -41,14 +41,14 @@ Skip this section unless the Worker exports such a class.
 1. Set `cloudflare.main` in `void.config.ts` to your entry module (relative to the app root):
 
 ```ts
-export default defineConfig({ cloudflare: { main: './server.ts' } });
+export default defineConfig({ cloudflare: { main: "./server.ts" } });
 ```
 
 2. In that module, default-export TanStack's handler and add the named class exports:
 
 ```ts
-import handler from '@tanstack/react-start/server-entry';
-export { Counter } from './counter';
+import handler from "@tanstack/react-start/server-entry";
+export { Counter } from "./counter";
 export default handler;
 ```
 

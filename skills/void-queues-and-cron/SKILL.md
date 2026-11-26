@@ -44,11 +44,11 @@ Limits on a Void platform: 100 distinct cron expressions and 1,000 schedules per
 
 Schedules do not fire in local development, and the local queue path differs by app type. Every dev call needs the `x-void-dev-trigger` token that the dev server prints (with a paste-ready curl command) at start.
 
-| Case | How |
-| --- | --- |
-| Queue, native Void app | send through the binding; Miniflare invokes the consumer. `POST /__void/queue` also works |
-| Queue, supported meta-framework | sending does not invoke the consumer; `POST /__void/queue` with `{ "queue", "messages": [{ "id", "timestamp", "body", "attempts" }] }` |
-| Cron job | `POST /__void/scheduled` with `{ "cron": "<an expression the job exports>", "scheduledTime": <unix ms> }`; success returns `{ "ok": true }` |
+| Case                            | How                                                                                                                                         |
+| ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| Queue, native Void app          | send through the binding; Miniflare invokes the consumer. `POST /__void/queue` also works                                                   |
+| Queue, supported meta-framework | sending does not invoke the consumer; `POST /__void/queue` with `{ "queue", "messages": [{ "id", "timestamp", "body", "attempts" }] }`      |
+| Cron job                        | `POST /__void/scheduled` with `{ "cron": "<an expression the job exports>", "scheduledTime": <unix ms> }`; success returns `{ "ok": true }` |
 
 Deployed framework apps: `/__void/scheduled` needs a matching `x-void-internal` token (the platform proxy supplies its own; `CRON_SECRET` is for manual calls). A missing or wrong token returns 401 and runs nothing. Native scheduled events need no token.
 

@@ -8,8 +8,8 @@ All Worker settings live in `void.config.ts`; Void generates the Cloudflare conf
 ## 1. Write settings as TypeScript in defineConfig
 
 ```ts
-import { defineConfig } from 'void/config';
-export default defineConfig({ worker: { compatibility_flags: ['nodejs_compat'] } });
+import { defineConfig } from "void/config";
+export default defineConfig({ worker: { compatibility_flags: ["nodejs_compat"] } });
 ```
 
 The docs show fields as JSON fragments; place each inside `defineConfig({ ... })`. Nothing is required: omit what inference or `void init` already settles.

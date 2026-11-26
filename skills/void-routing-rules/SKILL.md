@@ -9,13 +9,13 @@ Rules live in `routing.redirects`, `routing.rewrites`, `routing.fallbacks` and `
 
 ## 1. Choose the mechanism
 
-| You want | Use |
-| --- | --- |
-| The browser address to change | redirect (`routing.redirects`, or `c.redirect()` in code) |
-| Content served at another path, address unchanged, fixed mapping | `routing.rewrites` |
-| The same, destination depends on the request (cookie, header) | `c.rewrite()` in middleware |
-| A catch-all that must never pre-empt a real file or route | `routing.fallbacks` |
-| HTTP sent to HTTPS | `routing.alwaysUseHttps: true` (step 4) |
+| You want                                                         | Use                                                       |
+| ---------------------------------------------------------------- | --------------------------------------------------------- |
+| The browser address to change                                    | redirect (`routing.redirects`, or `c.redirect()` in code) |
+| Content served at another path, address unchanged, fixed mapping | `routing.rewrites`                                        |
+| The same, destination depends on the request (cookie, header)    | `c.rewrite()` in middleware                               |
+| A catch-all that must never pre-empt a real file or route        | `routing.fallbacks`                                       |
+| HTTP sent to HTTPS                                               | `routing.alwaysUseHttps: true` (step 4)                   |
 
 Rewrites run before static assets and application routes, so a rewrite shadows a real file or route at its source URL. Fallbacks fire only when nothing else matched (the request would otherwise 404). An SPA app already falls back to `/index.html`; do not add `'/*': '/index.html'`.
 

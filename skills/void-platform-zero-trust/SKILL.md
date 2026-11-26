@@ -23,18 +23,19 @@ Done when you can say: platform status (project changes need `ready`), whether t
 Skip when platform status already shows enabled. To change providers, policies, token or the new-project default later, rerun step 2d without `--existing-projects`; existing projects keep their protection.
 
 a. Check the requirements; all must hold, and Void rejects the configuration otherwise:
-   - Cloudflare Zero Trust organization in the account hosting the platform, with identity providers and reusable Access policies.
-   - At least one **Allow** policy that matches people by identity. Void rejects Bypass, Service Auth, and rules that allow Everyone or any service token.
-   - An API token of its own (not the runtime token): Access: Apps and Policies Write; Access: Organizations, Identity Providers, and Groups Read; scoped to the hosting account. Void stores it encrypted and never shows it again.
-   - Under 500 Access applications in the account, counting yours plus Void's (formula in `reconcile.md`). Void stops with an error above 500.
-   - Platform API, proxy and email gateway hostnames outside the project application domain.
-   - No project named `void-platform-health`: Void reserves it for its health check.
-b. Ask the operator which `--existing-projects` value they want. `--existing-projects protected|public` is required once, and rejected after Zero Trust is enabled. `protected` puts sign-in in front of every existing project; `public` leaves them open.
-c. Preview. The token goes only on standard input:
-   `printf '%s' "$ACCESS_API_TOKEN" | void platform zero-trust configure --identity-providers <id,...> --policies <id,...> --existing-projects <protected|public> [--protect-new-projects] --token-stdin --plan`
-   `--protect-new-projects` protects projects created from now on; without it new projects are public.
-d. **[REMOTE]** (**[IRREVERSIBLE]** the open access of every existing project when `protected`): same command with `--yes` in place of `--plan`.
-e. `void platform zero-trust status --check` shows enabled, no operation running, and no error. A large change runs in steps: status reads `configuring` until it finishes; read `recovery.md` if it stays that way.
+
+- Cloudflare Zero Trust organization in the account hosting the platform, with identity providers and reusable Access policies.
+- At least one **Allow** policy that matches people by identity. Void rejects Bypass, Service Auth, and rules that allow Everyone or any service token.
+- An API token of its own (not the runtime token): Access: Apps and Policies Write; Access: Organizations, Identity Providers, and Groups Read; scoped to the hosting account. Void stores it encrypted and never shows it again.
+- Under 500 Access applications in the account, counting yours plus Void's (formula in `reconcile.md`). Void stops with an error above 500.
+- Platform API, proxy and email gateway hostnames outside the project application domain.
+- No project named `void-platform-health`: Void reserves it for its health check.
+  b. Ask the operator which `--existing-projects` value they want. `--existing-projects protected|public` is required once, and rejected after Zero Trust is enabled. `protected` puts sign-in in front of every existing project; `public` leaves them open.
+  c. Preview. The token goes only on standard input:
+  `printf '%s' "$ACCESS_API_TOKEN" | void platform zero-trust configure --identity-providers <id,...> --policies <id,...> --existing-projects <protected|public> [--protect-new-projects] --token-stdin --plan`
+  `--protect-new-projects` protects projects created from now on; without it new projects are public.
+  d. **[REMOTE]** (**[IRREVERSIBLE]** the open access of every existing project when `protected`): same command with `--yes` in place of `--plan`.
+  e. `void platform zero-trust status --check` shows enabled, no operation running, and no error. A large change runs in steps: status reads `configuring` until it finishes; read `recovery.md` if it stays that way.
 
 For public-only rules under account-wide Default-Deny, install-time app access, or existing Access applications, read `access-options.md`.
 

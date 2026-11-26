@@ -17,9 +17,9 @@ Done when a submit re-renders the page with the new data.
 
 ## 2. Pick the client primitive
 
-| Need | Use |
-| --- | --- |
-| Form fields, field errors, pending flag | `useForm(url, defaults, options)` with `Form` |
+| Need                                            | Use                                                                                          |
+| ----------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| Form fields, field errors, pending flag         | `useForm(url, defaults, options)` with `Form`                                                |
 | One button or awaitable mutation, no form state | `action(url, { params, data, method })`; returns `{ ok, error }` or `{ ok: true, pageData }` |
 
 - Client-side checks: `form.setError(field, message)`; editing the field clears it.

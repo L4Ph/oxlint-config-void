@@ -4,11 +4,11 @@ Read this when a read in one request must see a save from an earlier request. Th
 
 ## Choose the transport
 
-| Transport | Carries through | Weakness |
-| --- | --- | --- |
-| Cookie `db-bookmark` (middleware sets it after `next()`) | navigation, redirects, forms, same-origin fetch | concurrent responses can overwrite it with an older bookmark |
-| Header `X-DB-Bookmark` plus the browser fetch wrapper | API requests made through the wrapper only | not sent by navigation, forms or Pages requests; shares nothing with the cookie recipe |
-| Both, in one middleware | everything above | needs the wrapper for every participating API request |
+| Transport                                                | Carries through                                 | Weakness                                                                               |
+| -------------------------------------------------------- | ----------------------------------------------- | -------------------------------------------------------------------------------------- |
+| Cookie `db-bookmark` (middleware sets it after `next()`) | navigation, redirects, forms, same-origin fetch | concurrent responses can overwrite it with an older bookmark                           |
+| Header `X-DB-Bookmark` plus the browser fetch wrapper    | API requests made through the wrapper only      | not sent by navigation, forms or Pages requests; shares nothing with the cookie recipe |
+| Both, in one middleware                                  | everything above                                | needs the wrapper for every participating API request                                  |
 
 Concurrent API clients: use the header recipe, which keeps the newest bookmark across out-of-order responses. A page reached by redirect that must be fresh: add a primary-first session on that page; the cookie alone does not guarantee it.
 

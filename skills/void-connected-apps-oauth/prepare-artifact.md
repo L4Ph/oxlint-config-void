@@ -11,8 +11,8 @@ VOID_DEPLOY_BUILD=1 VOID_DEPLOY_PROJECT_ID=artifact npm run build
 ```
 
 ```ts
-import { prepareDeployArtifact } from 'void/deploy';
-const { artifact, assets } = await prepareDeployArtifact('/path/to/app');
+import { prepareDeployArtifact } from "void/deploy";
+const { artifact, assets } = await prepareDeployArtifact("/path/to/app");
 ```
 
 The two variables select a platform-compatible build; the target project is chosen at publish approval. `artifact` holds the manifest, asset metadata and Worker modules; `assets` maps asset URL paths to base64 bytes.

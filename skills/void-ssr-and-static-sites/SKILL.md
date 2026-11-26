@@ -9,12 +9,12 @@ Lint covers config literals and `defineRender` asset tags (families `config`, `e
 
 ## 1. Choose the mode
 
-| You have | Set |
-| --- | --- |
-| Void pages that should be built to HTML | `output: 'static'` in `void.config.ts` |
-| A pre-built site from another tool (VitePress, plain HTML) | `inference.appType: 'static'` (and `inference.outputDir`) |
-| Your own router, HTML shell and hydration | custom SSR (step 2) |
-| Pages that should be cached at the edge on a server app | `prerender`/`revalidate` (see `void-isr-and-prerendering`) |
+| You have                                                   | Set                                                        |
+| ---------------------------------------------------------- | ---------------------------------------------------------- |
+| Void pages that should be built to HTML                    | `output: 'static'` in `void.config.ts`                     |
+| A pre-built site from another tool (VitePress, plain HTML) | `inference.appType: 'static'` (and `inference.outputDir`)  |
+| Your own router, HTML shell and hydration                  | custom SSR (step 2)                                        |
+| Pages that should be cached at the edge on a server app    | `prerender`/`revalidate` (see `void-isr-and-prerendering`) |
 
 `output` controls the rendering strategy of a Void app. `inference.appType` describes what the project is. They are different settings: `appType: 'static'` deploys files with no Void plugin and no Worker; `output: 'static'` prerenders a Void app and keeps a Worker only for server code and edge rules.
 

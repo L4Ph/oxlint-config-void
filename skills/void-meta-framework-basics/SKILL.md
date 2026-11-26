@@ -41,12 +41,12 @@ Done when every server-side read of a declared key goes through one mechanism, a
 
 Use the framework's own mechanism, and keep `void/env` for env values:
 
-| Framework | Raw bindings |
-| --- | --- |
-| TanStack Start, React Router, SvelteKit 3, Astro | `import { env } from "cloudflare:workers"` |
-| Analog | `cloudflare:workers` or the H3 event context |
-| SvelteKit 2 | `platform.env` |
-| Nuxt | `event.context.cloudflare.env` |
+| Framework                                        | Raw bindings                                 |
+| ------------------------------------------------ | -------------------------------------------- |
+| TanStack Start, React Router, SvelteKit 3, Astro | `import { env } from "cloudflare:workers"`   |
+| Analog                                           | `cloudflare:workers` or the H3 event context |
+| SvelteKit 2                                      | `platform.env`                               |
+| Nuxt                                             | `event.context.cloudflare.env`               |
 
 `void/db`, `void/kv`, `void/storage`, `void/ai` work from server-side code in every framework; use them there only.
 

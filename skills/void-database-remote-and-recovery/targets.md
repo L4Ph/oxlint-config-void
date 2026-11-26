@@ -4,12 +4,12 @@ Read this when a command targets PostgreSQL or MySQL, a hosted Void platform pro
 
 ## `--remote` by target
 
-| Target | `execute --remote` | `studio --remote` | `migrate --remote` / `status` |
-| --- | --- | --- | --- |
-| Void platform, D1 | routed through the platform's registered proxy with your auth token | not applicable: use `execute --remote` | Void login and link |
-| Direct Cloudflare, D1 | invokes Cloudflare against the D1 binding pinned in `void.config.ts` or `void.lock.json` | not applicable | the binding's `migrations_dir`, table and pattern |
-| Hosted PostgreSQL or MySQL | fetches the stored connection string from the platform | the same stored string (run `void db set-url` first if none) | Void login and link |
-| Direct Cloudflare PostgreSQL or MySQL | `DATABASE_URL` from the current shell | `DATABASE_URL` from the current shell | `DATABASE_URL` from the current shell |
+| Target                                | `execute --remote`                                                                       | `studio --remote`                                            | `migrate --remote` / `status`                     |
+| ------------------------------------- | ---------------------------------------------------------------------------------------- | ------------------------------------------------------------ | ------------------------------------------------- |
+| Void platform, D1                     | routed through the platform's registered proxy with your auth token                      | not applicable: use `execute --remote`                       | Void login and link                               |
+| Direct Cloudflare, D1                 | invokes Cloudflare against the D1 binding pinned in `void.config.ts` or `void.lock.json` | not applicable                                               | the binding's `migrations_dir`, table and pattern |
+| Hosted PostgreSQL or MySQL            | fetches the stored connection string from the platform                                   | the same stored string (run `void db set-url` first if none) | Void login and link                               |
+| Direct Cloudflare PostgreSQL or MySQL | `DATABASE_URL` from the current shell                                                    | `DATABASE_URL` from the current shell                        | `DATABASE_URL` from the current shell             |
 
 ## Connection strings
 

@@ -19,9 +19,9 @@ Middleware files live in `middleware/NN.name.ts` (global middleware) or are pass
 
 ```ts
 // middleware/01.cors.ts
-import { cors } from 'hono/cors';
-import { defineMiddleware } from 'void';
-export default defineMiddleware(cors({ origin: 'https://example.com' }));
+import { cors } from "hono/cors";
+import { defineMiddleware } from "void";
+export default defineMiddleware(cors({ origin: "https://example.com" }));
 ```
 
 Per route: `defineHandler(bearerAuth({ token }), async (c) => { ... })`.
@@ -36,7 +36,7 @@ A handler may return a plain value, or set status and headers on `c` and return 
 
 ```ts
 export const GET = defineHandler((c) => {
-  c.header('X-Custom', 'value');
+  c.header("X-Custom", "value");
   c.status(201);
   return c.json({ created: true });
 });
@@ -63,8 +63,8 @@ Done when a `.tsx` route in such an app builds and answers with HTML.
 A helper that is not a handler cannot return a response for the handler. Throw `HTTPException` from `hono/http-exception`:
 
 ```ts
-import { HTTPException } from 'hono/http-exception';
-throw new HTTPException(404, { message: 'User not found' });
+import { HTTPException } from "hono/http-exception";
+throw new HTTPException(404, { message: "User not found" });
 ```
 
 For a redirect, throw it with the redirect in `res`: `throw new HTTPException(302, { res: c.redirect('/login') })`. After a mutation use 303 (`c.redirect('/login', 303)`) so the next request is a GET. This works in loaders, actions and middleware, including client-side navigation. For a sign-in check, `requireAuth(c, { throwRedirect: '/login' })` (`reference/api/auth.md`) does the same and picks the status.

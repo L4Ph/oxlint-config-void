@@ -7,11 +7,11 @@ description: "Gives CI the credentials to deploy a Void project, covering projec
 
 Pick the path by target:
 
-| Target | CI credential |
-|---|---|
-| Void platform, core self-hosted | A project token (steps 2-5) used from your own workflow. No generated GitHub workflow exists for this install. |
-| Void platform with the GitHub Actions integration | Short-lived OIDC credentials, no stored token: `void-deploy-github-integration`. |
-| Direct Cloudflare | `CLOUDFLARE_API_TOKEN` (step 6). |
+| Target                                            | CI credential                                                                                                  |
+| ------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| Void platform, core self-hosted                   | A project token (steps 2-5) used from your own workflow. No generated GitHub workflow exists for this install. |
+| Void platform with the GitHub Actions integration | Short-lived OIDC credentials, no stored token: `void-deploy-github-integration`.                               |
+| Direct Cloudflare                                 | `CLOUDFLARE_API_TOKEN` (step 6).                                                                               |
 
 ## 1. Who may mint
 
