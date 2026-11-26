@@ -1,11 +1,12 @@
-import { isPrivate, isTestFile, locate } from "../lib/project.js";
+import { isPrivate, isTestFile, locate } from "../lib/project.ts";
+import { defineRule } from "../rule.ts";
 
 /**
  * A test file in `routes/` or `pages/` is a route to Void: it scans those directories and
  * serves what it finds. A name that starts with `_` (the file's or a directory's) is
  * skipped by the scan, so a test beside a page is `_<page>.test.tsx`.
  */
-export default {
+export default defineRule({
   meta: {
     type: "problem",
     docs: {
@@ -27,4 +28,4 @@ export default {
       },
     };
   },
-};
+});

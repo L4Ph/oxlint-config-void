@@ -1,5 +1,5 @@
-import { RuleTester } from "../rule-tester.js";
-import rule from "../../plugin/rules/no-test-in-route-dirs.js";
+import rule from "../../src/plugin/rules/no-test-in-route-dirs.ts";
+import { RuleTester } from "../rule-tester.ts";
 
 new RuleTester().run("no-test-in-route-dirs", rule, {
   valid: [
@@ -11,15 +11,7 @@ new RuleTester().run("no-test-in-route-dirs", rule, {
     { code: "export {};", filename: "pages/about.tsx" },
   ],
   invalid: [
-    {
-      code: "export {};",
-      filename: "pages/about.test.tsx",
-      errors: [{ messageId: "test" }],
-    },
-    {
-      code: "export {};",
-      filename: "routes/api/users.spec.ts",
-      errors: [{ messageId: "test" }],
-    },
+    { code: "export {};", filename: "pages/about.test.tsx", errors: [{ messageId: "test" }] },
+    { code: "export {};", filename: "routes/api/users.spec.ts", errors: [{ messageId: "test" }] },
   ],
 });

@@ -2,7 +2,7 @@ import { readdirSync, readFileSync } from "node:fs";
 import { join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vite-plus/test";
-import plugin from "../plugin/index.js";
+import { rules } from "../src/plugin/index.ts";
 
 const root = fileURLToPath(new URL("..", import.meta.url));
 const docsRoot = join(root, "node_modules/void/docs");
@@ -40,15 +40,15 @@ describe("the norms catalog", () => {
   it("gives every norm a unique id and a known enforcement", () => {
     const ids = norms.map((norm) => norm.id);
     expect(ids.filter((id, index) => ids.indexOf(id) !== index)).toEqual([]);
-    expect(norms.filter((norm) => !ENFORCEMENT.includes(norm.enforcement)).map((n) => n.id)).toEqual(
-      [],
-    );
+    expect(
+      norms.filter((norm) => !ENFORCEMENT.includes(norm.enforcement)).map((n) => n.id),
+    ).toEqual([]);
   });
 });
 
 describe("the rules", () => {
   const cited = new Map();
-  for (const [name, rule] of Object.entries(plugin.rules))
+  for (const [name, rule] of Object.entries(rules))
     for (const id of rule.meta.docs.norms) cited.set(id, [...(cited.get(id) ?? []), name]);
 
   it("cite only norms that exist", () => {
@@ -58,7 +58,7 @@ describe("the rules", () => {
 
   it("each cite at least one norm: a rule the docs do not ask for is not Void's", () => {
     expect(
-      Object.entries(plugin.rules)
+      Object.entries(rules)
         .filter(([, rule]) => rule.meta.docs.norms.length === 0)
         .map(([name]) => name),
     ).toEqual([]);
