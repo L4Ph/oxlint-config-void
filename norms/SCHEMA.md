@@ -40,6 +40,8 @@ Docs read: `void@1.11.0`, the Markdown bundled in the npm package (`node_modules
   line, at least 30 characters, enough to find it again). No ellipsis, no edits.
 - `line`: the 1-based line number of that line in the file.
 - `norm`: one imperative sentence, in English, that an application author can follow.
+  It is the reader's summary. Where it says more than `quote` and the lines around it, the
+  docs are right and the summary is wrong: rules and skills are written from the docs.
 - `appliesTo`: the files or the situation it governs (a glob where one exists).
 - `framework`: `all`, or one of `react`, `vue`, `svelte`, `solid` when the statement is
   about one adapter only.

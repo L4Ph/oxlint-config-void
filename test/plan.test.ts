@@ -51,3 +51,12 @@ describe("the plan", () => {
     expect(lintable.filter((id) => cited.has(id) && set.has(id))).toEqual([]);
   });
 });
+
+describe("docs/rules.md", () => {
+  it("is the list the rules generate (node scripts/rules-doc.ts > docs/rules.md)", async () => {
+    const { rulesDoc } = await import("../scripts/rules-doc.ts");
+    expect(readFileSync(fileURLToPath(new URL("../docs/rules.md", import.meta.url)), "utf8")).toBe(
+      rulesDoc(),
+    );
+  });
+});
