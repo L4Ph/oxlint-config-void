@@ -1,5 +1,5 @@
 import { moduleSpecifiers } from "../../lib/handlers.ts";
-import { locate } from "../../lib/project.ts";
+import { isTestFile, locate } from "../../lib/project.ts";
 import { defineRule } from "../../rule.ts";
 
 const CORES: Record<string, string> = {
@@ -31,6 +31,8 @@ const FROM_VOID_DB = new Set(
  * the validators (`void/drizzle-zod|valibot|arktype`), "so you never need to depend on
  * `drizzle-orm` directly". Migration and seed scripts under `db/` are left alone.
  */
+const TEST_DIRS = new Set(["test", "tests", "_test", "_tests", "__tests__"]);
+
 export default defineRule({
   meta: {
     type: "problem",
@@ -65,6 +67,9 @@ export default defineRule({
   create(context) {
     const file = locate(context);
     if (file?.dir === "db" && !/^db\/schema(?:\.|\/)/.test(file.path)) return {};
+    // Tests build their own database to stand in for `void/db` (guide/testing.md).
+    if (file && (isTestFile(file.name) || file.segments.some((segment) => TEST_DIRS.has(segment))))
+      return {};
     return {
       Program(program) {
         for (const node of moduleSpecifiers(program)) {

@@ -4,6 +4,11 @@ import { RuleTester } from "../../rule-tester.ts";
 new RuleTester().run("env-schema-safe-keys", rule, {
   valid: [
     {
+      // An endpoint whose name contains TOKEN is not a credential: the helper says it is a URL.
+      code: 'import { defineEnv, url } from "void/env";\nexport default defineEnv({ OAUTH_TOKEN_URL: url().default("https://id.example.com/oauth2/token") });',
+      filename: "env.ts",
+    },
+    {
       code: "export default defineEnv({ VITE_PUBLISHABLE_KEY: z.string() });",
       filename: "env.ts",
     },

@@ -4,6 +4,11 @@ import { RuleTester } from "../../rule-tester.ts";
 new RuleTester().run("use-void-drizzle-modules", rule, {
   valid: [
     {
+      // Test support builds a database to stand in for `void/db` (guide/testing.md:18).
+      code: 'import { drizzle } from "drizzle-orm/d1";\nexport const make = (d1: D1Database) => drizzle(d1);',
+      filename: "routes/_test/runtime.ts",
+    },
+    {
       code: "import { sqliteTable, text } from 'void/schema-d1';",
       filename: "db/schema.ts",
     },

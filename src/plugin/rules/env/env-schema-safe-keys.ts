@@ -1,3 +1,4 @@
+import type { ESTree } from "vite-plus/lint/plugins";
 import { importBindings, staticString, unwrap } from "../../lib/ast.ts";
 import { callsVoid } from "../../lib/database.ts";
 import { isEnvFile } from "../../lib/env.ts";
@@ -9,6 +10,20 @@ const SECRET_DEFAULT = /KEY|SECRET|TOKEN|PASSWORD/;
 const PUBLIC_WORDS = /PUBLISHABLE|PUBLIC|ORIGIN/;
 
 /** Docs: client values are public (`guide/env-vars.md:87`), defaults are not for credentials (`:34`). */
+/** The helper a schema chain starts from: `url` for `url().optional().default(…)`, `string` for `z.string()`. */
+function baseHelper(node: ESTree.Node): string | null {
+  let current = node;
+  while (current.type === "CallExpression") {
+    const callee = current.callee;
+    if (callee.type === "Identifier") return callee.name;
+    if (callee.type !== "MemberExpression" || callee.computed) return null;
+    if (callee.object.type !== "CallExpression")
+      return callee.property.type === "Identifier" ? callee.property.name : null;
+    current = callee.object;
+  }
+  return null;
+}
+
 export default defineRule({
   meta: {
     type: "problem",
@@ -75,6 +90,10 @@ export default defineRule({
             if (SECRET_WORDS.test(name) && !PUBLIC_WORDS.test(name))
               context.report({ node: member.key, messageId: "secretClient", data: { name } });
           } else if (SECRET_DEFAULT.test(name) && !PUBLIC_WORDS.test(name)) {
+            // A credential is a string. `url()`, `number()` and the other typed helpers say the
+            // value is something else (`OAUTH_TOKEN_URL: url().default("https://…")` is an endpoint).
+            const helper = baseHelper(unwrap(member.value));
+            if (helper !== null && helper !== "string") continue;
             // walk down the call chain: z.string().optional().default("x")
             for (let chain = unwrap(member.value); chain.type === "CallExpression";) {
               const callee = chain.callee;
