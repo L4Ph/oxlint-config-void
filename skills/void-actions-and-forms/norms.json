@@ -1,0 +1,20 @@
+{
+  "pages-routing/actions-and-forms/1": "SKILL.md#1. Write the action",
+  "pages-routing/actions-and-forms/10": "SKILL.md#2. Pick the client primitive",
+  "pages-routing/actions-and-forms/13": "SKILL.md#3. Refresh shared data or redirect",
+  "pages-routing/actions-and-forms/16": "SKILL.md#1. Write the action",
+  "pages-routing/actions-and-forms/18": "SKILL.md#1. Write the action",
+  "pages-routing/actions-and-forms/19": "SKILL.md#2. Pick the client primitive",
+  "pages-routing/actions-and-forms/21": "SKILL.md#4. Handle failures",
+  "pages-routing/actions-and-forms/24": "SKILL.md#4. Handle failures",
+  "pages-routing/actions-and-forms/25": "SKILL.md#5. Authorize inside the action",
+  "pages-routing/actions-and-forms/26": "SKILL.md#5. Authorize inside the action",
+  "pages-routing/actions-and-forms/27": "uploads.md#Read the upload",
+  "pages-routing/actions-and-forms/29": "uploads.md#Coerce multipart values",
+  "pages-routing/actions-and-forms/30": "uploads.md#Choose the storage key and file types",
+  "pages-routing/actions-and-forms/4": "SKILL.md#3. Refresh shared data or redirect",
+  "pages-routing/actions-and-forms/6": "SKILL.md#2. Pick the client primitive",
+  "pages-routing/actions-and-forms/7": "SKILL.md#2. Pick the client primitive",
+  "pages-routing/actions-and-forms/8": "SKILL.md#2. Pick the client primitive",
+  "pages-routing/layouts/12": "SKILL.md#3. Refresh shared data or redirect"
+}

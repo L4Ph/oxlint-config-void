@@ -1,0 +1,19 @@
+{
+  "guide-core/type-safety/1": "SKILL.md#4. Let handlers infer",
+  "guide-core/type-safety/17": "SKILL.md#5. Turn on typed routes",
+  "guide-core/type-safety/21": "SKILL.md#5. Turn on typed routes",
+  "guide-core/type-safety/25": "SKILL.md#3. Type bindings and context variables",
+  "guide-core/type-safety/26": "SKILL.md#3. Type bindings and context variables",
+  "guide-core/type-safety/27": "SKILL.md#1. Extend the generated tsconfig",
+  "guide-core/type-safety/28": "SKILL.md#1. Extend the generated tsconfig",
+  "guide-core/type-safety/29": "SKILL.md#2. Regenerate types",
+  "guide-core/typed-fetch/5": "SKILL.md#6. Call routes with void/client fetch",
+  "reference/client/4": "SKILL.md#6. Call routes with void/client fetch",
+  "reference/client/9": "SKILL.md#6. Call routes with void/client fetch",
+  "reference/config/43": "SKILL.md#5. Turn on typed routes",
+  "reference/env/5": "SKILL.md#1. Extend the generated tsconfig",
+  "reference/env/6": "SKILL.md#3. Type bindings and context variables",
+  "reference/structure/21": "environment: .gitignore (void init writes it) and reference/structure.md; .void/ is generated, regenerate with void prepare",
+  "reference/structure/23": "SKILL.md#1. Extend the generated tsconfig",
+  "reference/types/5": "SKILL.md#5. Turn on typed routes"
+}

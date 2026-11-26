@@ -1,0 +1,16 @@
+{
+  "cli/platform-installation/13": "SKILL.md#Roll back",
+  "platform/maintenance/8": "SKILL.md#1. Order",
+  "platform/maintenance/9": "SKILL.md#2. Prepare credentials",
+  "platform/maintenance/10": "SKILL.md#2. Prepare credentials",
+  "platform/maintenance/11": "SKILL.md#6. When the upgrade fails with traffic paused",
+  "platform/maintenance/12": "SKILL.md#2. Prepare credentials",
+  "platform/maintenance/13": "SKILL.md#4. Apply",
+  "platform/maintenance/14": "SKILL.md#Roll back",
+  "platform/maintenance/15": "rollback.md#Never below 0.26.0",
+  "platform/maintenance/16": "rollback.md#AI logging",
+  "platform/maintenance/17": "rollback.md#Proxy-token rotations",
+  "platform/maintenance/18": "SKILL.md#7. Change runtime logs or storage location",
+  "platform/maintenance/19": "SKILL.md#Roll back",
+  "platform/maintenance/23": "SKILL.md#Roll back"
+}

@@ -1,0 +1,22 @@
+{
+  "edge-integrations/static-assets/2": "assets.md#Cache policy for files",
+  "edge-integrations/static-assets/7": "assets.md#Framework apps on direct Cloudflare",
+  "edge-integrations/static-assets/8": "assets.md#Run the Worker before an asset",
+  "edge-integrations/static-assets/9": "assets.md#Cache policy for files",
+  "guide-core/app-types/5": "SKILL.md#5. Add a backend to a static generator",
+  "guide-core/app-types/6": "SKILL.md#5. Add a backend to a static generator",
+  "guide-core/app-types/7": "SKILL.md#5. Add a backend to a static generator",
+  "guide-core/app-types/9": "SKILL.md#5. Add a backend to a static generator",
+  "guide-core/ssg/1": "SKILL.md#3. Build a static site",
+  "guide-core/ssg/11": "SKILL.md#6. Know when the Worker runs",
+  "guide-core/ssg/12": "SKILL.md#1. Choose the mode",
+  "guide-core/ssg/5": "SKILL.md#3. Build a static site",
+  "guide-core/ssg/7": "SKILL.md#3. Build a static site",
+  "guide-core/ssg/8": "SKILL.md#4. Serve 404s",
+  "guide-core/ssg/9": "SKILL.md#4. Serve 404s",
+  "guide-core/ssr/1": "SKILL.md#2. Write a custom SSR entry",
+  "guide-core/ssr/2": "SKILL.md#2. Write a custom SSR entry",
+  "guide-core/ssr/5": "SKILL.md#2. Write a custom SSR entry",
+  "reference/config/54": "SKILL.md#4. Serve 404s",
+  "reference/handlers/13": "SKILL.md#2. Write a custom SSR entry"
+}

@@ -107,9 +107,11 @@ they do and give both; do not pick one.
   that says when to read it.
 - One meaning in one place. Do not restate what a lint rule already enforces; name the rule
   family in one line (`rules/plan.json` lists the rules by `family`).
-- Commands that change remote or production state, or cannot be undone, are marked where
-  they appear, with what they destroy and what to confirm first (`norms/cli.json`
-  `commands` records both for every command).
+- A command that changes remote or production state is marked **[REMOTE]** where it
+  appears; one that also removes access, signs people out, or cannot be undone is marked
+  **[IRREVERSIBLE]**. Each mark comes with what the command changes or destroys and what to
+  confirm first (`norms/cli.json` `commands` records both for every command), and the step
+  runs only when the person asked for that change.
 
 **Nothing from the docs is dropped.** Write `skills/<name>/norms.json`: an object mapping
 every norm id the plan gives the skill to where it is carried, as

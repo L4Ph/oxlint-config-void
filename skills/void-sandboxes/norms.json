@@ -1,0 +1,11 @@
+{
+  "services/sandboxes/1": "SKILL.md#Meet the requirements",
+  "services/sandboxes/6": "SKILL.md#Run commands and read results",
+  "services/sandboxes/8": "SKILL.md#Run commands and read results",
+  "services/sandboxes/9": "SKILL.md#Run commands and read results",
+  "services/sandboxes/11": "SKILL.md#Set options at the first start",
+  "services/sandboxes/14": "SKILL.md#Handle usage limits",
+  "services/sandboxes/15": "SKILL.md#Persist elsewhere",
+  "services/sandboxes/16": "images.md#Configure",
+  "services/sandboxes/17": "images.md#Include the Sandbox SDK helper"
+}

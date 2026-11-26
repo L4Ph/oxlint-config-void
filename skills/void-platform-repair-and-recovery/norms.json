@@ -1,0 +1,22 @@
+{
+  "cli/platform-installation/9": "SKILL.md#Resume or rerun",
+  "cli/platform-installation/10": "SKILL.md#Before you start",
+  "cli/platform-installation/11": "another-machine-and-restore.md#Manage from another machine",
+  "platform/maintenance/1": "SKILL.md#Resume or rerun",
+  "platform/maintenance/2": "administrator-login.md#Access blocks the health check (error 1050)",
+  "platform/maintenance/3": "administrator-login.md#Access blocks the health check (error 1050)",
+  "platform/maintenance/4": "administrator-login.md#Expired setup code",
+  "platform/maintenance/5": "administrator-login.md#Sign-in fails after the setup code",
+  "platform/maintenance/6": "administrator-login.md#Change login settings",
+  "platform/maintenance/7": "SKILL.md#Repair",
+  "platform/maintenance/20": "SKILL.md#Workers changed outside Void",
+  "platform/maintenance/21": "SKILL.md#Workers changed outside Void",
+  "platform/maintenance/24": "another-machine-and-restore.md#Manage from another machine",
+  "platform/maintenance/25": "another-machine-and-restore.md#Manage from another machine",
+  "platform/maintenance/26": "another-machine-and-restore.md#Manage from another machine",
+  "platform/maintenance/27": "another-machine-and-restore.md#Back up as one recovery point",
+  "platform/maintenance/28": "another-machine-and-restore.md#Restore",
+  "platform/maintenance/29": "another-machine-and-restore.md#Back up as one recovery point",
+  "platform/maintenance/30": "another-machine-and-restore.md#Where local state lives",
+  "platform/maintenance/31": "SKILL.md#Resume or rerun"
+}

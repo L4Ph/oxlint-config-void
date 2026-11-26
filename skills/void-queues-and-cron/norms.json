@@ -1,0 +1,15 @@
+{
+  "services/queues/2": "SKILL.md#1. Name the queue",
+  "services/queues/10": "SKILL.md#3. Set delivery options",
+  "services/queues/14": "SKILL.md#3. Set delivery options",
+  "services/queues/15": "SKILL.md#3. Set delivery options",
+  "services/queues/16": "SKILL.md#4. Plan for lost messages",
+  "services/queues/17": "SKILL.md#1. Name the queue",
+  "services/queues/18": "cloudflare-names.md#Adopting Worker-prefixed queue names (direct Cloudflare)",
+  "services/queues/19": "SKILL.md#6. Test locally",
+  "services/queues/20": "SKILL.md#6. Test locally",
+  "services/jobs/5": "SKILL.md#6. Test locally",
+  "services/jobs/6": "SKILL.md#6. Test locally",
+  "services/jobs/7": "SKILL.md#6. Test locally",
+  "services/jobs/8": "SKILL.md#5. Write the cron job"
+}

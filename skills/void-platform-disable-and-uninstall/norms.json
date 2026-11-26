@@ -1,0 +1,21 @@
+{
+  "cli/platform-installation/14": "SKILL.md#Uninstall",
+  "cli/platform-installation/15": "SKILL.md#2. Preview",
+  "platform/uninstall/1": "SKILL.md#Disable and enable (pause without deleting)",
+  "platform/uninstall/2": "SKILL.md#Disable and enable (pause without deleting)",
+  "platform/uninstall/3": "SKILL.md#1. Prepare",
+  "platform/uninstall/4": "SKILL.md#4. Finish",
+  "platform/uninstall/5": "SKILL.md#Uninstall",
+  "platform/uninstall/6": "SKILL.md#4. Finish",
+  "platform/uninstall/7": "SKILL.md#1. Prepare",
+  "platform/uninstall/8": "SKILL.md#1. Prepare",
+  "platform/uninstall/9": "SKILL.md#3. Apply",
+  "platform/uninstall/10": "SKILL.md#1. Prepare",
+  "platform/uninstall/11": "SKILL.md#3. Apply",
+  "platform/uninstall/12": "SKILL.md#3. Apply",
+  "platform/uninstall/13": "manual-cleanup.md#Manual cleanup after an uninstall",
+  "platform/uninstall/14": "manual-cleanup.md#Access resources",
+  "platform/uninstall/15": "SKILL.md#1. Prepare",
+  "platform/uninstall/16": "manual-cleanup.md#Permanently lost database",
+  "platform/uninstall/17": "SKILL.md#1. Prepare"
+}

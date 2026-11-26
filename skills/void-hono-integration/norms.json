@@ -1,0 +1,6 @@
+{
+  "edge-integrations/hono/6": "SKILL.md#Return from a handler",
+  "edge-integrations/hono/8": "SKILL.md#Stop a handler from a helper",
+  "guide-core/server-routing/11": "SKILL.md#Write JSX in routes",
+  "guide-core/server-routing/17": "SKILL.md#Install hono before importing it"
+}

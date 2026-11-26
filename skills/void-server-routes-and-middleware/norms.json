@@ -1,0 +1,14 @@
+{
+  "guide-core/server-routing/14": "SKILL.md#2. Validate input",
+  "guide-core/server-routing/15": "SKILL.md#2. Validate input",
+  "guide-core/server-routing/16": "SKILL.md#2. Validate input",
+  "guide-core/server-routing/21": "SKILL.md#4. Gate a site with basicAuth",
+  "guide-core/server-routing/22": "SKILL.md#4. Gate a site with basicAuth",
+  "guide-core/server-routing/24": "SKILL.md#3. Add middleware",
+  "guide-core/server-routing/4": "SKILL.md#1. Create the route file",
+  "guide-core/server-routing/5": "SKILL.md#1. Create the route file",
+  "guide-core/server-routing/6": "SKILL.md#1. Create the route file",
+  "reference/handlers/10": "SKILL.md#4. Gate a site with basicAuth",
+  "reference/handlers/11": "SKILL.md#4. Gate a site with basicAuth",
+  "reference/handlers/3": "SKILL.md#2. Validate input"
+}

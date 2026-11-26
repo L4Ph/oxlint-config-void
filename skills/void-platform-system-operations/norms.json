@@ -1,0 +1,9 @@
+{
+  "cli/platform-operations/1": "SKILL.md#2. Cancel a deployment",
+  "cli/platform-operations/2": "SKILL.md#3. Migrate legacy assets",
+  "cli/platform-operations/3": "SKILL.md#Logs",
+  "cli/platform-operations/4": "SKILL.md#Logs",
+  "cli/platform-operations/5": "SKILL.md#4. Rotate proxy tokens",
+  "cli/platform-operations/6": "SKILL.md#5. Drain legacy Sandboxes",
+  "cli/platform-operations/7": "SKILL.md#Hosted Void Cloud only"
+}

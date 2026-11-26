@@ -1,0 +1,19 @@
+{
+  "cli/platform-users/1": "SKILL.md#3. Delete a user",
+  "cli/platform-users/2": "SKILL.md#2. Suspend or restore a user",
+  "cli/platform-users/3": "SKILL.md#5. Transfer project ownership",
+  "cli/platform-users/4": "SKILL.md#6. Normalize a project",
+  "cli/platform-users/5": "ai-logging.md#Modes and precedence",
+  "cli/platform-users/6": "ai-logging.md#AI Gateway logging per project",
+  "cli/platform-users/9": "ai-logging.md#Errors",
+  "platform/projects/1": "SKILL.md#5. Transfer project ownership",
+  "platform/projects/3": "SKILL.md#8. Project team and AI logging",
+  "platform/projects/4": "SKILL.md#5. Transfer project ownership",
+  "platform/projects/5": "SKILL.md#5. Transfer project ownership",
+  "platform/projects/6": "SKILL.md#5. Transfer project ownership",
+  "platform/projects/7": "SKILL.md#5. Transfer project ownership",
+  "platform/projects/8": "SKILL.md#5. Transfer project ownership",
+  "platform/projects/9": "SKILL.md#7. Plans and budgets",
+  "platform/projects/10": "SKILL.md#2. Suspend or restore a user",
+  "platform/projects/11": "SKILL.md#3. Delete a user"
+}

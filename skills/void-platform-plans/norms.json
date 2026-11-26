@@ -1,0 +1,23 @@
+{
+  "cli/platform-config/1": "SKILL.md#2. Edit limits",
+  "cli/platform-config/2": "SKILL.md#4. Archive or remove a plan",
+  "cli/platform-config/3": "plan-file.md#Plan file fields",
+  "cli/platform-config/4": "SKILL.md#2. Edit limits",
+  "cli/platform-config/5": "SKILL.md#1. Read the catalog and any pending work",
+  "platform/plans/1": "SKILL.md#2. Edit limits",
+  "platform/plans/2": "SKILL.md#1. Read the catalog and any pending work",
+  "platform/plans/3": "SKILL.md#3. Add a plan, set the signup default, assign accounts",
+  "platform/plans/4": "SKILL.md#2. Edit limits",
+  "platform/plans/5": "plan-file.md#Plan file fields",
+  "platform/plans/6": "plan-file.md#Plan file fields",
+  "platform/plans/7": "plan-file.md#Plan file fields",
+  "platform/plans/8": "SKILL.md#2. Edit limits",
+  "platform/plans/9": "SKILL.md#5. AI logging defaults",
+  "platform/plans/10": "SKILL.md#5. AI logging defaults",
+  "platform/plans/11": "SKILL.md#5. AI logging defaults",
+  "platform/plans/12": "SKILL.md#5. AI logging defaults",
+  "platform/plans/13": "SKILL.md#4. Archive or remove a plan",
+  "platform/plans/14": "SKILL.md#1. Read the catalog and any pending work",
+  "platform/plans/15": "SKILL.md#When a command fails midway",
+  "platform/plans/16": "SKILL.md#Plans on a Void platform"
+}

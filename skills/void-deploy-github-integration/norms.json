@@ -1,0 +1,20 @@
+{
+  "cli/github/1": "SKILL.md#1. Link GitHub and install the App",
+  "cli/github/2": "SKILL.md#1. Link GitHub and install the App",
+  "cli/github/3": "SKILL.md#1. Link GitHub and install the App",
+  "cli/github/4": "SKILL.md#1. Link GitHub and install the App",
+  "cli/github/7": "SKILL.md#2. Choose executor and branch",
+  "cli/github/8": "SKILL.md#2. Choose executor and branch",
+  "cli/github/9": "SKILL.md#2. Choose executor and branch",
+  "guide-core/deployment/10": "SKILL.md#2. Choose executor and branch",
+  "cli/github/5": "SKILL.md#3. Connect",
+  "cli/github/6": "SKILL.md#3. Connect",
+  "cli/github/10": "SKILL.md#3. Connect",
+  "cli/github/11": "SKILL.md#3. Connect",
+  "cli/setup/14": "SKILL.md#3. Connect",
+  "cli/github/12": "SKILL.md#4. Change or remove the connection",
+  "cli/github/13": "SKILL.md#4. Change or remove the connection",
+  "cli/setup/13": "SKILL.md#5. Direct Cloudflare workflow",
+  "cli/github/15": "SKILL.md#6. Read build logs",
+  "cli/github/16": "SKILL.md#6. Read build logs"
+}

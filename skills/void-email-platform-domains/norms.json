@@ -1,0 +1,22 @@
+{
+  "cli/email/4": "SKILL.md#Verify recipients",
+  "cli/email/5": "SKILL.md#Verify recipients",
+  "cli/email/6": "SKILL.md#Verify recipients",
+  "cli/email/7": "SKILL.md#Verify recipients",
+  "cli/email/8": "SKILL.md#Verify recipients",
+  "cli/email/9": "SKILL.md#Reserve an alias",
+  "cli/email/10": "SKILL.md#Reserve an alias",
+  "cli/email/11": "SKILL.md#Register a custom mail domain",
+  "cli/email/12": "SKILL.md#Register a custom mail domain",
+  "cli/email/13": "domain-lifecycle.md#Interrupted or not ready",
+  "cli/email/14": "domain-lifecycle.md#Rotate the connection secret",
+  "cli/email/15": "domain-lifecycle.md#Remove a domain",
+  "services/domains/1": "SKILL.md#Register a custom mail domain",
+  "services/domains/2": "SKILL.md#Register a custom mail domain",
+  "services/domains/3": "SKILL.md#Register a custom mail domain",
+  "services/domains/4": "SKILL.md#Register a custom mail domain",
+  "services/domains/5": "domain-lifecycle.md#Interrupted or not ready",
+  "services/domains/6": "SKILL.md#Register a custom mail domain",
+  "services/domains/7": "SKILL.md#Register a custom mail domain",
+  "services/domains/20": "SKILL.md#Scope"
+}

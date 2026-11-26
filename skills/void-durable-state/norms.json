@@ -1,0 +1,16 @@
+{
+  "services/durable-state/2": "SKILL.md#4. Deploy class changes",
+  "services/durable-state/4": "SKILL.md#1. Define and call it",
+  "services/durable-state/5": "SKILL.md#1. Define and call it",
+  "services/durable-state/8": "SKILL.md#2. Change the shape of persisted state",
+  "services/durable-state/9": "class-migrations.md#Class migrations and atomic deploys",
+  "services/durable-state/10": "class-migrations.md#Class migrations and atomic deploys",
+  "services/durable-state/11": "class-migrations.md#Class migrations and atomic deploys",
+  "services/durable-state/12": "SKILL.md#3. Rename or move a definition file",
+  "services/durable-state/13": "SKILL.md#3. Rename or move a definition file",
+  "services/durable-state/15": "SKILL.md#3. Rename or move a definition file",
+  "services/durable-state/16": "SKILL.md#3. Rename or move a definition file",
+  "services/durable-state/17": "SKILL.md#5. Mind the limits",
+  "services/durable-state/18": "SKILL.md#Durable State and Durable Objects",
+  "services/durable-state/20": "SKILL.md#3. Rename or move a definition file"
+}

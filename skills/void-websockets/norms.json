@@ -1,0 +1,17 @@
+{
+  "services/websockets/1": "SKILL.md#Check the target",
+  "services/websockets/2": "SKILL.md#Check the target",
+  "services/websockets/7": "SKILL.md#Pick the definition",
+  "services/websockets/12": "SKILL.md#Take identity from the server",
+  "services/websockets/13": "SKILL.md#Take identity from the server",
+  "services/websockets/15": "SKILL.md#Reach a room from other server code",
+  "services/websockets/16": "SKILL.md#Take identity from the server",
+  "services/websockets/20": "SKILL.md#Reach a room from other server code",
+  "services/websockets/22": "SKILL.md#Reach a room from other server code",
+  "services/websockets/26": "SKILL.md#Move or rename a deployed route",
+  "services/websockets/27": "SKILL.md#Move or rename a deployed route",
+  "services/websockets/29": "SKILL.md#Move or rename a deployed route",
+  "services/websockets/30": "SKILL.md#Move or rename a deployed route",
+  "services/websockets/32": "SKILL.md#Move or rename a deployed route",
+  "services/websockets/33": "SKILL.md#One socket, one route"
+}

@@ -1,0 +1,14 @@
+{
+  "cli/platform-config/6": "SKILL.md#1. Initialize an existing installation (once)",
+  "cli/platform-config/7": "SKILL.md#3. Disable a login method",
+  "cli/platform-config/8": "SKILL.md#2. Add and enable a login method",
+  "cli/platform-config/9": "company-gate.md#Change the gate",
+  "cli/platform-config/10": "admin-recovery.md#Steps",
+  "platform/access/7": "admin-recovery.md#Who and what you need",
+  "platform/access/8": "admin-recovery.md#Steps",
+  "platform/access/9": "admin-recovery.md#Steps",
+  "platform/access/10": "admin-recovery.md#Steps",
+  "platform/access/11": "company-gate.md#Preconditions",
+  "platform/access/12": "company-gate.md#Change the gate",
+  "platform/access/13": "company-gate.md#Change the gate"
+}

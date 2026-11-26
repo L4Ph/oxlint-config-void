@@ -1,0 +1,22 @@
+{
+  "cli/database/9": "targets.md#`--remote` by target",
+  "cli/database/17": "SKILL.md#1. Pin the target before any `--remote` command",
+  "cli/database/18": "SKILL.md#1. Pin the target before any `--remote` command",
+  "cli/database/19": "SKILL.md#3. Change deployed data or schema",
+  "cli/database/20": "SKILL.md#3. Change deployed data or schema",
+  "cli/database/22": "SKILL.md#3. Change deployed data or schema",
+  "cli/database/24": "SKILL.md#2. Look before you write",
+  "cli/database/25": "SKILL.md#2. Look before you write",
+  "cli/database/26": "SKILL.md#4. Roll back a bad migration (D1 on direct Cloudflare)",
+  "cli/database/27": "SKILL.md#4. Roll back a bad migration (D1 on direct Cloudflare)",
+  "cli/database/28": "SKILL.md#4. Roll back a bad migration (D1 on direct Cloudflare)",
+  "cli/database/29": "SKILL.md#4. Roll back a bad migration (D1 on direct Cloudflare)",
+  "cli/database/30": "SKILL.md#1. Pin the target before any `--remote` command",
+  "cli/database/31": "targets.md#Renames",
+  "cli/database/32": "targets.md#Connection strings",
+  "cli/database/33": "targets.md#Connection strings",
+  "cli/database/35": "targets.md#Connection strings",
+  "cli/database/36": "SKILL.md#6. Back up",
+  "cli/database/37": "SKILL.md#6. Back up",
+  "guide-core/deployment/6": "SKILL.md#4. Roll back a bad migration (D1 on direct Cloudflare)"
+}

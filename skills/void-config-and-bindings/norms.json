@@ -1,0 +1,11 @@
+{
+  "edge-integrations/cloudflare/2": "SKILL.md#4. Add, rename or type a binding",
+  "edge-integrations/cloudflare/3": "SKILL.md#4. Add, rename or type a binding",
+  "edge-integrations/cloudflare/5": "SKILL.md#4. Add, rename or type a binding",
+  "edge-integrations/cloudflare/9": "SKILL.md#5. Commit the right files",
+  "reference/config/2": "SKILL.md#5. Commit the right files",
+  "reference/config/4": "SKILL.md#1. Write settings as TypeScript in defineConfig",
+  "reference/config/35": "SKILL.md#2. Choose `worker` or `cloudflare`",
+  "reference/config/37": "SKILL.md#3. Move off wrangler.jsonc",
+  "reference/config/38": "SKILL.md#5. Commit the right files"
+}

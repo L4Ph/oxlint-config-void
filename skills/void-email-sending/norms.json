@@ -1,0 +1,21 @@
+{
+  "cli/email/2": "SKILL.md#Stay within limits",
+  "cli/email/3": "SKILL.md#Retry safely",
+  "services/email/1": "SKILL.md#Pick the sender",
+  "services/sending/2": "SKILL.md#Set the from address",
+  "services/sending/3": "SKILL.md#Check recipients before the first send",
+  "services/sending/4": "SKILL.md#Check recipients before the first send",
+  "services/sending/5": "SKILL.md#Pick the sender",
+  "services/sending/6": "SKILL.md#Check recipients before the first send",
+  "services/sending/7": "SKILL.md#Pick the sender",
+  "services/sending/15": "SKILL.md#Set the from address",
+  "services/sending/16": "SKILL.md#Set the from address",
+  "services/sending/17": "SKILL.md#Reply later",
+  "services/sending/18": "SKILL.md#Reply later",
+  "services/sending/22": "SKILL.md#Stay within limits",
+  "services/sending/24": "SKILL.md#Retry safely",
+  "services/sending/26": "SKILL.md#Retry safely",
+  "services/sending/27": "SKILL.md#Stay within limits",
+  "services/sending/28": "SKILL.md#Test and develop locally",
+  "services/sending/29": "SKILL.md#Test and develop locally"
+}
