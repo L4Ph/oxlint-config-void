@@ -22,8 +22,14 @@ support the claim (3). The 1,136 statements a lint cannot check are carried by t
 
 ## Use
 
-This package is not on npm. Build it (`vp install && vp pack`) and extend the built
-preset from a [Vite+](https://viteplus.dev/) project's `vite.config.ts`:
+This package is not on npm. Install it from GitHub, pinned to a commit; it builds itself on
+install (`prepare` runs `vp pack`):
+
+```sh
+vp add -D github:L4Ph/oxlint-config-void#<commit>
+```
+
+Extend the preset from a [Vite+](https://viteplus.dev/) project's `vite.config.ts`:
 
 ```ts
 import voidConfig from "oxlint-config-void";
