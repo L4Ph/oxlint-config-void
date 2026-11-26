@@ -1,0 +1,47 @@
+{
+  "name": "oxlint-config-void",
+  "version": "0.0.0",
+  "description": "Oxlint rules and agent skills that hold a Void app to the way Void's documentation says to write one.",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "vite-plus.d.ts",
+    "plugin",
+    "norms",
+    "skills"
+  ],
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./index.js"
+    },
+    "./vite-plus": {
+      "types": "./vite-plus.d.ts",
+      "default": "./index.js"
+    },
+    "./plugin": "./plugin/index.js"
+  },
+  "scripts": {
+    "test": "vp test run",
+    "check": "vp check"
+  },
+  "devDependencies": {
+    "typescript": "^6.0.3",
+    "vite-plus": "^1.7.0",
+    "void": "1.11.0"
+  },
+  "peerDependencies": {
+    "vite-plus": ">=1.4.0"
+  },
+  "peerDependenciesMeta": {
+    "vite-plus": {
+      "optional": true
+    }
+  },
+  "engines": {
+    "node": "^22.18.0 || >=24.0.0"
+  }
+}
