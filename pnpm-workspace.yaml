@@ -1,4 +1,4 @@
 # Nothing here needs its install scripts: the tests run oxlint and Vitest, which ship prebuilt.
-ignoredBuiltDependencies:
-  - esbuild
-  - workerd
+allowBuilds:
+  esbuild: false
+  workerd: false
