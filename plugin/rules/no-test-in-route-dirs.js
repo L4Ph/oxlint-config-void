@@ -10,7 +10,7 @@ export default {
     type: "problem",
     docs: {
       description: "Keep test files out of routes/ and pages/, where Void would serve them.",
-      norms: [],
+      norms: ["guide-core/testing/2"],
     },
     messages: {
       test: "`{{path}}` is a test file inside `{{dir}}/`, where Void treats every file as a route. Move it to `tests/` or `src/`, or give it (or a directory above it) a name that starts with `_`.",
