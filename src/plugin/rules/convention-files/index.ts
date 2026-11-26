@@ -6,7 +6,6 @@ import durableStateModule from "./durable-state-module.ts";
 import emailHandlerFile from "./email-handler-file.ts";
 import envFileDefineEnv from "./env-file-define-env.ts";
 import middlewareDefaultExport from "./middleware-default-export.ts";
-import middlewareNumericPrefix from "./middleware-numeric-prefix.ts";
 import queueDefaultExport from "./queue-default-export.ts";
 import queueOptions from "./queue-options.ts";
 import renderIncludesAssetTags from "./render-includes-asset-tags.ts";
@@ -25,7 +24,6 @@ export const rules: Record<string, VoidRule> = {
   "email-handler-file": emailHandlerFile,
   "env-file-define-env": envFileDefineEnv,
   "middleware-default-export": middlewareDefaultExport,
-  "middleware-numeric-prefix": middlewareNumericPrefix,
   "queue-default-export": queueDefaultExport,
   "queue-options": queueOptions,
   "render-includes-asset-tags": renderIncludesAssetTags,

@@ -509,31 +509,6 @@
       "partial": "A default export that is an identifier bound elsewhere to a defineMiddleware call is followed; one imported from another module is not. A bare Hono middleware call (`export default cors()`) is a call and is not reported."
     },
     {
-      "name": "middleware-numeric-prefix",
-      "family": "convention-files",
-      "summary": "Global middleware files in middleware/ start with a number (01.logger.ts) that sets their order.",
-      "norms": [
-        "guide-core/server-routing/18",
-        "reference/structure/9"
-      ],
-      "files": "middleware/* (direct children, not _-prefixed)",
-      "detect": "File name does not match /^\\d+\\./.",
-      "reports": "the Program",
-      "allowed": [
-        "// middleware/01.logger.ts\nexport default defineMiddleware(async (c, next) => next());",
-        "// middleware/_shared.ts\nexport const x = 1;"
-      ],
-      "reported": [
-        "// middleware/logger.ts\nexport default defineMiddleware(async (c, next) => next());",
-        "// middleware/auth.ts\nexport default defineMiddleware(async (c, next) => next());"
-      ],
-      "options": [],
-      "scope": "void",
-      "adapter": "all",
-      "typeAware": false,
-      "partial": ""
-    },
-    {
       "name": "queue-default-export",
       "family": "convention-files",
       "summary": "A file in queues/ default-exports defineQueue<Message>(...); helpers start with `_`.",
@@ -5572,6 +5547,16 @@
       "norm": "edge-integrations/frameworks-sveltekit/11",
       "kind": "needs-other-file-or-config",
       "reason": "Planned as `sveltekit-void-tsconfig`, not written. The right setup depends on the SvelteKit major version (sveltekit.md:29-45 for 3, :124-138 for 2), which one file does not show; the rule would report the docs' main example."
+    },
+    {
+      "norm": "guide-core/server-routing/18",
+      "kind": "docs-own-example",
+      "reason": "Planned as `middleware-numeric-prefix`, written, then removed: guide/pages-routing/head.md:85 names its own example `middleware/admin.ts`. The docs say numeric prefixes control the order; they do not require one."
+    },
+    {
+      "norm": "reference/structure/9",
+      "kind": "docs-own-example",
+      "reason": "Planned as `middleware-numeric-prefix`, written, then removed: guide/pages-routing/head.md:85 names its own example `middleware/admin.ts`. The docs say numeric prefixes control the order; they do not require one."
     }
   ]
 }
