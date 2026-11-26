@@ -15,7 +15,7 @@ Run `vp install` once, then `vp check` and `vp test run`. `vp pack` builds `dist
 
 A rule lives in `src/plugin/rules/<family>/<name>.ts`, is registered in that family's
 `index.ts`, and is tested in `test/rules/<family>/<name>.test.ts`. Read
-`src/plugin/rules/testing/no-test-in-route-dirs.ts` and its test first; they are the
+`src/plugin/rules/testing/no-test-in-convention-dirs.ts` and its test first; they are the
 pattern.
 
 **Start from the docs, not from the plan's summary.** The plan entry (`rules/plan.json`,

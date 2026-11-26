@@ -15,7 +15,7 @@ What goes in which directory and how files are named (suffixes, segments, extens
 | `no-conventions-outside-source-dir` | With sourceDir set, keep the convention directories, auth.ts and env.ts under it, not at the project root. | native Void apps | `reference/config.md` |
 | `no-env-file-crossing` | Do not import a .dev module from code that ships to production, nor a .prod module from dev code. | native Void apps | `reference/structure.md` |
 | `no-public-import` | Reference files in public/ by their root path; do not import them as modules. | native Void apps | `reference/structure.md` |
-| `no-test-in-route-dirs` | Keep test files out of routes/ and pages/, where Void would serve them. | native Void apps | `guide/testing.md` |
+| `no-test-in-convention-dirs` | Keep test files out of the convention directories; they go in tests/ or beside code in src/. | native Void apps | `guide/testing.md` |
 | `queue-file-placement` | Put a queue consumer in queues/ as a .ts, .mts, .js or .mjs file whose path makes a valid Cloudflare queue name. | every app | `guide/queues.md`, `integrations/frameworks/tanstack-start.md` |
 | `route-file-name` | Name route files with a script extension and write dynamic segments as [id] and [...name]. | native Void apps | `guide/server-routing.md`, `guide/websockets.md`, `reference/structure.md` |
 | `schema-file-layout` | Define Drizzle tables in db/schema.ts or db/schema/**, and re-export a split schema from db/schema.ts. | native Void apps | `guide/database.md`, `reference/api/database.md`, `reference/structure.md` |

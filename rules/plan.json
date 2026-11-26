@@ -182,14 +182,14 @@
       "partial": "Vite's own `public/` alias spelled differently (an absolute `/logo.svg` import) is not seen."
     },
     {
-      "name": "no-test-in-route-dirs",
+      "name": "no-test-in-convention-dirs",
       "family": "placement",
-      "summary": "Test files stay out of routes/ and pages/ (and the other convention directories), where Void would serve them.",
+      "summary": "A test file does not sit in a convention directory; it goes in tests/ or beside code in src/.",
       "norms": [
         "guide-core/testing/2"
       ],
-      "files": "any *.test.* / *.spec.* file below a convention directory with no `_` segment",
-      "detect": "Already implemented in plugin/rules/no-test-in-route-dirs.js: the file name is a Vitest-style test name, it sits in routes/ or pages/, and no segment below the directory starts with `_`.",
+      "files": "any *.test.* / *.spec.* file under routes/, pages/, middleware/, crons/, queues/, email/ or durable-objects/",
+      "detect": "The file's name matches a test pattern and its first path segment is a convention directory. A leading `_` on the file or a directory does not exempt it: the docs name tests/ and src/ as the places for a test.",
       "reports": "the Program",
       "allowed": [
         "// tests/pages/about.test.ts\nexport {};",
@@ -203,8 +203,7 @@
       "scope": "void",
       "adapter": "all",
       "typeAware": false,
-      "partial": "Implemented for routes/ and pages/ only; the norm also names middleware/, crons/ and queues/, which the rule could add (CONVENTION_DIRS already lists them).",
-      "status": "implemented"
+      "partial": ""
     },
     {
       "name": "queue-file-placement",
