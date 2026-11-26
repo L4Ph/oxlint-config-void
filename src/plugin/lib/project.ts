@@ -86,3 +86,67 @@ const TEST_FILE = /\.(test|spec)\.[cm]?[jt]sx?$/;
 export function isTestFile(name: string): boolean {
   return TEST_FILE.test(name);
 }
+
+/** The settings a consumer may give under `settings.void` in the lint config. */
+export type VoidSettings = {
+  /** The app's directory, when it cannot be found from the file (relative to the working directory). */
+  root?: string;
+  /** Void's own `sourceDir` option. */
+  sourceDir?: string;
+};
+
+const SERVER_COMPANION = /\.server\.(?:ts|tsx|js|jsx|mts|mjs)$/;
+const PAGE_COMPONENT = /\.(?:tsx|jsx|vue|svelte|md)$/;
+const ENV_SUFFIX = /\.(dev|prod)(?=\.)/;
+
+/** What a file is to Void, read from where it sits and how it is named. */
+export type FileKind = {
+  /** The convention directory it is in, when it is in one. */
+  convention: (typeof CONVENTION_DIRS)[number] | "db" | null;
+  /** Skipped by Void's scan: a path segment below the convention directory starts with `_`. */
+  private: boolean;
+  /** A page's `.server.*` companion (in `pages/`). */
+  serverCompanion: boolean;
+  /** A page component, layout or boundary file (in `pages/`, not a companion). */
+  pageComponent: boolean;
+  /** Named `<name>.island.<ext>`. */
+  island: boolean;
+  /** Named `layout.*`, or a file of a `_layouts/` directory. */
+  layout: boolean;
+  /** Named `_error.*` or `_not-found.*`. */
+  boundary: "error" | "not-found" | null;
+  /** The `.dev` / `.prod` suffix. */
+  environment: "dev" | "prod" | null;
+  test: boolean;
+};
+
+/** Classifies a located file. `_layouts/` is the one `_` directory Void reads. */
+export function describe(file: Location): FileKind {
+  const convention =
+    ([...CONVENTION_DIRS, "db"] as const).find((name) => name === file.dir) ?? null;
+  const below = file.segments.slice(1);
+  const inLayouts = below.slice(0, -1).includes("_layouts");
+  const boundary = file.name.startsWith("_error.")
+    ? "error"
+    : file.name.startsWith("_not-found.")
+      ? "not-found"
+      : null;
+  const hidden = below.some(
+    (segment, index) =>
+      segment.startsWith("_") &&
+      segment !== "_layouts" &&
+      !(index === below.length - 1 && boundary !== null),
+  );
+  const serverCompanion = convention === "pages" && SERVER_COMPANION.test(file.name);
+  return {
+    convention,
+    private: hidden,
+    serverCompanion,
+    pageComponent: convention === "pages" && !serverCompanion && PAGE_COMPONENT.test(file.name),
+    island: /\.island\.[^.]+$/.test(file.name),
+    layout: file.name.startsWith("layout.") || inLayouts,
+    boundary,
+    environment: (ENV_SUFFIX.exec(file.name)?.[1] as "dev" | "prod" | undefined) ?? null,
+    test: isTestFile(file.name),
+  };
+}

@@ -1,5 +1,5 @@
-import rule from "../../src/plugin/rules/no-test-in-route-dirs.ts";
-import { RuleTester } from "../rule-tester.ts";
+import rule from "../../../src/plugin/rules/testing/no-test-in-route-dirs.ts";
+import { RuleTester } from "../../rule-tester.ts";
 
 new RuleTester().run("no-test-in-route-dirs", rule, {
   valid: [

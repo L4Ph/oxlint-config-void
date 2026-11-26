@@ -1,0 +1,2766 @@
+{
+  "skills": [
+    {
+      "name": "void-actions-and-forms",
+      "description": "Writes Void page actions and forms: `action`/`actions` exports, useForm, action(), resetOnSuccess, redirects after mutation, file uploads, shared data refresh. Use when adding a form or button mutation, handling validation errors, uploading files, or when shared layout data is stale after an action.",
+      "audience": "app-author",
+      "norms": [
+        "pages-routing/actions-and-forms/1",
+        "pages-routing/actions-and-forms/4",
+        "pages-routing/actions-and-forms/6",
+        "pages-routing/actions-and-forms/7",
+        "pages-routing/actions-and-forms/8",
+        "pages-routing/actions-and-forms/10",
+        "pages-routing/actions-and-forms/13",
+        "pages-routing/actions-and-forms/16",
+        "pages-routing/actions-and-forms/18",
+        "pages-routing/actions-and-forms/19",
+        "pages-routing/actions-and-forms/21",
+        "pages-routing/actions-and-forms/24",
+        "pages-routing/actions-and-forms/25",
+        "pages-routing/actions-and-forms/26",
+        "pages-routing/actions-and-forms/27",
+        "pages-routing/actions-and-forms/29",
+        "pages-routing/actions-and-forms/30",
+        "pages-routing/layouts/12"
+      ],
+      "commands": [],
+      "procedures": [],
+      "outline": [
+        "Use a page action, not a loader or fetch, to mutate; single `action` vs named `actions` with ?name URLs",
+        "useForm for form state, action() for awaitable button mutations; setError for client errors",
+        "Refresh shared data (c.set('shared')) or redirect after changing it; c.redirect(path) clears query",
+        "Auth checks inside actions; same-origin only (cross-origin gets 403)",
+        "Uploads: parseBody, coerce multipart strings in schema, choose storage key and file types on the server",
+        "Thrown 401/403/5xx handling and UsageLimit customisation"
+      ],
+      "destructive": [],
+      "lintCompanion": "Lint holds validator and fetch bans; this skill holds the mutation flow and edge cases."
+    },
+    {
+      "name": "void-ai",
+      "description": "Calls Workers AI and provider models from a Void app: ai.run, ai.image, ai.provider, gateways, provider keys, streaming, UsageLimit. Use when adding AI features, wiring a provider key, or AI calls fail in dev or production.",
+      "audience": "app-author",
+      "norms": [
+        "edge-integrations/cloudflare/32",
+        "edge-integrations/cloudflare/33",
+        "reference/resources/2",
+        "reference/resources/3",
+        "reference/config/57",
+        "services/ai/2",
+        "services/ai/3",
+        "services/ai/4",
+        "services/ai/5",
+        "services/ai/6",
+        "services/ai/7",
+        "services/ai/10",
+        "services/ai/13",
+        "services/ai/18",
+        "services/ai/20",
+        "services/ai/22",
+        "services/ai/23",
+        "services/ai/24",
+        "services/ai/25",
+        "services/ai/26",
+        "services/ai/27",
+        "services/ai/28",
+        "services/ai/29",
+        "services/ai/30"
+      ],
+      "commands": [],
+      "procedures": [],
+      "outline": [
+        "Dev auth: Workers AI has no simulator; void cloudflare login or token; team platform needs connect and link",
+        "Native models via ai.run (typed names); binary results as Blob; contradiction: one page says no provider key is needed for gateway models, the Cloudflare page says store the provider key as a secret",
+        "Provider models: ai.gateway config, key secret names or apiKeyEnv, provider().fetch for native image and multipart",
+        "Streaming via fetchStream; aborted streams reject with the signal reason",
+        "UsageLimit propagates as 429 or is caught",
+        "Logging headers ignored on team platforms"
+      ],
+      "destructive": [],
+      "lintCompanion": "Lint holds import and key literal checks; this skill holds provider setup."
+    },
+    {
+      "name": "void-analog",
+      "description": "Sets up Void in an Analog app: nitro-cloudflare-dev, plugin and nitro module setup, env via void/env. Use when adding Void to Analog or env reads fail in Analog.",
+      "audience": "app-author",
+      "norms": [
+        "edge-integrations/frameworks-analog/1",
+        "edge-integrations/frameworks-analog/9",
+        "edge-integrations/frameworks-analog/10"
+      ],
+      "commands": [],
+      "procedures": [],
+      "outline": [
+        "Read the meta-framework basics first",
+        "Install nitro-cloudflare-dev for the dev platform proxy",
+        "Plugin order: the page's example puts voidPlugin() after analog(), while SvelteKit's example lists voidPlugin() first; the docs state no rule, so say which order the lint rule enforces; nitro.modules lists 'nitro-cloudflare-dev' then 'void/nitro'",
+        "Env: void/env, not the H3 event context or cloudflare:workers env"
+      ],
+      "destructive": [],
+      "lintCompanion": "Lint holds the nitro and plugin settings."
+    },
+    {
+      "name": "void-app-shape-and-inference",
+      "description": "Chooses a Void app's shape and what Void infers from the code: API-only, SPA plus routes, pages mode, or meta-framework; `inference.appType`, `inference.bindings`, auth and database inference. Use when auto-detection picks the wrong app type, a binding is missing or unwanted, or deciding whether to use Void-managed features in a framework app.",
+      "audience": "app-author",
+      "norms": [
+        "guide-core/quickstart/9",
+        "guide-core/app-types/1",
+        "guide-core/app-types/2",
+        "guide-core/app-types/3",
+        "reference/resource-inference/2",
+        "reference/resource-inference/5",
+        "reference/resource-inference/7",
+        "reference/config/55"
+      ],
+      "commands": [],
+      "procedures": [],
+      "outline": [
+        "Pick one app shape (API-only, SPA + routes, pages mode) or follow the meta-framework guide",
+        "Set inference.appType when detection is wrong or a static generator also has backend files",
+        "Which imports switch on auth, database, KV, storage inference (`auth` import, voidPlugin() in framework Vite config)",
+        "Use inference.bindings to enable, disable or rename a binding; never disable db when auth or migrations exist",
+        "Meta-frameworks: no Void-managed auth, use Better Auth's own integration"
+      ],
+      "destructive": [],
+      "lintCompanion": "Lint holds config key shapes; this skill holds the decision which shape fits and why inference chose a binding."
+    },
+    {
+      "name": "void-astro",
+      "description": "Sets up Void in an Astro app: Astro 7+, nodejs_als, env via void/env. Use when adding Void to Astro.",
+      "audience": "app-author",
+      "norms": [
+        "edge-integrations/frameworks-astro/1",
+        "edge-integrations/frameworks-astro/5",
+        "edge-integrations/frameworks-astro/9"
+      ],
+      "commands": [],
+      "procedures": [],
+      "outline": [
+        "Read the meta-framework basics first",
+        "Use Astro 7 or later",
+        "Enable nodejs_als; void/* helpers need it",
+        "Env via void/env"
+      ],
+      "destructive": [],
+      "lintCompanion": "Lint holds config shapes."
+    },
+    {
+      "name": "void-auth",
+      "description": "Adds and uses Void-managed Better Auth in a native Void app: providers, requireAuth/getUser/getAuth, @auth-schema, auth.ts, trustedOrigins, CSRF, rate limits, AUTH_TRUSTED_KEY. Use when adding login, guarding routes or actions, configuring social providers, or auth tables or origins misbehave.",
+      "audience": "app-author",
+      "norms": [
+        "guide-core/auth/1",
+        "guide-core/auth/3",
+        "guide-core/auth/5",
+        "guide-core/auth/6",
+        "guide-core/auth/7",
+        "guide-core/auth/11",
+        "guide-core/auth/14",
+        "guide-core/auth/15",
+        "guide-core/auth/17",
+        "guide-core/auth/18",
+        "guide-core/auth/19",
+        "guide-core/auth/21",
+        "guide-core/auth/22",
+        "guide-core/auth/23",
+        "guide-core/auth/24",
+        "guide-core/auth/26",
+        "guide-core/auth/27",
+        "reference/auth/6",
+        "reference/auth/7",
+        "reference/auth/8",
+        "reference/auth/9",
+        "reference/auth/11",
+        "reference/auth/13",
+        "reference/auth/16",
+        "reference/auth/17",
+        "reference/config/7",
+        "reference/config/8"
+      ],
+      "commands": [],
+      "procedures": [],
+      "outline": [
+        "Only native Void apps on Cloudflare; meta-frameworks and node targets use Better Auth directly",
+        "Providers in void.config.ts auth.providers with AUTH_<PROVIDER>_* keys; custom OAuth via auth.ts defineAuth",
+        "requireAuth vs getUser vs getAuth; throwRedirect; redirect after session-changing actions",
+        "@auth-schema alias, never edit .void/better-auth-schema.ts, serial id foreign keys",
+        "trustedOrigins, CSRF Origin check, ETag per user, rate limit storage and AUTH_TRUSTED_KEY",
+        "Local production preview needs BETTER_AUTH_SECRET"
+      ],
+      "destructive": [],
+      "lintCompanion": "Lint holds import and alias shapes; this skill holds the auth design decisions."
+    },
+    {
+      "name": "void-ci-deploy-credentials",
+      "description": "Gives CI the credentials to deploy a Void project: project-scoped tokens (`void project token create/renew/revoke`), VOID_TOKEN with VOID_API_URL, VOID_PROJECT, Access credentials, Cloudflare API tokens. Use when setting up, rotating or debugging CI deploy credentials, or when a deploy in CI is refused.",
+      "audience": "app-author",
+      "norms": [
+        "cli/deploy/2",
+        "cli/deploy/19",
+        "cli/project/7",
+        "cli/project/8",
+        "cli/project/9",
+        "guide-core/deployment/9",
+        "platform/first-deployment/2",
+        "platform/first-deployment/3",
+        "platform/first-deployment/4",
+        "platform/first-deployment/6",
+        "platform/first-deployment/7",
+        "platform/first-deployment/8",
+        "platform/self-hosted-platform/4",
+        "platform/project-collaboration/1",
+        "platform/project-collaboration/2"
+      ],
+      "commands": [
+        "void project token create --name github-actions --expires-in 30",
+        "void project token list",
+        "void project token renew <credential-id> --expires-in 30",
+        "void project token revoke <credential-id>"
+      ],
+      "procedures": [
+        "ci-project-deploy-credential"
+      ],
+      "outline": [
+        "Only the project owner mints, lists, renews and revokes CI tokens; collaborators and admins deploy with their own account",
+        "Create a bounded token (1-90 days), shown once; store VOID_TOKEN and VOID_API_URL together in the CI secret manager; never a human token",
+        "In fresh CI run `void connect \"$VOID_API_URL\" --no-login`, then name the project (VOID_PROJECT, --project, or a committed .void/project.json)",
+        "Rotate with renew and replace the secret at once; revoke leaked tokens",
+        "Behind Cloudflare Access: VOID_ACCESS_CREDENTIALS keyed by API and proxy origin; an Access service token alone does not authorize a deploy; not VOID_ACCESS_ORIGIN",
+        "Direct Cloudflare: CLOUDFLARE_API_TOKEN (secret), repository secrets, DATABASE_URL",
+        "Self-hosted platforms have no generated workflow: deploy from your own CI"
+      ],
+      "destructive": [
+        "void project token renew <credential-id> --expires-in 30",
+        "void project token revoke <credential-id>",
+        "procedure ci-project-deploy-credential: Revoked tokens stop CI deploys; project transfer revokes existing tokens"
+      ],
+      "lintCompanion": "Lint cannot see secrets; this skill holds the credential lifecycle."
+    },
+    {
+      "name": "void-config-and-bindings",
+      "description": "Edits `void.config.ts` and Cloudflare bindings: defineConfig, cloudflare.* binding arrays, worker limits, wrangler.jsonc removal, `void.lock.json`, `.void-wrangler.jsonc`, typing custom bindings on `c.env`. Use when adding or renaming a binding, changing Worker settings, migrating from wrangler, or deciding what to commit.",
+      "audience": "app-author",
+      "norms": [
+        "edge-integrations/cloudflare/2",
+        "edge-integrations/cloudflare/3",
+        "edge-integrations/cloudflare/5",
+        "edge-integrations/cloudflare/9",
+        "reference/config/2",
+        "reference/config/4",
+        "reference/config/35",
+        "reference/config/37",
+        "reference/config/38"
+      ],
+      "commands": [],
+      "procedures": [],
+      "outline": [
+        "Write settings as TypeScript in defineConfig; move wrangler.jsonc settings into void.config.ts",
+        "Contradiction: `compatibility_date` sits under `worker` in reference/config.md and integrations/cloudflare.md, but under `cloudflare` in the Nuxt, Analog, Astro, SvelteKit and framework overview examples (and the dates differ: 2025-12-01 vs 2026-02-24); tell the reader which the installed Void accepts",
+        "Declare custom bindings under cloudflare.* and run void prepare; raw bindings via env from cloudflare:workers or c.env",
+        "Commit void.lock.json; keep generated .void-wrangler.jsonc out of Git; remove a stale generated value from `resolved`",
+        "Keep worker.limits.cpu_ms inside the plan ceiling"
+      ],
+      "destructive": [],
+      "lintCompanion": "Lint holds config shape rules; this skill holds which setting to use and which files to commit."
+    },
+    {
+      "name": "void-connect-and-login",
+      "description": "Connects the Void CLI to a deploy target and signs in: `void connect`, `void auth`, `void account`, `void cloudflare login`, VOID_TOKEN, VOID_API_URL, VOID_PROJECT, keychain and CI credentials. Use when choosing Cloudflare or a Void platform, a login or connect command fails, or CI needs credentials.",
+      "audience": "app-author",
+      "norms": [
+        "cli/cli/4",
+        "cli/cli/5",
+        "cli/auth/1",
+        "cli/auth/2",
+        "cli/auth/3",
+        "cli/auth/4",
+        "cli/auth/5",
+        "cli/auth/6",
+        "cli/auth/7",
+        "cli/auth/8",
+        "cli/auth/9",
+        "cli/auth/10",
+        "cli/auth/11",
+        "cli/auth/12",
+        "cli/auth/13",
+        "cli/auth/14",
+        "cli/auth/15",
+        "cli/auth/16",
+        "cli/auth/17",
+        "cli/auth/18",
+        "cli/auth/19",
+        "cli/auth/20"
+      ],
+      "commands": [
+        "void connect [<url>] [--platform cloudflare|void] [--no-login]",
+        "void auth login",
+        "void auth status",
+        "void auth logout",
+        "void account login",
+        "void account link [connection-id]",
+        "void account logout",
+        "void account whoami",
+        "void account token",
+        "void cloudflare login",
+        "void cloudflare status",
+        "void cloudflare logout"
+      ],
+      "procedures": [],
+      "outline": [
+        "Decide the target: direct Cloudflare account or a Void platform (void connect --platform / <url>)",
+        "Interactive vs non-interactive connect; account_id and .void/project.json are written by the CLI",
+        "Sign in: void auth, void account, void cloudflare; env credentials take precedence over browser login",
+        "CI: VOID_TOKEN with VOID_API_URL together, `connect --no-login`, never a human token; VOID_PROJECT names the project",
+        "Errors: no keychain, conflicting Cloudflare accounts, unlinked project"
+      ],
+      "destructive": [],
+      "lintCompanion": "Lint cannot see credentials; this skill covers the command order and failure causes."
+    },
+    {
+      "name": "void-connected-apps-oauth",
+      "description": "Integrates an external app builder with a Void platform over OAuth: client registration, authorization code with PKCE, token refresh, private previews, deployment requests with `prepareDeployArtifact`. Use when building or operating a connected app that previews or publishes projects for users.",
+      "audience": "both",
+      "norms": [
+        "platform/connected-apps/1",
+        "platform/connected-apps/2",
+        "platform/connected-apps/3",
+        "platform/connected-apps/4",
+        "platform/connected-apps/5",
+        "platform/connected-apps/6",
+        "platform/connected-apps/7",
+        "platform/connected-apps/8",
+        "platform/connected-apps/9",
+        "platform/connected-apps/10",
+        "platform/connected-apps/11",
+        "platform/connected-apps/12",
+        "platform/connected-apps/13",
+        "platform/connected-apps/14",
+        "platform/connected-apps/15",
+        "platform/connected-apps/16",
+        "platform/connected-apps/17",
+        "platform/connected-apps/19",
+        "platform/connected-apps/20",
+        "reference/deploy/2",
+        "reference/deploy/3",
+        "reference/deploy/5",
+        "reference/deploy/7",
+        "reference/deploy/8",
+        "reference/deploy/9"
+      ],
+      "commands": [],
+      "procedures": [
+        "connected-app-private-preview-and-publish"
+      ],
+      "outline": [
+        "Register each exact HTTPS callback; client secret server-side only; replace credentials by registering a new client then disabling the old",
+        "Sign in: authorization code, scope=profile, random state, S256 PKCE; no OIDC ID token",
+        "Tokens: one-hour access, refresh up to 30 days; replace the pair after each refresh; serialize refreshes, reuse revokes",
+        "Private previews: POST workspace then artifact; launch URL works once within a minute; no auth, DB, email, queues in previews; Access must allow preview origins; quota limits",
+        "Publish: prepareDeployArtifact in an isolated managed build, do not modify the result, user approves every publish (deploy:approve, no refresh token)",
+        "Platform behind Access needs a service identity"
+      ],
+      "destructive": [
+        "procedure connected-app-private-preview-and-publish: Approval permits one deployment that can use the project's existing secrets and run migrations"
+      ],
+      "lintCompanion": "None."
+    },
+    {
+      "name": "void-database-d1-replication",
+      "description": "Uses D1 read replication and consistency in Void: createDb sessions, bookmarks, getBookmark, first-primary, bookmark cookies and fetch wrapper, readReplication config. Use when reads must see recent writes, stale reads appear, or replication should be switched off.",
+      "audience": "app-author",
+      "norms": [
+        "reference/database/4",
+        "reference/database/6",
+        "reference/database/11",
+        "reference/database/12",
+        "reference/database/13",
+        "reference/database/14",
+        "services/d1/4",
+        "services/d1/5",
+        "services/d1/6",
+        "services/d1/7",
+        "services/d1/9",
+        "services/d1/12",
+        "services/d1/13",
+        "services/d1/14",
+        "services/d1/15",
+        "services/d1/17",
+        "services/d1/19",
+        "services/d1/20",
+        "services/d1/21",
+        "services/d1/22",
+        "services/d1/23",
+        "services/d1/24",
+        "services/d1/25",
+        "services/d1/26",
+        "services/d1/27",
+        "services/d1/28",
+        "services/d1/30"
+      ],
+      "commands": [],
+      "procedures": [],
+      "outline": [
+        "Decide: replication on or off (database.readReplication; set false explicitly to disable)",
+        "Session choice: first-unconstrained vs first-primary; set before use; independent createDb sessions",
+        "Bookmarks: opaque, scoped per database and environment, newest only, await queries before getBookmark",
+        "Cookie recipe vs header recipe; fetch wrapper requirements; middleware coverage; ISR off for participating pages",
+        "Redirects need primary-first sessions; batch and raw env.DB"
+      ],
+      "destructive": [],
+      "lintCompanion": "Lint holds config literals; this skill holds the consistency design."
+    },
+    {
+      "name": "void-database-migrations",
+      "description": "Changes a Void app's database schema and ships the migration: edits db/schema, `void gen model`, `void db generate`, review of generated SQL, local `void db migrate`, seed, push, ad-hoc `void db execute`. Use when adding, changing or removing a table or column, when `void deploy` reports schema drift, or when a migration needs a hand edit.",
+      "audience": "app-author",
+      "norms": [
+        "cli/database/1",
+        "cli/database/2",
+        "cli/database/3",
+        "cli/database/4",
+        "cli/database/5",
+        "cli/database/6",
+        "cli/database/7",
+        "cli/database/8",
+        "cli/database/10",
+        "cli/database/11",
+        "cli/database/12",
+        "cli/database/13",
+        "cli/database/16",
+        "cli/database/21",
+        "cli/generate/1",
+        "cli/generate/2",
+        "cli/generate/3",
+        "cli/generate/4",
+        "cli/generate/5",
+        "cli/generate/6",
+        "cli/generate/7",
+        "cli/generate/8",
+        "guide-core/quickstart/6",
+        "guide-core/auth/32",
+        "guide-core/deployment/3",
+        "guide-core/deployment/4",
+        "reference/structure/13",
+        "reference/structure/14",
+        "services/database/6",
+        "services/database/7",
+        "services/database/10",
+        "services/database/11",
+        "services/database/17",
+        "services/database/18",
+        "services/database/19",
+        "services/database/29",
+        "services/d1/1",
+        "services/d1/2",
+        "services/d1/3"
+      ],
+      "commands": [
+        "void db push",
+        "void db generate",
+        "void db reset [--yes]",
+        "void db seed [--file <path>] [--yes]",
+        "void db execute <sql>",
+        "void db migrate [--remote]",
+        "void db rename-migrations",
+        "void gen model <name> [columns...]",
+        "void gen migration <name>"
+      ],
+      "procedures": [],
+      "outline": [
+        "Decide: does the change map to db/schema? edit schema first, never hand-write SQL first",
+        "Scaffold with `void gen model`; custom empty migration with `void gen migration`",
+        "Generate, then read the SQL: table rebuilds, foreign keys, triggers need statement-breakpoint; casing changes",
+        "Auth tables are generated by Void; deploy commits them",
+        "Apply locally with migrate (not reset); push only for prototyping; seed and reset wipe local data",
+        "Generation check failure and restore behavior",
+        "Drift check at deploy; commit SQL, snapshots and journal"
+      ],
+      "destructive": [
+        "void db push",
+        "void db reset [--yes]",
+        "void db seed [--file <path>] [--yes]",
+        "void db execute <sql>"
+      ],
+      "lintCompanion": "Rules in the database family hold file shapes; this skill holds the order of steps and the review."
+    },
+    {
+      "name": "void-database-postgres-mysql",
+      "description": "Sets up PostgreSQL or MySQL for a Void app and adopts an existing Drizzle PostgreSQL database: DATABASE_URL, Hyperdrive, adopt-void.sql, migration journals, MySQL failure recovery. Use when choosing an external database, adopting Drizzle history, or a MySQL migration failed halfway.",
+      "audience": "app-author",
+      "norms": [
+        "cli/database/34",
+        "reference/database/3",
+        "reference/database/7",
+        "reference/config/12",
+        "services/database/20",
+        "services/database/21",
+        "services/database/22",
+        "services/database/23",
+        "services/database/24",
+        "services/database/25",
+        "services/database/26",
+        "services/database/27",
+        "services/database/28",
+        "services/mysql/2",
+        "services/mysql/3",
+        "services/mysql/4",
+        "services/mysql/5",
+        "services/mysql/6",
+        "services/mysql/7",
+        "services/mysql/8",
+        "services/postgresql/1",
+        "services/postgresql/2",
+        "services/postgresql/3",
+        "services/postgresql/4",
+        "services/postgresql/6",
+        "services/postgresql/7"
+      ],
+      "commands": [
+        "void db set-url"
+      ],
+      "procedures": [],
+      "outline": [
+        "Local DATABASE_URL in .env; production via Hyperdrive; direct Cloudflare exports DATABASE_URL and needs a Hyperdrive token",
+        "Platform: connection string by prompt or `void db set-url`",
+        "Adopt Drizzle PostgreSQL: backup, pause deploys, rehearse on a copy, database: 'pg', adopt-void.sql, status check",
+        "Keep db/migrations/meta consistent; journal and snapshot naming",
+        "MySQL: no IF NOT EXISTS, failed file leaves partial changes, single migration runner, breakpoints"
+      ],
+      "destructive": [],
+      "lintCompanion": "Lint holds config literals; this skill holds the adoption procedure."
+    },
+    {
+      "name": "void-database-remote-and-recovery",
+      "description": "Runs Void database commands against deployed data and recovers from bad migrations: `--remote`, `void db status/studio/export/restore`, `void db connect`, `void db set-url`, D1 Time Travel, backups, rollback order. Use when inspecting or changing production data, a migration broke production, or restoring a database.",
+      "audience": "app-author",
+      "norms": [
+        "cli/database/9",
+        "cli/database/17",
+        "cli/database/18",
+        "cli/database/19",
+        "cli/database/20",
+        "cli/database/22",
+        "cli/database/24",
+        "cli/database/25",
+        "cli/database/26",
+        "cli/database/27",
+        "cli/database/28",
+        "cli/database/29",
+        "cli/database/30",
+        "cli/database/31",
+        "cli/database/32",
+        "cli/database/33",
+        "cli/database/35",
+        "cli/database/36",
+        "cli/database/37",
+        "guide-core/deployment/6"
+      ],
+      "commands": [
+        "void db status",
+        "void db execute --remote <sql> [--yes]",
+        "void db migrate [--remote]",
+        "void db studio [--remote]",
+        "void db restore --bookmark <bookmark> [--platform cloudflare] [--yes]",
+        "void db connect",
+        "void db set-url",
+        "void db export [--output <path>] [--no-data] [--no-schema] [--table <name>]"
+      ],
+      "procedures": [],
+      "outline": [
+        "Check the target in .void/project.json before any --remote command; DATABASE_URL for PostgreSQL/MySQL on direct Cloudflare",
+        "Read-only first: status, studio; execute --remote prompts on destructive SQL; --yes only when intended; 100 KB file limit on D1",
+        "Recovery order: roll back code, restore, then fix migration; check restored schema against deployed code",
+        "D1 Time Travel window (7/30 days) and restore bookmark printed before migrations; restore discards later writes",
+        "Backups: export is local only; pg_dump for complete PostgreSQL backup",
+        "Platform vs direct Cloudflare differences"
+      ],
+      "destructive": [
+        "void db execute --remote <sql> [--yes]",
+        "void db restore --bookmark <bookmark> [--platform cloudflare] [--yes]"
+      ],
+      "lintCompanion": "Lint cannot see targets; this skill holds the safety order."
+    },
+    {
+      "name": "void-deploy",
+      "description": "Deploys a Void app and handles the result: `void deploy`, migrations on deploy, --skip-migrations, rollback, cancel, timeouts, drift check, usage-limit pages. Use when shipping, a deploy fails or hangs, or rolling back.",
+      "audience": "app-author",
+      "norms": [
+        "cli/deploy/1",
+        "cli/deploy/3",
+        "cli/deploy/4",
+        "cli/deploy/5",
+        "cli/deploy/6",
+        "cli/deploy/9",
+        "cli/deploy/14",
+        "cli/deploy/15",
+        "cli/deploy/16",
+        "cli/deploy/18",
+        "cli/deploy/20",
+        "cli/deploy/26",
+        "cli/project/14",
+        "cli/project/15",
+        "cli/project/16",
+        "guide-core/quickstart/7",
+        "guide-core/deployment/1",
+        "guide-core/deployment/5",
+        "guide-core/deployment/8",
+        "guide-core/deployment/12",
+        "guide-core/deployment/14",
+        "guide-core/deployment/15",
+        "guide-core/deployment/16",
+        "reference/deploy/4"
+      ],
+      "commands": [
+        "void deploy [--project <name>] [--dir <path>] [--spa] [--skip-build] [--skip-migrations] [--debug]",
+        "void project rollback [deployId] [--platform cloudflare]",
+        "void project cancel [deployId]"
+      ],
+      "procedures": [],
+      "outline": [
+        "Connect once, then deploy; Ctrl+C only stops watching",
+        "Before deploy: generate and commit migrations (drift check stops otherwise)",
+        "--skip-migrations: code must match the current schema; history shows unknown",
+        "Timeouts: check project status before retrying",
+        "Rollback restores code only; check old code against current schema",
+        "Cancel active deployments",
+        "Limit pages and stream failures",
+        "Logs in ~/.void/logs"
+      ],
+      "destructive": [
+        "void deploy [--project <name>] [--dir <path>] [--spa] [--skip-build] [--skip-migrations] [--debug]",
+        "void project rollback [deployId] [--platform cloudflare]",
+        "void project cancel [deployId]"
+      ],
+      "lintCompanion": "Lint holds config literals; this skill holds deploy order and failure handling."
+    },
+    {
+      "name": "void-deploy-github-integration",
+      "description": "Connects a Void project to GitHub for automatic deploys: `void github link/install/join/connect/update/disconnect`, container builds vs a GitHub Actions workflow, `void init --github`, `void build logs`. Use when setting up deploy-on-push, changing branch or executor, or reading build logs.",
+      "audience": "app-author",
+      "norms": [
+        "cli/github/1",
+        "cli/github/2",
+        "cli/github/3",
+        "cli/github/4",
+        "cli/github/5",
+        "cli/github/6",
+        "cli/github/7",
+        "cli/github/8",
+        "cli/github/9",
+        "cli/github/10",
+        "cli/github/11",
+        "cli/github/12",
+        "cli/github/13",
+        "cli/github/15",
+        "cli/github/16",
+        "cli/setup/13",
+        "cli/setup/14",
+        "guide-core/deployment/10"
+      ],
+      "commands": [
+        "void github link",
+        "void github install",
+        "void github installations",
+        "void github join",
+        "void github connect [project] [options]",
+        "void github update [project] [options]",
+        "void github status [project]",
+        "void github disconnect [project]",
+        "void build logs [build] [--follow] [--output <file>] [--project <slug>]"
+      ],
+      "procedures": [],
+      "outline": [
+        "Link the GitHub identity (one per Void account), install the app, join an organization installation locally before CI",
+        "Choose executor: container (platform builds) or github_actions (dedicated workflow file, OIDC token, id-token: write, VOID_API_URL)",
+        "Choose the branch deliberately: every push to it deploys",
+        "Non-interactive: pass --branch, --installation, --repo, --yes",
+        "Change with `update` (branch, executor, workflow only); one connection per project, disconnect to switch repos (cancels in-flight builds)",
+        "Direct Cloudflare workflow from `void init --github`: CLOUDFLARE_API_TOKEN and DATABASE_URL secrets",
+        "Read logs: `void build logs` for container builds only"
+      ],
+      "destructive": [
+        "void github disconnect [project]"
+      ],
+      "lintCompanion": "Lint cannot see GitHub state; this skill holds the connect order."
+    },
+    {
+      "name": "void-direct-cloudflare-deploy",
+      "description": "Deploys to your own Cloudflare account with `void deploy --platform cloudflare`: tokens, first deploy, adopting an existing Worker, atomic mode, provisioning, Hyperdrive, Access readiness. Use when linking an existing Worker, CI deploys fail on credentials, or Durable Object migrations need atomic deploy.",
+      "audience": "app-author",
+      "norms": [
+        "cli/deploy/7",
+        "cli/deploy/8",
+        "cli/deploy/10",
+        "cli/deploy/11",
+        "cli/deploy/12",
+        "cli/deploy/13",
+        "cli/deploy/21",
+        "cli/deploy/23",
+        "cli/deploy/24",
+        "cli/deploy/25",
+        "cli/deploy/27",
+        "cli/deploy/28",
+        "cli/deploy/31",
+        "cli/deploy/32",
+        "edge-integrations/cloudflare/11",
+        "edge-integrations/cloudflare/12",
+        "edge-integrations/cloudflare/13",
+        "edge-integrations/cloudflare/14",
+        "edge-integrations/cloudflare/15",
+        "edge-integrations/cloudflare/16",
+        "edge-integrations/cloudflare/18",
+        "edge-integrations/cloudflare/20",
+        "edge-integrations/cloudflare/21",
+        "edge-integrations/cloudflare/22",
+        "edge-integrations/cloudflare/24",
+        "edge-integrations/cloudflare/25",
+        "edge-integrations/cloudflare/26",
+        "edge-integrations/cloudflare/28",
+        "edge-integrations/cloudflare/29",
+        "edge-integrations/cloudflare/31",
+        "guide-core/deployment/2",
+        "reference/config/40"
+      ],
+      "commands": [
+        "void deploy [--platform <cloudflare|void>] [--require-email]",
+        "void deploy --platform cloudflare --atomic",
+        "void deploy --platform cloudflare --provision"
+      ],
+      "procedures": [],
+      "outline": [
+        "Credentials and token permissions; account id; DATABASE_URL",
+        "Adopt an existing Worker: keep wrangler JSON, convert toml, add nothing new at first, binding mismatches",
+        "First deploy one machine, commit void.lock.json",
+        "Skip-build only for static; no named environments; gradual rollouts finished first",
+        "Atomic mode only after review; DO class migrations cannot roll back",
+        "Candidate file kept on failed staging; CF_ACCESS_READINESS_ORIGIN; sandbox tokens",
+        "After project delete clean up resources yourself"
+      ],
+      "destructive": [
+        "void deploy [--platform <cloudflare|void>] [--require-email]",
+        "void deploy --platform cloudflare --atomic",
+        "void deploy --platform cloudflare --provision"
+      ],
+      "lintCompanion": "Lint holds config literals; this skill holds first-deploy ordering."
+    },
+    {
+      "name": "void-durable-state",
+      "description": "Uses Void Durable State and Durable Objects: definitions, state versions and migrations, resource names, void info before renaming, atomic deploy. Use when adding persistent state objects, renaming or moving definition files, or changing state shape.",
+      "audience": "app-author",
+      "norms": [
+        "services/durable-state/2",
+        "services/durable-state/4",
+        "services/durable-state/5",
+        "services/durable-state/8",
+        "services/durable-state/9",
+        "services/durable-state/10",
+        "services/durable-state/11",
+        "services/durable-state/12",
+        "services/durable-state/13",
+        "services/durable-state/15",
+        "services/durable-state/16",
+        "services/durable-state/17",
+        "services/durable-state/18",
+        "services/durable-state/20"
+      ],
+      "commands": [],
+      "procedures": [],
+      "outline": [
+        "Select with Definition.get(name); stable names",
+        "Mutate context.state; storage writes are not rolled back",
+        "Bump version and add a migration on shape change",
+        "Before moving a file run void info and pin name",
+        "Lock file: commit, never edit or reorder",
+        "Class changes need atomic deploy; class limit"
+      ],
+      "destructive": [],
+      "lintCompanion": "Lint holds define* shapes; this skill holds renames."
+    },
+    {
+      "name": "void-email-cloudflare-setup",
+      "description": "Sets up email on a direct Cloudflare account: email.from, `void email setup/status --platform cloudflare`, Email Routing/Sending, SPF/DKIM/DMARC, CI with --require-email. Use when enabling email on your own account, a deploy ships without email, or setup prompts block CI.",
+      "audience": "app-author",
+      "norms": [
+        "cli/email/1",
+        "cli/email/16",
+        "cli/email/17",
+        "cli/email/18",
+        "cli/email/19",
+        "cli/email/20",
+        "edge-integrations/cloudflare/17",
+        "edge-integrations/cloudflare/19",
+        "reference/config/15",
+        "services/domains/9",
+        "services/domains/10",
+        "services/domains/11",
+        "services/domains/12",
+        "services/domains/13",
+        "services/domains/14",
+        "services/domains/15",
+        "services/domains/16",
+        "services/domains/17",
+        "services/domains/18",
+        "services/domains/19",
+        "services/domains/21",
+        "services/domains/22",
+        "services/domains/23",
+        "services/domains/24",
+        "services/domains/25",
+        "services/domains/26"
+      ],
+      "commands": [
+        "void email status --platform cloudflare",
+        "void email setup --platform cloudflare"
+      ],
+      "procedures": [],
+      "outline": [
+        "Set email.from; without it Void skips automatic setup",
+        "Run setup locally (interactive), commit void.lock.json",
+        "CI: status as a check, deploy with --require-email",
+        "Token scopes; Workers Paid for sending",
+        "Mail subdomain limits and plus addressing; avoid hand-managed addresses",
+        "Removing email setup"
+      ],
+      "destructive": [],
+      "lintCompanion": "Lint holds config shapes; this skill holds the setup order."
+    },
+    {
+      "name": "void-email-platform-domains",
+      "description": "Manages email on a Void platform: recipient allow-lists, aliases, custom mail domains, void email domain add/status/sync/rotate-secret/remove. Use when recipients are unverified, registering a mail domain, or domain setup is interrupted.",
+      "audience": "app-author",
+      "norms": [
+        "cli/email/4",
+        "cli/email/5",
+        "cli/email/6",
+        "cli/email/7",
+        "cli/email/8",
+        "cli/email/9",
+        "cli/email/10",
+        "cli/email/11",
+        "cli/email/12",
+        "cli/email/13",
+        "cli/email/14",
+        "cli/email/15",
+        "services/domains/1",
+        "services/domains/2",
+        "services/domains/3",
+        "services/domains/4",
+        "services/domains/5",
+        "services/domains/6",
+        "services/domains/7",
+        "services/domains/20"
+      ],
+      "commands": [
+        "void email destinations [--project <name>]",
+        "void email allow <address> [--project <name>]",
+        "void email disallow <address> [--project <name>]",
+        "void email alias [--project <name>]",
+        "void email alias <name> [--yes] [--project <name>]",
+        "void email domain add <domain> [--project <name>]",
+        "void email domain status <domain> [--project <name>]",
+        "void email domain list [--project <name>]",
+        "void email domain sync <domain> [--project <name>]",
+        "void email domain rotate-secret <domain> [--project <name>]",
+        "void email domain remove <domain> [--project <name>]"
+      ],
+      "procedures": [],
+      "outline": [
+        "Verify recipients: allow, link click, destinations; owner address needs verification too",
+        "Aliases are permanent",
+        "Register a zone apex with no existing mail, API token scoped to account and zone",
+        "Interrupted setup: status then sync; rotate-secret only after sync",
+        "Remove cleans records but shared zone resources remain",
+        "Outbound readiness for arbitrary recipients"
+      ],
+      "destructive": [
+        "void email disallow <address> [--project <name>]",
+        "void email alias <name> [--yes] [--project <name>]",
+        "void email domain remove <domain> [--project <name>]"
+      ],
+      "lintCompanion": "Lint cannot see platform state; this skill is the procedure."
+    },
+    {
+      "name": "void-email-receiving",
+      "description": "Receives email in a Void app: email/ handler files, recipient naming, _default.ts, replies and forwards, test harness. Use when adding inbound mail handlers or routing addresses.",
+      "audience": "app-author",
+      "norms": [
+        "reference/structure/18",
+        "services/receiving/2",
+        "services/receiving/4",
+        "services/receiving/7",
+        "services/receiving/8",
+        "services/receiving/9",
+        "services/receiving/12",
+        "services/receiving/13",
+        "services/receiving/14",
+        "services/receiving/15",
+        "services/receiving/16"
+      ],
+      "commands": [],
+      "procedures": [],
+      "outline": [
+        "Handlers only in native Void apps; name files after the recipient local part (static, [dynamic], +tag, _default)",
+        "Overlap order: alphabetical, first match wins; unmatched mail bounces without _default",
+        "Forward only to verified destinations; on a platform use replies for custom domains",
+        "Test with createInboundTestHarness"
+      ],
+      "destructive": [],
+      "lintCompanion": "Lint holds file naming; this skill holds routing design."
+    },
+    {
+      "name": "void-email-sending",
+      "description": "Sends email from a Void app: sendEmail, from/threading/idempotency, shared sender limits, verified recipients, outcome unknown handling, dev inbox. Use when adding outbound email, a send fails with INVALID_FROM or MIME_ERROR, or retries risk duplicates.",
+      "audience": "app-author",
+      "norms": [
+        "cli/email/2",
+        "cli/email/3",
+        "services/email/1",
+        "services/sending/2",
+        "services/sending/3",
+        "services/sending/4",
+        "services/sending/5",
+        "services/sending/6",
+        "services/sending/7",
+        "services/sending/15",
+        "services/sending/16",
+        "services/sending/17",
+        "services/sending/18",
+        "services/sending/22",
+        "services/sending/24",
+        "services/sending/26",
+        "services/sending/27",
+        "services/sending/28",
+        "services/sending/29"
+      ],
+      "commands": [
+        "void email usage [--project <name>]",
+        "void email logs [--limit <n>] [--project <name>]"
+      ],
+      "procedures": [],
+      "outline": [
+        "Choose sender: shared platform sender (verified recipients only) vs own Cloudflare account (email.from, registered recipients)",
+        "from rules per platform; long slugs need explicit from",
+        "Threading headers for replies",
+        "Limits: 5 MiB message, 16 KiB headers, platform allowance",
+        "OUTCOME_UNKNOWN: inspect logs, retry with the same key",
+        "Dev inbox token is a credential; unavailable in SvelteKit/Nuxt/Analog/Astro"
+      ],
+      "destructive": [],
+      "lintCompanion": "Lint holds call shapes; this skill holds the delivery model."
+    },
+    {
+      "name": "void-env-and-secrets",
+      "description": "Manages environment variables and secrets in a Void app: `env.ts`, `.env`, VITE_* client values, `void secret put/list/sync/delete`, `void env check/types`, `worker.vars`. Use when adding a setting, a deploy says a required key is missing, a value works locally but not in production, or secrets must be set or rotated.",
+      "audience": "app-author",
+      "norms": [
+        "cli/secrets/1",
+        "cli/secrets/2",
+        "cli/secrets/3",
+        "cli/secrets/4",
+        "cli/secrets/5",
+        "cli/secrets/6",
+        "cli/secrets/7",
+        "cli/secrets/8",
+        "cli/secrets/9",
+        "cli/secrets/10",
+        "edge-integrations/cloudflare/10",
+        "edge-integrations/cloudflare/23",
+        "guide-core/env-vars/4",
+        "guide-core/env-vars/5",
+        "guide-core/env-vars/6",
+        "guide-core/env-vars/7",
+        "guide-core/env-vars/8",
+        "guide-core/env-vars/9",
+        "guide-core/env-vars/10",
+        "guide-core/env-vars/12",
+        "guide-core/env-vars/13",
+        "guide-core/env-vars/14",
+        "guide-core/env-vars/15",
+        "reference/structure/24",
+        "reference/structure/25",
+        "reference/config/32",
+        "reference/config/33"
+      ],
+      "commands": [
+        "void secret list [--project <name>]",
+        "void secret put <name> [--project <name>]",
+        "void secret put <name=value> [--project <name>]",
+        "void secret sync <file> [--project <name>] [--yes]",
+        "void secret delete <name> [--project <name>]",
+        "void env check [--remote]",
+        "void env types"
+      ],
+      "procedures": [],
+      "outline": [
+        "Declare every variable in env.ts; values live in .env locally and as secrets remotely, never plaintext vars",
+        "Server keys: `void secret put` (masked prompt, avoid inline NAME=value); `secret sync` file rules",
+        "Client VITE_* values come from the build shell or a schema default, not .env, and never go through void secret",
+        "Validate with `void env check` and `--remote`; deploy refuses when a required key is missing",
+        "Local .env rules: single file, quote '#', no .env.example or .dev.vars, keep out of Git",
+        "Reserved __VOID_ names; worker.vars vs secret precedence"
+      ],
+      "destructive": [
+        "void secret delete <name> [--project <name>]"
+      ],
+      "lintCompanion": "Lint holds env.ts and void/env usage shapes; this skill holds the production secret workflow."
+    },
+    {
+      "name": "void-hono-integration",
+      "description": "Uses Hono inside a Void app: installing hono, JSX importSource, handler return shapes, HTTPException from helpers. Use when importing from hono/*, using hono/jsx in routes, or throwing errors from helper functions.",
+      "audience": "app-author",
+      "norms": [
+        "edge-integrations/hono/6",
+        "edge-integrations/hono/8",
+        "guide-core/server-routing/11",
+        "guide-core/server-routing/17"
+      ],
+      "commands": [],
+      "procedures": [],
+      "outline": [
+        "Install hono before importing hono/*; set oxc.jsx importSource to hono/jsx for API-only, Vue or Svelte apps",
+        "Handlers return plain objects or c.json/stream; contradiction with the loader docs about c.json",
+        "Throw HTTPException from helpers"
+      ],
+      "destructive": [],
+      "lintCompanion": "Lint holds import checks; this skill is the setup note."
+    },
+    {
+      "name": "void-island-and-markdown-pages",
+      "description": "Builds Void island pages and markdown pages with @void/md: island import attributes, hydration strategies, frontmatter, themes, page lists. Use when adding a content or docs site, mixing interactive components into markdown, or theming markdown output.",
+      "audience": "app-author",
+      "norms": [
+        "pages-routing/head/10",
+        "pages-routing/islands/2",
+        "pages-routing/islands/4",
+        "pages-routing/islands/5",
+        "pages-routing/islands/6",
+        "pages-routing/islands/7",
+        "pages-routing/islands/9",
+        "pages-routing/layouts/7",
+        "pages-routing/markdown/1",
+        "pages-routing/markdown/2",
+        "pages-routing/markdown/4",
+        "pages-routing/markdown/5",
+        "pages-routing/markdown/6",
+        "pages-routing/markdown/8",
+        "pages-routing/markdown/9",
+        "pages-routing/markdown/10",
+        "pages-routing/markdown/12",
+        "pages-routing/markdown/13",
+        "pages-routing/markdown/15",
+        "pages-routing/markdown/16"
+      ],
+      "commands": [],
+      "procedures": [],
+      "outline": [
+        "Choose island pages (mostly static) vs regular pages (shared client state)",
+        "Mark interactive components with `with { island: ... }`; tsconfig module ESNext; others do not run in browser",
+        "Markdown: install @void/md, import islands in <script>, uppercase tags, include extension",
+        "Layout naming contradiction (`layout.island.<ext>` vs `layout.<ext>`) and `layout:` frontmatter",
+        "Frontmatter is shared with the browser: no secrets; head from frontmatter",
+        "Navigation from @void/md/pages; theme CSS choice and --vmd-* overrides; valid theme names or the build stops"
+      ],
+      "destructive": [],
+      "lintCompanion": "Lint holds import attribute shapes; this skill holds when to use islands."
+    },
+    {
+      "name": "void-isr-and-prerendering",
+      "description": "Controls caching of rendered Void pages: revalidate exports and patterns, routing.isr, prerender, revalidate(), x-revalidate, query allowlist, cache bypass rules. Use when a page is not cached, shows stale or per-user data, or purge or prerender behaves unexpectedly.",
+      "audience": "app-author",
+      "norms": [
+        "edge-integrations/prerendering/8",
+        "edge-integrations/prerendering/11",
+        "edge-integrations/prerendering/12",
+        "edge-integrations/prerendering/13",
+        "edge-integrations/prerendering/15",
+        "edge-integrations/revalidation/1",
+        "edge-integrations/revalidation/2",
+        "edge-integrations/revalidation/4",
+        "edge-integrations/revalidation/6",
+        "edge-integrations/revalidation/9",
+        "edge-integrations/revalidation/10",
+        "edge-integrations/revalidation/11",
+        "edge-integrations/revalidation/13",
+        "edge-integrations/revalidation/14",
+        "edge-integrations/revalidation/15",
+        "edge-integrations/revalidation/16",
+        "edge-integrations/revalidation/17",
+        "edge-integrations/revalidation/18",
+        "edge-integrations/revalidation/19",
+        "edge-integrations/revalidation/20",
+        "edge-integrations/revalidation/21",
+        "edge-integrations/cloudflare/34",
+        "reference/resources/4",
+        "reference/config/50"
+      ],
+      "commands": [],
+      "procedures": [],
+      "outline": [
+        "Decide: ISR for public pages only; 0 turns off; 31536000 until next deploy",
+        "Precedence: x-revalidate header, page export, config patterns; routing.isr false disables all",
+        "What bypasses the cache: cookies, Authorization, Set-Cookie, private/no-store, Vary, event-stream",
+        "Query parameters: routing.revalidateQueryAllowlist",
+        "Prerender defaults, TTL, failures only logged",
+        "Purging: destination path for rewrites; local no-op; only current data center edge cache clears"
+      ],
+      "destructive": [],
+      "lintCompanion": "Lint holds export literal shapes; this skill holds cache behavior reasoning."
+    },
+    {
+      "name": "void-kv-and-storage",
+      "description": "Uses Void KV and R2 storage: void/kv calls, pagination, custom buckets with createStorage, locationHint. Use when adding KV or object storage, or needing a raw binding.",
+      "audience": "app-author",
+      "norms": [
+        "reference/config/29",
+        "services/storage/5",
+        "services/storage/6",
+        "services/kv/2",
+        "services/kv/5",
+        "services/kv/7"
+      ],
+      "commands": [],
+      "procedures": [],
+      "outline": [
+        "kv.get raw string for non-JSON, list pagination, c.env.KV for missing operations",
+        "Declare extra R2 buckets under cloudflare.r2_buckets, run prepare, wrap with createStorage",
+        "storage.locationHint does not move an existing bucket"
+      ],
+      "destructive": [],
+      "lintCompanion": "Lint holds import shapes; this skill holds data-shape caveats."
+    },
+    {
+      "name": "void-loaders-and-errors",
+      "description": "Writes Void page loaders and error handling: plain-data returns, defer(), c.status vs HTTPException, c.notFound(), _error and _not-found boundaries. Use when a loader is slow, a page needs a 404 or error status, deferred props fail, or error pages render the wrong thing.",
+      "audience": "app-author",
+      "norms": [
+        "pages-routing/errors/1",
+        "pages-routing/errors/3",
+        "pages-routing/errors/4",
+        "pages-routing/errors/5",
+        "pages-routing/errors/6",
+        "pages-routing/errors/8",
+        "pages-routing/errors/10",
+        "pages-routing/errors/13",
+        "pages-routing/loaders/6",
+        "pages-routing/loaders/8",
+        "pages-routing/loaders/11",
+        "pages-routing/loaders/13",
+        "pages-routing/loaders/15",
+        "pages-routing/loaders/16",
+        "pages-routing/loaders/17",
+        "pages-routing/loaders/18"
+      ],
+      "commands": [],
+      "procedures": [],
+      "outline": [
+        "Return plain data from loaders; contradiction: some docs show loaders returning c.json(), the loaders guide says return data directly to keep Date/Map/Set",
+        "Choose: c.status(code) keeps the page, HTTPException shows _error, c.notFound() shows _not-found",
+        "Defer slow non-critical data with defer(); group names; per-framework loading/error states; actions do not refresh deferred props",
+        "Error boundary file names; safe messages only; retry with refresh() not resubmit",
+        "Actions and API routes do not render _error; handle inline"
+      ],
+      "destructive": [],
+      "lintCompanion": "Lint holds return-shape checks; this skill holds which failure mode to pick."
+    },
+    {
+      "name": "void-meta-framework-basics",
+      "description": "Shared rules for running Void inside a meta-framework (TanStack Start, React Router, vinext, SvelteKit, Nuxt, Analog, Astro): Cloudflare adapter, bindings access, void/env, routing config. Use first when a project is a framework app, before the framework-specific skill.",
+      "audience": "app-author",
+      "norms": [
+        "edge-integrations/frameworks-overview/2",
+        "edge-integrations/frameworks-overview/4",
+        "edge-integrations/frameworks-overview/5",
+        "edge-integrations/frameworks-overview/6",
+        "edge-integrations/frameworks-overview/7",
+        "edge-integrations/frameworks-overview/8",
+        "edge-integrations/frameworks-overview/11",
+        "edge-integrations/frameworks-overview/12",
+        "edge-integrations/frameworks-overview/13"
+      ],
+      "commands": [],
+      "procedures": [],
+      "outline": [
+        "Point the framework's Cloudflare adapter at generated .void-wrangler.jsonc; define Cloudflare settings in void.config.ts",
+        "Bindings: use the framework's own mechanism (env from cloudflare:workers, platform.env in SvelteKit 2, event context)",
+        "Also compatibility_date sits under `cloudflare` in the framework examples but `worker` elsewhere. Contradiction: this overview says only TanStack Start, React Router and vinext use void/env, while the SvelteKit, Nuxt, Analog and Astro pages also say declare in env.ts and read void/env; follow the framework page",
+        "Revalidation and prerender through routing.* in void.config.ts; no Set-Cookie or private on cacheable HTML; vinext middleware also hits public/ files",
+        "Do not set routing.notFound in SvelteKit, Nuxt, Analog, Astro",
+        "Reads of missing env throw only on the requests that read them; local D1/KV placeholders; log in for void/ai"
+      ],
+      "destructive": [],
+      "lintCompanion": "Lint holds config shape checks."
+    },
+    {
+      "name": "void-node-bun-deno-targets",
+      "description": "Builds a Void app for the node, bun or deno target and avoids what exists only on Cloudflare. Use when setting target in void.config.ts, hitting a build error about void/* modules, or planning cron, email or auth outside Cloudflare.",
+      "audience": "app-author",
+      "norms": [
+        "edge-integrations/nodejs-bun-deno/2",
+        "edge-integrations/nodejs-bun-deno/3",
+        "edge-integrations/nodejs-bun-deno/4",
+        "edge-integrations/nodejs-bun-deno/5",
+        "edge-integrations/nodejs-bun-deno/8",
+        "edge-integrations/nodejs-bun-deno/9",
+        "edge-integrations/nodejs-bun-deno/10",
+        "edge-integrations/nodejs-bun-deno/11",
+        "edge-integrations/nodejs-bun-deno/12",
+        "edge-integrations/nodejs-bun-deno/13",
+        "edge-integrations/nodejs-bun-deno/14",
+        "edge-integrations/nodejs-bun-deno/15",
+        "edge-integrations/nodejs-bun-deno/16",
+        "edge-integrations/nodejs-bun-deno/17",
+        "guide-core/deployment/13",
+        "reference/config/26",
+        "reference/config/27"
+      ],
+      "commands": [],
+      "procedures": [],
+      "outline": [
+        "Install @hono/node-server for node; run from the app directory (PORT or 3000); deploy dist/ssr and dist/client together; add native-addon dependencies to your app",
+        "Void rejects void/db, kv, storage, auth, ai, sandbox, env imports and warns on inference.bindings, remote, worker, routing.revalidate",
+        "Use Better Auth directly; no *.ws.ts, email handlers or sendEmail, edge prerender (use ssg), void deploy",
+        "Cron: crons/ compile but need an external scheduler",
+        "Single executables: ASSETS object in app.fetch env; Bun file imports regenerated after each build"
+      ],
+      "destructive": [],
+      "lintCompanion": "Lint holds the import bans; this skill explains the substitutes."
+    },
+    {
+      "name": "void-nuxt",
+      "description": "Sets up Void in a Nuxt app: Nitro/Cloudflare development config per version, Windows inlining, env via void/env. Use when adding Void to Nuxt or reading env in a Nuxt server.",
+      "audience": "app-author",
+      "norms": [
+        "edge-integrations/frameworks-nuxt/4",
+        "edge-integrations/frameworks-nuxt/8",
+        "edge-integrations/frameworks-nuxt/13"
+      ],
+      "commands": [],
+      "procedures": [],
+      "outline": [
+        "Read the meta-framework basics first",
+        "Choose the Cloudflare dev configuration for your Nuxt/Nitro version (Nitro 2 or 3 prerelease)",
+        "Nuxt 4.6.0 on Windows: nitro.externals.inline nuxt/dist",
+        "Env: void/env, not useRuntimeConfig() or event.context.cloudflare.env (keep that for raw bindings)"
+      ],
+      "destructive": [],
+      "lintCompanion": "Lint holds config shapes."
+    },
+    {
+      "name": "void-pages-and-navigation",
+      "description": "Builds Void pages mode screens: pages/ files and companions, .dev/.prod variants, ssr and prerender exports, layouts, head(), links and navigation state, router.visit, view transitions. Use when adding or renaming a page, wiring a layout or head tags, styling active links, or debugging navigation and prefetch.",
+      "audience": "app-author",
+      "norms": [
+        "pages-routing/head/3",
+        "pages-routing/head/5",
+        "pages-routing/head/9",
+        "pages-routing/layouts/1",
+        "pages-routing/layouts/3",
+        "pages-routing/layouts/8",
+        "pages-routing/layouts/9",
+        "pages-routing/overview/1",
+        "pages-routing/overview/2",
+        "pages-routing/overview/3",
+        "pages-routing/overview/6",
+        "pages-routing/overview/9",
+        "pages-routing/overview/11",
+        "pages-routing/overview/13",
+        "pages-routing/overview/14",
+        "pages-routing/overview/21",
+        "pages-routing/overview/23",
+        "pages-routing/overview/24",
+        "pages-routing/overview/25",
+        "pages-routing/overview/26",
+        "pages-routing/overview/28",
+        "pages-routing/view-transitions/3",
+        "pages-routing/view-transitions/4",
+        "reference/pages/4",
+        "reference/pages/12",
+        "reference/pages/23"
+      ],
+      "commands": [],
+      "procedures": [],
+      "outline": [
+        "Pages for UI, routes/ for APIs; one file per URL; one adapter installed",
+        "Companion .server file pairing, .dev/.prod suffix rules, void prepare after rename",
+        "ssr and prerender exports must be literal; island pages never ssr = false",
+        "Layouts: layout.<ext> placement, named layouts in _layouts/, string-literal layout exports; contradiction: markdown/island pages use `layout.island.<ext>` in the markdown page but `layout.<ext>` elsewhere",
+        "Head: site defaults in void.config.ts, per-request headDefaults in middleware, absolute social URLs on prerendered pages",
+        "Navigation: activeMatch, aria-current, data-void-active, data-void-pending, useNavigation, no javascript: URLs, loaders free of side effects because of prefetch",
+        "View transitions CSS; Vue state preservation; resolveOn timing in React"
+      ],
+      "destructive": [],
+      "lintCompanion": "Lint holds file naming and export literal rules; this skill holds layout/head/navigation choices."
+    },
+    {
+      "name": "void-platform-access-and-signup",
+      "description": "Controls who can sign up to a self-hosted Void platform and who is invited: `void platform signup open/restrict/allow/disallow`, invitations, first administrator. Use when opening or restricting signup or inviting users.",
+      "audience": "operator",
+      "norms": [
+        "cli/platform-users/7",
+        "cli/platform-users/8",
+        "platform/access/1",
+        "platform/access/2",
+        "platform/access/3",
+        "platform/access/4",
+        "platform/access/5",
+        "platform/access/6",
+        "platform/access/14",
+        "platform/access/15",
+        "platform/access/16",
+        "platform/access/17",
+        "platform/access/18",
+        "platform/access/19",
+        "platform/access/20"
+      ],
+      "commands": [
+        "void platform signup show",
+        "void platform signup open",
+        "void platform signup restrict",
+        "void platform signup allow <github|email> <pattern> [--note <text>]",
+        "void platform signup disallow <github|email> <pattern>",
+        "void platform signup remove <github|email> <pattern>",
+        "void platform signup allow identity <connection-id> <subject> [--note <text>]",
+        "void platform signup disallow identity <connection-id> <subject>",
+        "void platform invitation list [--page <n>] [--limit <n>]",
+        "void platform invitation send <email[,email...]>",
+        "void platform invitation revoke <id>"
+      ],
+      "procedures": [
+        "grant-platform-access"
+      ],
+      "outline": [
+        "First admin via the printed /admin setup instructions; connect --no-login then platform auth login; cloudflared behind Access",
+        "Check which connection is selected first",
+        "Before `signup open`, consider cookie sharing on the application domain",
+        "Allow patterns: quote wildcards; identity grants use connection ID and exact case-sensitive subject",
+        "Invitations: up to 100, emailed invite works only with a login giving the same verified email; share the /invite page if email fails",
+        "Suspend to remove a user; disallow only affects future signup",
+        "`void account link`: confirm identity shown"
+      ],
+      "destructive": [
+        "procedure grant-platform-access: signup open lets anyone deploy on the application domain"
+      ],
+      "lintCompanion": "None."
+    },
+    {
+      "name": "void-platform-development",
+      "description": "Develops, tests and releases the Void platform from source: local setup, schema migrations and compatibility, source-built runtime, GitHub webhook ingress, CI refs. Use when contributing to the platform or running a fork.",
+      "audience": "operator",
+      "norms": [
+        "platform/local/1",
+        "platform/local/2",
+        "platform/local/3",
+        "platform/local/4",
+        "platform/local/5",
+        "platform/local/6",
+        "platform/local/7",
+        "platform/local/8",
+        "platform/local/9",
+        "platform/local/10",
+        "platform/local/11",
+        "platform/runtime/1",
+        "platform/runtime/2",
+        "platform/runtime/3",
+        "platform/runtime/4",
+        "platform/runtime/5",
+        "platform/runtime/6",
+        "platform/runtime/7",
+        "platform/runtime/8",
+        "platform/runtime/9",
+        "platform/runtime/10",
+        "platform/runtime/11",
+        "platform/schema-ci/1",
+        "platform/schema-ci/2",
+        "platform/schema-ci/3",
+        "platform/schema-ci/4",
+        "platform/schema-ci/5",
+        "platform/schema-ci/6",
+        "platform/schema-ci/7"
+      ],
+      "commands": [],
+      "procedures": [
+        "deploy-source-built-runtime",
+        "deploy-github-webhook-ingress",
+        "change-platform-schema",
+        "run-platform-locally"
+      ],
+      "outline": [
+        "Local: .node-version, build:core, PostgreSQL, Docker only for builds, bypass only locally; disposable test databases",
+        "Schema: db:generate, review, append-only, compatible with previous Workers, drizzle/compatibility.json after testing",
+        "Source-built runtime: --runtime kept, clean checkout or VOID_PLATFORM_SOURCE_REVISION, one deployment at a time",
+        "Webhook ingress: separate hostname, secrets, no bypass policy",
+        "CI: protected environments, VOID_PLATFORM_PRODUCTION_REF, fork permissions"
+      ],
+      "destructive": [
+        "procedure deploy-source-built-runtime: Cancelling during migrations can leave the installation waiting for recovery",
+        "procedure change-platform-schema: Released migrations are append-only and must stay compatible with previous Workers",
+        "procedure run-platform-locally: Tests with VOID_TEST_DATABASE_URL clear tables"
+      ],
+      "lintCompanion": "None."
+    },
+    {
+      "name": "void-platform-disable-and-uninstall",
+      "description": "Takes a self-hosted Void platform offline or removes it: disable/enable, uninstall with --purge-data or --purge-resources, manual cleanup order, token revocation. Use when pausing, decommissioning or reinstalling a platform.",
+      "audience": "operator",
+      "norms": [
+        "cli/platform-installation/14",
+        "cli/platform-installation/15",
+        "platform/uninstall/1",
+        "platform/uninstall/2",
+        "platform/uninstall/3",
+        "platform/uninstall/4",
+        "platform/uninstall/5",
+        "platform/uninstall/6",
+        "platform/uninstall/7",
+        "platform/uninstall/8",
+        "platform/uninstall/9",
+        "platform/uninstall/10",
+        "platform/uninstall/11",
+        "platform/uninstall/12",
+        "platform/uninstall/13",
+        "platform/uninstall/14",
+        "platform/uninstall/15",
+        "platform/uninstall/16",
+        "platform/uninstall/17"
+      ],
+      "commands": [
+        "void platform disable [id]",
+        "void platform enable [id]",
+        "void platform uninstall [id]"
+      ],
+      "procedures": [
+        "disable-and-enable-platform",
+        "uninstall-platform"
+      ],
+      "outline": [
+        "Disable: traffic and API are rejected, queue messages retried every five minutes; plan a dead-letter queue; enable with --plan",
+        "Uninstall retains data unless --purge-data; --purge-resources deletes Workers, queues, R2, AI Gateway, DNS and routes: delete all projects and disable Zero Trust first, use an edit-permission token, nobody else changing Workers",
+        "Partial uninstall: fix named resource, rerun the same command",
+        "Manual cleanup order after a finished uninstall; revoke tokens; delete local record and recovery file; reinstall needs a new empty database"
+      ],
+      "destructive": [
+        "void platform disable [id]",
+        "void platform uninstall [id]",
+        "procedure disable-and-enable-platform: Traffic and API rejected while disabled; queue messages may expire",
+        "procedure uninstall-platform: --purge-resources deletes Workers, Queues, R2 bucket, AI Gateway, DNS, routes, Access resources"
+      ],
+      "lintCompanion": "None."
+    },
+    {
+      "name": "void-platform-email-admin",
+      "description": "Administers email on a self-hosted Void platform: sending policy, per-project limits, mail domains, Email Routing rule limits, cross-account zones. Use when configuring who the shared sender reaches or registering a domain for a project.",
+      "audience": "operator",
+      "norms": [
+        "cli/platform-email/6",
+        "platform/email/1",
+        "platform/email/2",
+        "platform/email/3",
+        "platform/email/7",
+        "platform/email/8",
+        "platform/email/9",
+        "platform/email/14",
+        "platform/email/15",
+        "platform/email/16",
+        "platform/email/17",
+        "platform/email/18",
+        "platform/email/19",
+        "platform/email/20",
+        "platform/email/21",
+        "platform/email/27",
+        "platform/email/28",
+        "platform/email/29"
+      ],
+      "commands": [
+        "void platform email policy",
+        "void platform email policy-set <verified|domains|any> [--domains <domain[,domain...]>]",
+        "void platform email settings",
+        "void platform email settings-set --domains <self-serve|admin>",
+        "void platform email limit <project-id|slug> [--monthly <n>] [--burst <n>]",
+        "void platform email logs <project-id|slug> [--page <n>] [--limit <n>] [--json]",
+        "void platform email domains [--project <id|slug>]",
+        "void platform email domain-add <domain> --project <id|slug> [--token-stdin] [--outbound-only]",
+        "void platform email domain-status <domain>",
+        "void platform email domain-sync <domain>",
+        "void platform email domain-rotate-secret <domain>"
+      ],
+      "procedures": [
+        "register-email-domain-for-project"
+      ],
+      "outline": [
+        "Policy verified/domains/any: widening affects the shared sender",
+        "Mind the 200-rule Email Routing limit and conflicting rules",
+        "Register zone apexes in the platform account; other accounts via scoped token on stdin",
+        "domain-add then domain-sync; Workers Paid for sending onboarding; runtime token email permissions",
+        "Outbound-only domains: DNS conflicts at cf-bounce and _dmarc",
+        "Caps count every started attempt; logs retained 30 days after delete"
+      ],
+      "destructive": [
+        "procedure register-email-domain-for-project: Removal of a domain stops sending"
+      ],
+      "lintCompanion": "None."
+    },
+    {
+      "name": "void-platform-email-recovery",
+      "description": "Resolves interrupted email operations on a Void platform: attempt-resolve, operation-resolve, shared-recipient-resolve, domain-remove token recovery. Use when an email send or Cloudflare mutation timed out.",
+      "audience": "operator",
+      "norms": [
+        "cli/platform-email/1",
+        "cli/platform-email/2",
+        "cli/platform-email/3",
+        "cli/platform-email/4",
+        "cli/platform-email/5",
+        "platform/email/4",
+        "platform/email/5",
+        "platform/email/6",
+        "platform/email/10",
+        "platform/email/11",
+        "platform/email/12",
+        "platform/email/13",
+        "platform/email/22",
+        "platform/email/23",
+        "platform/email/24",
+        "platform/email/25",
+        "platform/email/26"
+      ],
+      "commands": [
+        "void platform email attempts [--project <id|slug>] [--page <n>] [--limit <n>]",
+        "void platform email attempt-resolve <attempt-id> --ended --reason <text>",
+        "void platform email operation-resolve <operation-id> --ended --outcome <applied|not-applied> --reason <text>",
+        "void platform email shared-recipients [--project <id|slug>] [--page <n>] [--limit <n>]",
+        "void platform email shared-recipient-resolve <recipient-id> --ended --outcome <applied|not-applied> --reason <text>",
+        "void platform email domain-remove <domain> [--token-stdin]"
+      ],
+      "procedures": [
+        "recover-interrupted-email-operations"
+      ],
+      "outline": [
+        "Confirm the original execution ended",
+        "Wait at least 24 hours; elapsed time alone is never permission",
+        "Preview with --plan, inspect provider state, then --yes with applied or not-applied by evidence",
+        "Audit reason holds no addresses",
+        "Same platform version that created the intent"
+      ],
+      "destructive": [
+        "void platform email domain-remove <domain> [--token-stdin]",
+        "procedure recover-interrupted-email-operations: Wrongly resolving can duplicate or lose provider writes"
+      ],
+      "lintCompanion": "None."
+    },
+    {
+      "name": "void-platform-install",
+      "description": "Runs the self-hosted Void platform install and domain setup: `void platform install` plan and apply, login methods, Access, runtime logs level, storage location, `void platform domain set`, resume. Use when installing, adding the first application domain, or enabling project custom domains.",
+      "audience": "operator",
+      "norms": [
+        "cli/platform-installation/1",
+        "cli/platform-installation/2",
+        "cli/platform-installation/3",
+        "cli/platform-installation/4",
+        "cli/platform-installation/5",
+        "cli/platform-installation/6",
+        "cli/platform-installation/7",
+        "cli/platform-installation/8",
+        "cli/platform-installation/12",
+        "cli/platform-installation/16",
+        "platform/domains/1",
+        "platform/domains/2",
+        "platform/domains/3",
+        "platform/domains/4",
+        "platform/domains/5",
+        "platform/domains/6",
+        "platform/domains/7",
+        "platform/domains/8",
+        "platform/domains/9",
+        "platform/domains/10",
+        "platform/domains/11",
+        "platform/domains/12",
+        "platform/domains/13",
+        "platform/domains/14",
+        "platform/domains/15",
+        "platform/setup/1",
+        "platform/setup/2",
+        "platform/setup/3",
+        "platform/setup/4",
+        "platform/setup/5",
+        "platform/setup/9",
+        "platform/setup/10",
+        "platform/setup/11",
+        "platform/setup/17",
+        "platform/setup/18",
+        "platform/setup/19",
+        "platform/setup/20",
+        "platform/setup/21",
+        "platform/setup/22",
+        "platform/setup/23",
+        "platform/setup/24"
+      ],
+      "commands": [
+        "void platform install [options] [--yes]",
+        "void platform install --resume --name <installation-id>",
+        "void platform domain set <domain>"
+      ],
+      "procedures": [
+        "install-platform",
+        "add-application-domain",
+        "enable-project-custom-domains"
+      ],
+      "outline": [
+        "Preview with --plan, apply the saved plan; use your own names; scope the management token to the zone; unset the token after install",
+        "Select every login method (none preselected); register the exact printed callback in the provider; GitHub OAuth app steps",
+        "Access for app protection: allow policies only, never everyone/bypass/service token; token scopes; hand-off to the zero-trust skill",
+        "--runtime-logs minimal when apps may leak personal data; --storage-location hints are best effort",
+        "Application domain: add only the first, never replace; wildcard conflicts, nested domains need a wildcard certificate, dashboard origin rules, callback URLs re-registered; custom domains need --dedicated-zone and cname record",
+        "Resume with the same checkpoint when zones wait for DNS; never start a second install"
+      ],
+      "destructive": [
+        "procedure install-platform: Database is claimed and cannot be swapped; credentials and keys generated only exist in local recovery files unless supplied",
+        "procedure add-application-domain: Replacing an application domain is unsupported"
+      ],
+      "lintCompanion": "None."
+    },
+    {
+      "name": "void-platform-install-prerequisites",
+      "description": "Prepares everything a self-hosted Void platform install needs: Cloudflare features (Workers for Platforms, R2, Analytics Engine), the PostgreSQL database and Hyperdrive, API tokens, signing keys, R2 keys, the shared mail zone. Use before running `void platform install` for the first time or when an install stops on a permission or Analytics Engine error.",
+      "audience": "operator",
+      "norms": [
+        "platform/credentials/1",
+        "platform/credentials/2",
+        "platform/credentials/3",
+        "platform/credentials/4",
+        "platform/credentials/5",
+        "platform/credentials/6",
+        "platform/credentials/7",
+        "platform/credentials/8",
+        "platform/credentials/9",
+        "platform/credentials/10",
+        "platform/credentials/11",
+        "platform/credentials/12",
+        "platform/credentials/13",
+        "platform/credentials/14",
+        "platform/credentials/15",
+        "platform/credentials/16",
+        "platform/credentials/17",
+        "platform/credentials/18",
+        "platform/credentials/19",
+        "platform/credentials/20",
+        "platform/credentials/21",
+        "platform/credentials/22",
+        "platform/prerequisites/1",
+        "platform/prerequisites/2",
+        "platform/prerequisites/3",
+        "platform/prerequisites/4",
+        "platform/prerequisites/5",
+        "platform/prerequisites/6",
+        "platform/prerequisites/7",
+        "platform/prerequisites/8",
+        "platform/prerequisites/9",
+        "platform/prerequisites/10",
+        "platform/prerequisites/11",
+        "platform/prerequisites/12",
+        "platform/prerequisites/13",
+        "platform/prerequisites/14",
+        "platform/prerequisites/15",
+        "platform/prerequisites/16"
+      ],
+      "commands": [],
+      "procedures": [
+        "enable-platform-email"
+      ],
+      "outline": [
+        "Enable Workers for Platforms, R2, Analytics Engine; handle error 10089 with a disposable Worker",
+        "Choose an unused installation name and a fresh dedicated PostgreSQL database (direct or session mode, no pooling; PlanetScale 5432, Neon unpooled, verify-full); the database cannot be swapped once claimed",
+        "Existing Hyperdrive: runtime user, SQL caching off",
+        "Create separate management and runtime tokens with the listed permissions; keep copies in a password manager",
+        "Keys: keep original JWT and project-encryption keys, never regenerate; generate without printing",
+        "Email: choose the shared mail zone and domain now (fixed for the install); runtime token scopes",
+        "Do not combine --workers-dev with application domain options; Node 24.22+/26.12+"
+      ],
+      "destructive": [
+        "procedure enable-platform-email: Domain and zone are chosen for the installation lifetime"
+      ],
+      "lintCompanion": "None."
+    },
+    {
+      "name": "void-platform-login-and-admin-recovery",
+      "description": "Manages login methods and Cloudflare Access company gate, and recovers administrator access: `void platform config auth ...` add/enable/disable/protection/recover/initialize. Use when adding a login provider, removing the gate, or an administrator is locked out.",
+      "audience": "operator",
+      "norms": [
+        "cli/platform-config/6",
+        "cli/platform-config/7",
+        "cli/platform-config/8",
+        "cli/platform-config/9",
+        "cli/platform-config/10",
+        "platform/access/7",
+        "platform/access/8",
+        "platform/access/9",
+        "platform/access/10",
+        "platform/access/11",
+        "platform/access/12",
+        "platform/access/13"
+      ],
+      "commands": [
+        "void platform config auth list",
+        "void platform config auth show company",
+        "void platform config auth add google",
+        "void platform config auth configure company",
+        "void platform config auth test company",
+        "void platform config auth link company",
+        "void platform config auth enable company",
+        "void platform config auth disable github",
+        "void platform config auth admission",
+        "void platform config auth protection show",
+        "void platform config auth protection enable --installation <id>",
+        "void platform config auth protection disable --installation <id>",
+        "void platform config auth recover company --installation <id> --file recovery.json",
+        "void platform config auth initialize"
+      ],
+      "procedures": [
+        "recover-administrator-login",
+        "change-company-access-gate"
+      ],
+      "outline": [
+        "Initialize auth config once on existing installations, then sign in again",
+        "Before disabling a method verify an alternative; the last cannot be disabled",
+        "Scripts: non-secret fields via --file, secrets via --client-secret-env",
+        "Gate enable/disable from the installing workstation: ends every human session; select another company rule before removing",
+        "Recovery: only the installation owner with Cloudflare and database authority and original keys; recovery file names the administrator; with --yes pin expectedIdentity and still log in"
+      ],
+      "destructive": [
+        "void platform config auth disable github",
+        "void platform config auth protection enable --installation <id>",
+        "void platform config auth protection disable --installation <id>",
+        "procedure recover-administrator-login: Changes who can administer the platform",
+        "procedure change-company-access-gate: Ends all human sessions; removal leaves Cloudflare applications behind"
+      ],
+      "lintCompanion": "None."
+    },
+    {
+      "name": "void-platform-operator-cli",
+      "description": "Runs operator commands safely and from CI: `void platform list/use/status/auth`, --plan then --yes, VOID_OPERATOR_TOKEN, event checks, timeouts, protected CI for install/upgrade/repair. Use when scripting platform administration or an operator command times out.",
+      "audience": "operator",
+      "norms": [
+        "cli/platform/1",
+        "cli/platform/2",
+        "cli/platform/3",
+        "cli/platform/4",
+        "cli/platform/5",
+        "platform/operations/1",
+        "platform/operations/2",
+        "platform/operations/3",
+        "platform/operations/4",
+        "platform/operations/5",
+        "platform/operations/6",
+        "platform/operations/7",
+        "platform/operations/8",
+        "platform/operations/9",
+        "platform/ci/1",
+        "platform/ci/3",
+        "platform/ci/4",
+        "platform/ci/5",
+        "platform/ci/6",
+        "platform/ci/7",
+        "platform/ci/8",
+        "platform/ci/9",
+        "platform/maintenance/22"
+      ],
+      "commands": [
+        "void platform list",
+        "void platform use [id]",
+        "void platform status [id]",
+        "void platform auth login [--provider <connection-id>] [--token-stdin]",
+        "void platform auth status",
+        "void platform auth logout",
+        "void platform auth token [--token-stdin]"
+      ],
+      "procedures": [
+        "operator-token-in-ci",
+        "preview-and-apply-platform-change"
+      ],
+      "outline": [
+        "Select the platform (--connection, VOID_API_URL, active); check before administrative commands",
+        "Preview with --plan, apply with --yes; never combine; check `system events` after",
+        "Timeout or lost connection: inspect objects and events before retrying; raise --timeout instead",
+        "CI: mint a fresh operator token per job, VOID_API_URL explicit, no shell tracing, repeat the exchange for jobs over an hour; platform credentials from protected secrets",
+        "CI install/upgrade/repair: same --plan options, --auth-config, --yes, stops when Workers were changed outside Void",
+        "Keep operator tokens separate from deploy tokens"
+      ],
+      "destructive": [
+        "procedure operator-token-in-ci: Tokens leaked via logs or shell tracing",
+        "procedure preview-and-apply-platform-change: Retrying a timed-out change can repeat partial work"
+      ],
+      "lintCompanion": "None."
+    },
+    {
+      "name": "void-platform-plans",
+      "description": "Edits plans, quotas and AI logging defaults on a self-hosted Void platform: `void platform config plans show/add/set/archive/remove/default/sync`. Use when changing limits, adding a plan or archiving one.",
+      "audience": "operator",
+      "norms": [
+        "cli/platform-config/1",
+        "cli/platform-config/2",
+        "cli/platform-config/3",
+        "cli/platform-config/4",
+        "cli/platform-config/5",
+        "platform/plans/1",
+        "platform/plans/2",
+        "platform/plans/3",
+        "platform/plans/4",
+        "platform/plans/5",
+        "platform/plans/6",
+        "platform/plans/7",
+        "platform/plans/8",
+        "platform/plans/9",
+        "platform/plans/10",
+        "platform/plans/11",
+        "platform/plans/12",
+        "platform/plans/13",
+        "platform/plans/14",
+        "platform/plans/15",
+        "platform/plans/16"
+      ],
+      "commands": [
+        "void platform config plans show [plan-id]",
+        "void platform config plans add <plan-id> --copy <existing-id> --name \"Team\"",
+        "void platform config plans set <plan-id> [--name \"Team\"] [--file plan.json]",
+        "void platform config plans reset <builtin-plan-id>",
+        "void platform config plans archive <plan-id>",
+        "void platform config plans restore <plan-id>",
+        "void platform config plans remove <plan-id> [--replacement <plan-id>]",
+        "void platform config plans default <plan-id>",
+        "void platform config plans sync"
+      ],
+      "procedures": [
+        "edit-plan-limits",
+        "archive-or-remove-plan"
+      ],
+      "outline": [
+        "Preview with --plan, apply with --yes; re-preview if the catalog changed",
+        "Limits are nonnegative whole numbers (0 unlimited); build timeouts max 60 minutes; cpuMsPerRequest within the ceiling; storage figures are informational",
+        "Review quota warnings; lowering can restrict existing apps",
+        "Pending work: plans show then sync --yes before further edits",
+        "Default plan affects new accounts only; assign existing with user plan; replacement needed to remove or archive the default",
+        "AI logging defaults: wait for publish (about 2 minutes); upgrade if unsupported"
+      ],
+      "destructive": [
+        "void platform config plans remove <plan-id> [--replacement <plan-id>]",
+        "procedure edit-plan-limits: Lowering quotas can restrict existing apps",
+        "procedure archive-or-remove-plan: Removal moves accounts to the replacement"
+      ],
+      "lintCompanion": "None."
+    },
+    {
+      "name": "void-platform-repair-and-recovery",
+      "description": "Repairs, rediscovers and restores a self-hosted Void platform: `void platform repair/discover`, setup codes, Workers changed outside Void, rotated keys, backups, disaster recovery. Use when the platform is broken, locked out, moved to another machine or restored from backup.",
+      "audience": "operator",
+      "norms": [
+        "cli/platform-installation/9",
+        "cli/platform-installation/10",
+        "cli/platform-installation/11",
+        "platform/maintenance/1",
+        "platform/maintenance/2",
+        "platform/maintenance/3",
+        "platform/maintenance/4",
+        "platform/maintenance/5",
+        "platform/maintenance/6",
+        "platform/maintenance/7",
+        "platform/maintenance/20",
+        "platform/maintenance/21",
+        "platform/maintenance/24",
+        "platform/maintenance/25",
+        "platform/maintenance/26",
+        "platform/maintenance/27",
+        "platform/maintenance/28",
+        "platform/maintenance/29",
+        "platform/maintenance/30",
+        "platform/maintenance/31"
+      ],
+      "commands": [
+        "void platform install --resume --name <installation-id>",
+        "void platform discover [--account <id>] [--installation <id-or-name>]",
+        "void platform repair [id]"
+      ],
+      "procedures": [
+        "resume-interrupted-install",
+        "repair-platform",
+        "platform-workers-changed-outside-void",
+        "manage-from-another-machine",
+        "disaster-recovery-restore"
+      ],
+      "outline": [
+        "Repair: new administrator setup code, login settings, callback URL; repair does not restore PostgreSQL rows or missing adopted resources",
+        "Workers edited outside Void: manage only through Void commands; the replace-configuration prompt removes manual variables (default No)",
+        "Another machine: discover, then supply database URL and recreation secrets",
+        "Back up signing and encryption keys and the PostgreSQL database as a coordinated set",
+        "Restore with traffic disabled; supply original identity and keyring; then discover, repair",
+        "Rerun the same command after interruption; resume an install with the same checkpoint"
+      ],
+      "destructive": [
+        "procedure resume-interrupted-install: Starting a second installation or regenerating keys breaks the saved checkpoint",
+        "procedure repair-platform: Repair does not restore data",
+        "procedure platform-workers-changed-outside-void: Accepting removes manually added variables",
+        "procedure disaster-recovery-restore: Restoring over live data; discovery does not recover data"
+      ],
+      "lintCompanion": "None."
+    },
+    {
+      "name": "void-platform-system-operations",
+      "description": "Performs deep platform operations: deployments, builds, worker rollbacks, asset migrations, proxy-token rotation, sandbox drain. Use during incidents on a self-hosted platform.",
+      "audience": "operator",
+      "norms": [
+        "cli/platform-operations/1",
+        "cli/platform-operations/2",
+        "cli/platform-operations/3",
+        "cli/platform-operations/4",
+        "cli/platform-operations/5",
+        "cli/platform-operations/6",
+        "cli/platform-operations/7"
+      ],
+      "commands": [
+        "void platform deployment list [--project <id-or-slug>] [--status <status>] [--search <text>] [--page <n>] [--limit <n>]",
+        "void platform deployment show <id>",
+        "void platform deployment cancel <id>",
+        "void platform deployment migrate-assets <id> [--cursor <cursor>] [--plan|--yes]",
+        "void platform deployment logs <id> [--since <time>] [--cursor <cursor>] [--limit <n>] [--follow]",
+        "void platform build show <id>",
+        "void platform build logs <id> [--since <sequence>] [--limit <n>] [--follow]",
+        "void platform system overview",
+        "void platform system health",
+        "void platform system cli-versions",
+        "void platform system asset-migrations [--page <n>] [--limit <n>]",
+        "void platform system events [--page <n>] [--limit <n>]",
+        "void platform system backfill-queue-tokens",
+        "void platform system sandbox-drain [--cursor <opaque-cursor>]",
+        "void platform system rotate-proxy-tokens [--project <id> | --all]",
+        "void platform worker list [--environment <production|staging>]",
+        "void platform worker show <worker-name> [--environment <production|staging>]",
+        "void platform worker rollback <worker-name> <version-id> [--environment <production|staging>]",
+        "void platform worker rollback-all [--environment <production|staging>]",
+        "void platform worker events [batch-id] [--environment <production|staging>]"
+      ],
+      "procedures": [],
+      "outline": [
+        "Cancel deployments only while pending, uploading, migrating or prerendering",
+        "migrate-assets: --plan, resume with --cursor",
+        "Logs: narrow window above 10,000 records; build logs need managed builds",
+        "rotate-proxy-tokens --plan then --yes",
+        "sandbox-drain is destructive and pauses traffic",
+        "`platform worker` commands are for hosted Void Cloud only; self-hosted uses lifecycle commands"
+      ],
+      "destructive": [
+        "void platform deployment cancel <id>",
+        "void platform system sandbox-drain [--cursor <opaque-cursor>]",
+        "void platform worker rollback <worker-name> <version-id> [--environment <production|staging>]",
+        "void platform worker rollback-all [--environment <production|staging>]"
+      ],
+      "lintCompanion": "None."
+    },
+    {
+      "name": "void-platform-upgrade-and-rollback",
+      "description": "Upgrades or rolls back a self-hosted Void platform: `void platform upgrade/rollback`, forward-only migrations, runtime files, credentials, proxy tokens, AI logging and runtime-log levels. Use when upgrading, an upgrade fails with traffic paused, or considering a rollback.",
+      "audience": "operator",
+      "norms": [
+        "cli/platform-installation/13",
+        "platform/maintenance/8",
+        "platform/maintenance/9",
+        "platform/maintenance/10",
+        "platform/maintenance/11",
+        "platform/maintenance/12",
+        "platform/maintenance/13",
+        "platform/maintenance/14",
+        "platform/maintenance/15",
+        "platform/maintenance/16",
+        "platform/maintenance/17",
+        "platform/maintenance/18",
+        "platform/maintenance/19",
+        "platform/maintenance/23"
+      ],
+      "commands": [
+        "void platform upgrade [id]",
+        "void platform rollback [id] --runtime <earlier-path>"
+      ],
+      "procedures": [
+        "upgrade-platform",
+        "rollback-platform"
+      ],
+      "outline": [
+        "Upgrade the platform before the team updates the CLI; preview with --plan",
+        "Migrations only move forward: rollback needs a declared-compatible runtime and the earlier runtime files; never below 0.26.0",
+        "Failed upgrade: `platform status`, fix, resume with the same runtime files",
+        "Credential replacement: only supply VOID_PLATFORM_* values to replace",
+        "Before rollback: runtime logs full, AI logging below 1.8.0, finish proxy-token rotations then rotate again",
+        "Runtime token needs Containers and Cloudchamber edit for Sandboxes"
+      ],
+      "destructive": [
+        "procedure upgrade-platform: Migrations move forward only; traffic can be paused",
+        "procedure rollback-platform: Migrations are not reversed; rollbacks to 0.26.0 or earlier break app credentials; logging may revert"
+      ],
+      "lintCompanion": "None."
+    },
+    {
+      "name": "void-platform-users-and-projects",
+      "description": "Administers users and projects on a self-hosted Void platform: suspend, delete, plan, project transfer, normalization, AI logging. Use when removing a user, transferring a project, or a deploy asks for normalization.",
+      "audience": "operator",
+      "norms": [
+        "cli/platform-users/1",
+        "cli/platform-users/2",
+        "cli/platform-users/3",
+        "cli/platform-users/4",
+        "cli/platform-users/5",
+        "cli/platform-users/6",
+        "cli/platform-users/9",
+        "platform/projects/1",
+        "platform/projects/3",
+        "platform/projects/4",
+        "platform/projects/5",
+        "platform/projects/6",
+        "platform/projects/7",
+        "platform/projects/8",
+        "platform/projects/9",
+        "platform/projects/10",
+        "platform/projects/11"
+      ],
+      "commands": [
+        "void platform user list [--search <text>] [--page <n>] [--limit <n>]",
+        "void platform user show <id>",
+        "void platform user plan <id> <plan-id>",
+        "void platform user suspend <id> [--reason <text>]",
+        "void platform user restore <id>",
+        "void platform user delete <id>",
+        "void platform project list [--user <user-id>] [--search <text>] [--page <n>] [--limit <n>]",
+        "void platform project show <id>",
+        "void platform project normalize <id> [--plan | --yes]",
+        "void platform project delete <id>",
+        "void platform project owner <project-id> <user-id>",
+        "void platform project ai-logging <project-id> <inherit|off|metadata|full> [--plan | --yes]"
+      ],
+      "procedures": [
+        "transfer-project-ownership"
+      ],
+      "outline": [
+        "Suspending blocks apps, cron and queues (messages drop after retries); suspend rather than disallow",
+        "Never remove the last active administrator",
+        "Transfer: preview, wait for builds/rollbacks, then new owner creates fresh CI credentials; inspect before retry",
+        "Delete user/project removes resources",
+        "normalize --plan then --yes",
+        "AI logging per project needs platform 1.8.0+; known error codes",
+        "Set budget and retention before opening signup"
+      ],
+      "destructive": [
+        "void platform user suspend <id> [--reason <text>]",
+        "void platform user delete <id>",
+        "void platform project delete <id>",
+        "procedure transfer-project-ownership: Existing CI deploy credentials revoked; owner usage accounting changes"
+      ],
+      "lintCompanion": "None."
+    },
+    {
+      "name": "void-platform-zero-trust",
+      "description": "Configures Cloudflare Zero Trust protection of Void projects: `void platform zero-trust`, `void project zero-trust`, Access policies, tokens, app Access at install, reconcile, disable. Use when protecting projects, a deploy is refused for protection state, or Zero Trust is stuck.",
+      "audience": "both",
+      "norms": [
+        "cli/platform-zero-trust/1",
+        "cli/platform-zero-trust/2",
+        "cli/platform-zero-trust/3",
+        "cli/platform-zero-trust/4",
+        "cli/platform-zero-trust/5",
+        "cli/project/6",
+        "platform/zero-trust/1",
+        "platform/zero-trust/2",
+        "platform/zero-trust/3",
+        "platform/zero-trust/4",
+        "platform/zero-trust/5",
+        "platform/zero-trust/6",
+        "platform/zero-trust/7",
+        "platform/zero-trust/8",
+        "platform/zero-trust/9",
+        "platform/zero-trust/10",
+        "platform/zero-trust/11",
+        "platform/zero-trust/12",
+        "platform/zero-trust/13",
+        "platform/zero-trust/14",
+        "platform/zero-trust/15",
+        "platform/zero-trust/16",
+        "platform/zero-trust/17",
+        "platform/zero-trust/18",
+        "platform/zero-trust/19",
+        "platform/zero-trust/20",
+        "platform/zero-trust/21",
+        "platform/zero-trust/22",
+        "platform/zero-trust/23",
+        "platform/setup/6",
+        "platform/setup/7",
+        "platform/setup/8",
+        "platform/setup/12",
+        "platform/setup/13",
+        "platform/setup/14",
+        "platform/setup/15",
+        "platform/setup/16"
+      ],
+      "commands": [
+        "void project zero-trust status [--project <slug>]",
+        "void project zero-trust protect [--project <slug>]",
+        "void project zero-trust public [--project <slug>]",
+        "void project zero-trust reconcile [--project <slug>]",
+        "void platform zero-trust status [--check]",
+        "void platform zero-trust configure",
+        "void platform zero-trust reconcile",
+        "void platform zero-trust disable",
+        "void platform zero-trust project-status <project-id>",
+        "void platform zero-trust project-protect <project-id>",
+        "void platform zero-trust project-public <project-id>",
+        "void platform zero-trust project-reconcile <project-id>"
+      ],
+      "procedures": [
+        "enable-project-zero-trust",
+        "disable-project-zero-trust",
+        "recover-zero-trust"
+      ],
+      "outline": [
+        "Select identity-based Allow policies only (Bypass, Service Auth, Everyone rejected); own API token; stay under 500 Access apps",
+        "configure --plan first; --existing-projects protected|public required once; token via stdin",
+        "Webhooks, CI and curl cannot pass protection: make the project public",
+        "Do not edit Void-managed Access apps; hostnames outside the application domain; reserved name void-platform-health",
+        "Stuck: reconcile platform before projects; restore renamed app names; replace expired token",
+        "Disable makes every project public; wait before uninstall",
+        "Project owner: `project zero-trust status/protect/public/reconcile`"
+      ],
+      "destructive": [
+        "void platform zero-trust configure",
+        "void platform zero-trust disable",
+        "procedure enable-project-zero-trust: Existing projects become protected or public according to the flag",
+        "procedure disable-project-zero-trust: Removes Access applications and makes every project public",
+        "procedure recover-zero-trust: Disable makes projects public"
+      ],
+      "lintCompanion": "None."
+    },
+    {
+      "name": "void-project-operations",
+      "description": "Operates a deployed Void project: `void project status/link/list/logs/requests/purge-cache/delete` and `void domain add/delete/list/status`. Use when debugging production errors, adding a custom domain, purging cache or deleting a project.",
+      "audience": "app-author",
+      "norms": [
+        "cli/domains/2",
+        "cli/domains/3",
+        "cli/domains/4",
+        "cli/domains/5",
+        "cli/project/1",
+        "cli/project/2",
+        "cli/project/12",
+        "cli/project/13",
+        "cli/project/17",
+        "cli/project/18",
+        "cli/project/19"
+      ],
+      "commands": [
+        "void domain add <hostname> [--project <name>]",
+        "void domain delete <hostname> [--project <name>]",
+        "void domain list [--project <name>]",
+        "void domain status <hostname> [--project <name>] [--verbose]",
+        "void project status [name]",
+        "void project link [name]",
+        "void project list",
+        "void project logs [--level <level>] [--filter <text>] [--range <duration>] [--deployment <id>]",
+        "void project requests [--status <filter>] [--range <duration>]",
+        "void project delete [name]",
+        "void project purge-cache [--project <name>]"
+      ],
+      "procedures": [],
+      "outline": [
+        "Status and link: Cloudflare targets take no project name, set cloudflare.name; link writes .void/project.json",
+        "Find errors: `project logs` (live tail on Cloudflare, --filter, --deployment) and `project requests --status 5xx` for edge errors that never reach the Worker",
+        "Domains: one hostname per call, no wildcards; direct Cloudflare edits config and applies at once, deleting the last needs a login or token; status shows only route presence",
+        "Purge cache is hosted-only; on Cloudflare redeploy or purge the ISR KV namespace",
+        "Delete: permanent, removes databases, KV, R2 and deployments; refused on direct Cloudflare, clean up by hand"
+      ],
+      "destructive": [
+        "void domain delete <hostname> [--project <name>]",
+        "void project delete [name]"
+      ],
+      "lintCompanion": "None."
+    },
+    {
+      "name": "void-project-setup",
+      "description": "Starts or adopts a Void project: `void init`, `void prepare`, `void info`, `void migrate`, agent instructions, the package-manager and Node requirements, and the first files to create. Use when creating a new Void app, adding Void to an existing one, running the CLI for the first time, or after a fresh clone when types are missing.",
+      "audience": "app-author",
+      "norms": [
+        "cli/cli/1",
+        "cli/cli/2",
+        "cli/cli/3",
+        "cli/cli/6",
+        "cli/setup/2",
+        "cli/setup/3",
+        "cli/setup/4",
+        "cli/setup/5",
+        "cli/setup/7",
+        "cli/setup/8",
+        "cli/setup/9",
+        "cli/setup/10",
+        "cli/setup/11",
+        "cli/setup/12",
+        "cli/setup/15",
+        "edge-integrations/agents/1",
+        "edge-integrations/agents/2",
+        "edge-integrations/agents/3",
+        "guide-core/guide-index/1",
+        "guide-core/quickstart/1",
+        "guide-core/quickstart/2",
+        "guide-core/quickstart/10",
+        "guide-core/quickstart/11",
+        "guide-core/deployment/11"
+      ],
+      "commands": [
+        "void init [--tsconfig] [--github] [--git | --no-git]",
+        "void prepare",
+        "void info [--json]",
+        "void migrate"
+      ],
+      "procedures": [],
+      "outline": [
+        "Decide: new project, existing app, or legacy void.json/wrangler config (init vs migrate)",
+        "Run the CLI through the project's package manager on a supported Node; pnpm build-script approvals; bun needs Node on PATH",
+        "What `void init` edits (deps, scripts, Vite config, tsconfig, AGENTS.md, skills, git) and its non-interactive flags",
+        "`void prepare` after clone and in CI before typecheck; what `.void/` and generated files are committed or ignored",
+        "`void info` before moving code that owns a persistent resource name",
+        "Where files go: routes/ vs pages/, db/, email/, crons/, queues/ (guide index)",
+        "Agents: read node_modules/void/docs, keep Void's skills linked to the installed package"
+      ],
+      "destructive": [],
+      "lintCompanion": "Lint holds file layout and import shapes; this skill holds the order of the first commands and what each one writes."
+    },
+    {
+      "name": "void-project-team",
+      "description": "Manages who can work on a Void project on a platform: `void project team invite/role/remove/revoke/leave/accept/decline`, roles reader, collaborator, admin. Use when inviting someone, an invitation fails, removing a member, or after accepting an invitation.",
+      "audience": "app-author",
+      "norms": [
+        "cli/project/3",
+        "cli/project/4",
+        "cli/project/5",
+        "platform/projects/2",
+        "platform/project-collaboration/3",
+        "platform/project-collaboration/4",
+        "platform/project-collaboration/5",
+        "platform/project-collaboration/6",
+        "platform/project-collaboration/7",
+        "platform/project-collaboration/8",
+        "platform/project-collaboration/9",
+        "platform/project-collaboration/10",
+        "platform/project-collaboration/11",
+        "platform/project-collaboration/12",
+        "platform/project-collaboration/13",
+        "platform/project-collaboration/14"
+      ],
+      "commands": [
+        "void project team list [--project <slug>]",
+        "void project team invite <email> --role <reader|collaborator|admin> [--project <slug>]",
+        "void project team invitations [--project <slug>]",
+        "void project team role <user-id> <reader|collaborator|admin> [--project <slug>]",
+        "void project team remove <user-id> [--project <slug>]",
+        "void project team revoke <invitation-id> [--project <slug>]",
+        "void project team leave [--project <slug>]",
+        "void project team pending",
+        "void project team accept <invitation-id>",
+        "void project team decline <invitation-id>"
+      ],
+      "procedures": [
+        "invite-and-accept-project-member",
+        "remove-project-member"
+      ],
+      "outline": [
+        "Invite only emails already registered on the same platform; roles: reader (view), collaborator (deploy), admin (also domains, email destinations, GitHub)",
+        "Invitations expire in seven days and are bound to the invited account; re-invite instead of forwarding IDs; share the ID if email fails",
+        "After accepting, run `void project link` in a checkout not linked elsewhere; use VOID_API_URL with VOID_TOKEN",
+        "Removing or demoting: check status, and replace code you no longer trust since it keeps running; do not roll back to a removed member's deployment",
+        "Owners cannot leave: an installation administrator transfers ownership first",
+        "--project for teams other than the linked one"
+      ],
+      "destructive": [
+        "void project team remove <user-id> [--project <slug>]",
+        "void project team revoke <invitation-id> [--project <slug>]",
+        "void project team leave [--project <slug>]",
+        "procedure remove-project-member: Removed member's deployed code keeps running; platform credentials replaced"
+      ],
+      "lintCompanion": "None."
+    },
+    {
+      "name": "void-queues-and-cron",
+      "description": "Writes Void queues and cron jobs: queues/ files, delivery exports, retries, maxConcurrency, no dead-letter queue, scheduled handlers, `void gen cron/queue`. Use when adding background jobs or schedules, or debugging a consumer.",
+      "audience": "app-author",
+      "norms": [
+        "services/queues/2",
+        "services/queues/10",
+        "services/queues/14",
+        "services/queues/15",
+        "services/queues/16",
+        "services/queues/17",
+        "services/queues/18",
+        "services/queues/19",
+        "services/queues/20",
+        "services/jobs/5",
+        "services/jobs/6",
+        "services/jobs/7",
+        "services/jobs/8"
+      ],
+      "commands": [
+        "void gen cron <name>",
+        "void gen queue <name>"
+      ],
+      "procedures": [],
+      "outline": [
+        "Unique queue names; one consumer per queue; Worker-name length limit",
+        "Delivery exports and maxConcurrency (platform version)",
+        "Plan for lost messages: no DLQ",
+        "Test locally via /__void/queue and /__void/scheduled; tokens",
+        "Cron limits per project; scheduled token on frameworks"
+      ],
+      "destructive": [],
+      "lintCompanion": "Lint holds file shapes; this skill holds failure design."
+    },
+    {
+      "name": "void-react-router",
+      "description": "Sets up Void in a React Router app: env via void/env, and what Void rejects in route files. Use when adding Void to React Router or a build rejects a route file.",
+      "audience": "app-author",
+      "norms": [
+        "edge-integrations/frameworks-react-router/6",
+        "edge-integrations/frameworks-react-router/8"
+      ],
+      "commands": [],
+      "procedures": [],
+      "outline": [
+        "Read the meta-framework basics first",
+        "Declare env in env.ts, read void/env",
+        "Void rejects server-secret reads in route files that also hold browser components: move them to loader/action or a server module"
+      ],
+      "destructive": [],
+      "lintCompanion": "Lint holds config shapes."
+    },
+    {
+      "name": "void-realtime-sse-and-live",
+      "description": "Chooses and uses Void SSE and Live: eventStream, connectEventStream, publish, topics, limits, replay. Use when streaming server events or broadcasting to subscribers.",
+      "audience": "app-author",
+      "norms": [
+        "services/live/1",
+        "services/live/11",
+        "services/live/13",
+        "services/live/14",
+        "services/live/16",
+        "services/live/18",
+        "services/live/20",
+        "services/live/21",
+        "services/live/22",
+        "services/sse/1",
+        "services/sse/5",
+        "services/sse/7",
+        "services/sse/10",
+        "services/sse/11",
+        "services/sse/12",
+        "services/sse/13"
+      ],
+      "commands": [],
+      "procedures": [],
+      "outline": [
+        "Choose sse vs live vs websockets",
+        "Auth same as JSON routes",
+        "Closed stream errors",
+        "Topics, limits, at-most-once, replay from own storage",
+        "Typed URLs and parse options"
+      ],
+      "destructive": [],
+      "lintCompanion": "Lint holds import checks; this skill holds the choice."
+    },
+    {
+      "name": "void-remote-dev",
+      "description": "Develops against a deployed project's data with Void remote mode. Use when enabling remote: true or VOID_REMOTE.",
+      "audience": "app-author",
+      "norms": [
+        "guide-core/remote-dev/1",
+        "guide-core/remote-dev/2",
+        "guide-core/remote-dev/3",
+        "guide-core/remote-dev/4",
+        "guide-core/remote-dev/5",
+        "guide-core/remote-dev/6",
+        "guide-core/remote-dev/7",
+        "reference/config/19"
+      ],
+      "commands": [],
+      "procedures": [],
+      "outline": [
+        "Use staging",
+        "Prerequisites: connect, link, deploy",
+        "Enable/disable",
+        "R2 and D1 limitations in remote mode"
+      ],
+      "destructive": [],
+      "lintCompanion": "Lint holds config literals; this skill holds the safety note."
+    },
+    {
+      "name": "void-routing-rules",
+      "description": "Writes Void routing rules: redirects, rewrites, fallbacks, headers, _redirects/_headers files, c.rewrite(), c.redirect(), alwaysUseHttps. Use when moving URLs, serving content at another path, adding cache or security headers, or HTTPS redirects.",
+      "audience": "app-author",
+      "norms": [
+        "edge-integrations/headers/3",
+        "edge-integrations/headers/4",
+        "edge-integrations/headers/8",
+        "edge-integrations/headers/10",
+        "edge-integrations/headers/11",
+        "edge-integrations/redirects/4",
+        "edge-integrations/redirects/5",
+        "edge-integrations/redirects/7",
+        "edge-integrations/redirects/8",
+        "edge-integrations/redirects/10",
+        "edge-integrations/redirects/11",
+        "edge-integrations/redirects/12",
+        "edge-integrations/redirects/13",
+        "edge-integrations/redirects/14",
+        "edge-integrations/rewrites/1",
+        "edge-integrations/rewrites/5",
+        "edge-integrations/rewrites/6",
+        "edge-integrations/rewrites/9",
+        "edge-integrations/rewrites/10",
+        "edge-integrations/rewrites/12",
+        "edge-integrations/rewrites/14",
+        "edge-integrations/rewrites/16",
+        "edge-integrations/rewrites/17",
+        "edge-integrations/rewrites/18",
+        "edge-integrations/rewrites/19",
+        "edge-integrations/cloudflare/27",
+        "reference/rewrites/5",
+        "reference/rewrites/6",
+        "reference/rewrites/7",
+        "reference/rewrites/8",
+        "reference/rewrites/9",
+        "reference/config/47"
+      ],
+      "commands": [],
+      "procedures": [],
+      "outline": [
+        "Redirect vs rewrite vs fallback: choose by whether the address changes and whether real routes win",
+        "Rule order: config beats _redirects, first match wins in a group; last header rule wins",
+        "Redirects run before the Worker; host-prefixed rules need void domain add",
+        "c.rewrite: same-origin paths only, never assets, guard side effects with isRewritten, keep authorization",
+        "Header rules vs ISR pages, cookies on shared domains",
+        "Framework direct-Cloudflare deployments configure these in the framework"
+      ],
+      "destructive": [],
+      "lintCompanion": "Lint holds rule shapes; this skill holds the interaction between rules and the cache."
+    },
+    {
+      "name": "void-sandboxes",
+      "description": "Runs code in Void Sandboxes: requirements, process and file APIs, images, ephemerality. Use when adding sandboxed execution or custom images.",
+      "audience": "app-author",
+      "norms": [
+        "services/sandboxes/1",
+        "services/sandboxes/6",
+        "services/sandboxes/8",
+        "services/sandboxes/9",
+        "services/sandboxes/11",
+        "services/sandboxes/14",
+        "services/sandboxes/15",
+        "services/sandboxes/16",
+        "services/sandboxes/17"
+      ],
+      "commands": [],
+      "procedures": [],
+      "outline": [
+        "Requirements: Workers Paid, Containers, Docker",
+        "Await long commands",
+        "Ephemeral storage: persist elsewhere",
+        "enableInternet/labels at next start",
+        "Custom image and instanceType",
+        "Usage-limit retry"
+      ],
+      "destructive": [],
+      "lintCompanion": "Lint holds import shapes."
+    },
+    {
+      "name": "void-self-hosted-first-deploy",
+      "description": "Does the first deploy of an app to a self-hosted Void platform and knows what that platform lacks. Use when targeting a self-hosted Void platform for the first time or wondering why a hosted feature is missing.",
+      "audience": "app-author",
+      "norms": [
+        "platform/first-deployment/1",
+        "platform/first-deployment/5",
+        "platform/self-hosted-platform/1",
+        "platform/self-hosted-platform/2",
+        "platform/self-hosted-platform/3",
+        "platform/self-hosted-platform/5"
+      ],
+      "commands": [],
+      "procedures": [
+        "connect-cli-and-first-deploy"
+      ],
+      "outline": [
+        "Use a fresh app directory: a linked app keeps its destination",
+        "`void connect <url>`, `void project link`, then deploy",
+        "Commit the project link by changing .gitignore from `.void` to `.void/*` plus `!.void/project.json`",
+        "No user dashboard or managed GitHub builds on a standard install; email, custom domains, Sandboxes need the operator to enable them (shared mail zone, --custom-domains, Workers Paid)",
+        "Where credentials for CI come from: see the CI credentials skill"
+      ],
+      "destructive": [],
+      "lintCompanion": "None; this is platform-side knowledge for app authors."
+    },
+    {
+      "name": "void-server-routes-and-middleware",
+      "description": "Writes Void server routes and middleware: defineHandler, withValidator, param naming, .dev/.prod route files, per-route middleware, basicAuth, defineRender asset tags. Use when adding an API endpoint, validating input, protecting a route with basicAuth, or writing middleware.",
+      "audience": "app-author",
+      "norms": [
+        "guide-core/server-routing/4",
+        "guide-core/server-routing/5",
+        "guide-core/server-routing/6",
+        "guide-core/server-routing/14",
+        "guide-core/server-routing/15",
+        "guide-core/server-routing/16",
+        "guide-core/server-routing/21",
+        "guide-core/server-routing/22",
+        "guide-core/server-routing/24",
+        "reference/handlers/3",
+        "reference/handlers/10",
+        "reference/handlers/11"
+      ],
+      "commands": [
+        "void gen route <path> [--methods get,post,...]",
+        "void gen middleware <name>"
+      ],
+      "procedures": [],
+      "outline": [
+        "Route file naming; no sibling routes differing only by param; .dev/.prod do not provision production resources",
+        "Validate with withValidator: drizzle-derived or Standard Schema; install the validator library",
+        "Per-route middleware before the final handler",
+        "basicAuth: contradiction, docs show `export default basicAuth({...})` in middleware files and elsewhere as a call inside defineHandler; credentials from env, non-empty, bypass middleware placed before it",
+        "defineRender: asset tags in head and body"
+      ],
+      "destructive": [],
+      "lintCompanion": "Lint holds validator and handler shapes; this skill holds design of bypasses and credentials."
+    },
+    {
+      "name": "void-ssr-and-static-sites",
+      "description": "Sets up custom SSR entries, static site generation and static assets in Void: `output: 'static'`, getPrerenderPaths, 404 pages, trailing slashes, appType 'static', routing.notFound. Use when building a static or pre-rendered site, writing a custom SSR entry, or serving assets.",
+      "audience": "app-author",
+      "norms": [
+        "edge-integrations/static-assets/2",
+        "edge-integrations/static-assets/7",
+        "edge-integrations/static-assets/8",
+        "edge-integrations/static-assets/9",
+        "guide-core/app-types/5",
+        "guide-core/app-types/6",
+        "guide-core/app-types/7",
+        "guide-core/app-types/9",
+        "guide-core/ssr/1",
+        "guide-core/ssr/2",
+        "guide-core/ssr/5",
+        "guide-core/ssg/1",
+        "guide-core/ssg/5",
+        "guide-core/ssg/7",
+        "guide-core/ssg/8",
+        "guide-core/ssg/9",
+        "guide-core/ssg/11",
+        "guide-core/ssg/12",
+        "reference/handlers/13",
+        "reference/config/54"
+      ],
+      "commands": [
+        "void gen ssr [--react | --vue | --svelte | --solid]"
+      ],
+      "procedures": [],
+      "outline": [
+        "SSR: src/main.ssr.ts(x) and one client entry; hydrate the same root",
+        "Static: output 'static' vs inference.appType 'static' (different settings); SSG plus backend",
+        "404 handling and hosting status; trailing slash settings on Cloudflare",
+        "Assets: caching policy, run_worker_first, _headers/_redirects Worker cost, publicDir",
+        "Frameworks that ignore routing.notFound; invalid getPrerenderPaths entries reported at build",
+        "defineRender asset tags"
+      ],
+      "destructive": [],
+      "lintCompanion": "Lint holds config literals; this skill holds when to choose static."
+    },
+    {
+      "name": "void-sveltekit",
+      "description": "Sets up Void in a SvelteKit app: supported versions, tsconfig extends and types, `void prepare` ordering, subpath imports, env, raw bindings. Use when adding Void to SvelteKit or typecheck fails before sync.",
+      "audience": "app-author",
+      "norms": [
+        "edge-integrations/frameworks-sveltekit/1",
+        "edge-integrations/frameworks-sveltekit/3",
+        "edge-integrations/frameworks-sveltekit/4",
+        "edge-integrations/frameworks-sveltekit/5",
+        "edge-integrations/frameworks-sveltekit/9",
+        "edge-integrations/frameworks-sveltekit/10"
+      ],
+      "commands": [],
+      "procedures": [],
+      "outline": [
+        "Read the meta-framework basics first",
+        "SvelteKit 3 (adapter-cloudflare 8) or 2.62+ (adapter 7)",
+        "tsconfig: extend $app/tsconfig and .void/tsconfig.json, types, includes; run void prepare after clone and before typecheck in CI",
+        "Subpath imports (#lib) in Kit 3",
+        "Env via void/env; raw bindings via cloudflare:workers (Kit 3) vs platform.env (Kit 2)"
+      ],
+      "destructive": [],
+      "lintCompanion": "Lint holds config shapes."
+    },
+    {
+      "name": "void-tanstack-start",
+      "description": "Sets up Void in a TanStack Start app: env via void/env with VITE_* client keys, raw bindings from cloudflare:workers, Durable Object classes under cloudflare. Use when adding Void to TanStack Start or declaring Durable Objects for deploy.",
+      "audience": "app-author",
+      "norms": [
+        "edge-integrations/frameworks-tanstack-start/6",
+        "edge-integrations/frameworks-tanstack-start/8"
+      ],
+      "commands": [],
+      "procedures": [],
+      "outline": [
+        "Read the meta-framework basics first",
+        "Declare env in env.ts, read via void/env; client keys VITE_*",
+        "Declare exported Durable Object or Workflow classes under cloudflare (e.g. cloudflare.durable_objects) for direct Cloudflare deploys"
+      ],
+      "destructive": [],
+      "lintCompanion": "Lint holds config and plugin shapes; this skill holds the two judgement items."
+    },
+    {
+      "name": "void-testing",
+      "description": "Tests a Void app: replacing void/db, void/kv and void/storage in unit tests, capturing sent and received email with void/email/testing, harness choice per framework. Use when writing or fixing tests for handlers, pages or email code in a Void app.",
+      "audience": "app-author",
+      "norms": [
+        "guide-core/testing/3",
+        "guide-core/testing/4"
+      ],
+      "commands": [],
+      "procedures": [],
+      "outline": [
+        "Tests run without a Worker or local migrations: replace binding modules (void/db, void/kv, void/storage) in the test setup; contradiction to note: guide says mock them, a project lint may forbid per-file vi.mock, so do it once in shared setup",
+        "Capture sent and received email with void/email/testing",
+        "Inbound handlers: createInboundTestHarness with the full project-prefixed address (slug: null on direct Cloudflare)",
+        "Frameworks without a dev inbox (SvelteKit, Nuxt, Analog, Astro): createEmailTestHarness"
+      ],
+      "destructive": [],
+      "lintCompanion": "Lint holds import bans for test files; this skill holds which harness to use."
+    },
+    {
+      "name": "void-types-and-typed-urls",
+      "description": "Gets Void's generated types, tsconfig and typed URLs right: `.void/tsconfig.json`, CloudBindings and CloudContextVariables augmentation, `routing.typedRoutes`, `routeUrl()`, `void/client` fetch and FetchError. Use when types are missing after a clone, `c.env` or `c.get()` is untyped, a route URL needs type checking, or a typed fetch call misbehaves.",
+      "audience": "app-author",
+      "norms": [
+        "guide-core/type-safety/1",
+        "guide-core/type-safety/17",
+        "guide-core/type-safety/21",
+        "guide-core/type-safety/25",
+        "guide-core/type-safety/26",
+        "guide-core/type-safety/27",
+        "guide-core/type-safety/28",
+        "guide-core/type-safety/29",
+        "guide-core/typed-fetch/5",
+        "reference/client/4",
+        "reference/client/9",
+        "reference/env/5",
+        "reference/env/6",
+        "reference/types/5",
+        "reference/structure/21",
+        "reference/structure/23",
+        "reference/config/43"
+      ],
+      "commands": [],
+      "procedures": [],
+      "outline": [
+        "tsconfig extends .void/tsconfig.json (`void init --tsconfig`); run void prepare in CI and after clone",
+        "Type bindings (cloudflare.* + void prepare, CloudBindings) versus context variables (CloudContextVariables), and void/env references",
+        "Let handler return types infer; do not annotate responses",
+        "Enable routing.typedRoutes, restart dev or prepare; routeUrl() requires every path parameter and validates untrusted URLs",
+        "void/client fetch: undefined on 204, FetchError on non-2xx, retries on 408/429/5xx so set retry: 0 on non-idempotent calls"
+      ],
+      "destructive": [],
+      "lintCompanion": "Lint holds import and annotation shapes; this skill holds how to regenerate and read type errors."
+    },
+    {
+      "name": "void-websockets",
+      "description": "Writes Void WebSocket routes: defineRoom, defineWebSocket, getRoom, connection identity, route moves. Use when adding realtime rooms or moving a deployed socket route.",
+      "audience": "app-author",
+      "norms": [
+        "services/websockets/1",
+        "services/websockets/2",
+        "services/websockets/7",
+        "services/websockets/12",
+        "services/websockets/13",
+        "services/websockets/15",
+        "services/websockets/16",
+        "services/websockets/20",
+        "services/websockets/22",
+        "services/websockets/26",
+        "services/websockets/27",
+        "services/websockets/29",
+        "services/websockets/30",
+        "services/websockets/32",
+        "services/websockets/33"
+      ],
+      "commands": [],
+      "procedures": [],
+      "outline": [
+        "Native apps on Cloudflare only",
+        "defineRoom vs defineWebSocket",
+        "Identity from getSession, re-check bans in onMessage",
+        "getRoom params and env",
+        "Moving routes: void info, name, key callback",
+        "One socket one route"
+      ],
+      "destructive": [],
+      "lintCompanion": "Lint holds file shapes; this skill holds identity and move safety."
+    }
+  ],
+  "waived": [
+    {
+      "norm": "cli/deploy/29",
+      "reason": "duplicate of edge-integrations/cloudflare/23 (production server values via void secret put)"
+    },
+    {
+      "norm": "cli/deploy/30",
+      "reason": "duplicate of edge-integrations/cloudflare/22 (run void db generate and commit before deploying)"
+    },
+    {
+      "norm": "cli/github/14",
+      "reason": "duplicate of cli/github/13 (--yes required to disconnect in non-interactive shells)"
+    },
+    {
+      "norm": "edge-integrations/static-assets/6",
+      "reason": "duplicate of edge-integrations/frameworks-overview/11 (routing.notFound ignored in SvelteKit, Nuxt, Analog, Astro)"
+    },
+    {
+      "norm": "edge-integrations/cloudflare/8",
+      "reason": "duplicate of reference/config/2 (commit void.lock.json)"
+    },
+    {
+      "norm": "edge-integrations/cloudflare/30",
+      "reason": "duplicate of services/durable-state/10 (never delete or reorder deployed DO migrations)"
+    },
+    {
+      "norm": "edge-integrations/frameworks-overview/14",
+      "reason": "duplicate of reference/config/2 (commit void.config.ts and void.lock.json)"
+    },
+    {
+      "norm": "guide-core/deployment/7",
+      "reason": "duplicate of guide-core/env-vars/7 and edge-integrations/cloudflare/10 (declare in env.ts, secrets via void secret put)"
+    },
+    {
+      "norm": "reference/durable/3",
+      "reason": "duplicate of services/durable-state/12 (run void info before renaming a durable-state file)"
+    },
+    {
+      "norm": "reference/durable/4",
+      "reason": "duplicate of services/durable-state/13 (keep names passed to get() unchanged)"
+    },
+    {
+      "norm": "reference/durable/6",
+      "reason": "duplicate of services/websockets/26 (void info before moving a WebSocket route)"
+    },
+    {
+      "norm": "reference/durable/8",
+      "reason": "duplicate of services/websockets/30 (keep old key via key callback when renaming parameters)"
+    },
+    {
+      "norm": "reference/config/22",
+      "reason": "duplicate of services/sandboxes/17 (custom sandbox images need the Sandbox SDK helper)"
+    },
+    {
+      "norm": "reference/config/24",
+      "reason": "duplicate of services/sandboxes/1 (Sandbox needs Workers Paid and Containers)"
+    },
+    {
+      "norm": "services/websockets/34",
+      "reason": "duplicate of services/durable-state/2 (commit void.lock.json, keep migration order)"
+    }
+  ]
+}

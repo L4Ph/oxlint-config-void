@@ -1,5 +1,5 @@
-import { isPrivate, isTestFile, locate } from "../lib/project.ts";
-import { defineRule } from "../rule.ts";
+import { isPrivate, isTestFile, locate } from "../../lib/project.ts";
+import { defineRule } from "../../rule.ts";
 
 /**
  * A test file in `routes/` or `pages/` is a route to Void: it scans those directories and
@@ -12,6 +12,7 @@ export default defineRule({
     docs: {
       description: "Keep test files out of routes/ and pages/, where Void would serve them.",
       norms: ["guide-core/testing/2"],
+      scope: "void",
     },
     messages: {
       test: "`{{path}}` is a test file inside `{{dir}}/`, where Void treats every file as a route. Move it to `tests/` or `src/`, or give it (or a directory above it) a name that starts with `_`.",
