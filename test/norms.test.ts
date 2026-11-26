@@ -8,12 +8,15 @@ const root = fileURLToPath(new URL("..", import.meta.url));
 const docsRoot = join(root, "node_modules/void/docs");
 const normsDir = join(root, "norms");
 
+type Norm = { id: string; doc: string; line: number; quote: string; enforcement: string };
+type Area = { pages: { doc: string }[]; norms: Norm[] };
+
 const areas = readdirSync(normsDir)
   .filter((name) => name.endsWith(".json"))
-  .map((name) => ({ name, ...JSON.parse(readFileSync(join(normsDir, name), "utf8")) }));
+  .map((name): Area => JSON.parse(readFileSync(join(normsDir, name), "utf8")));
 const norms = areas.flatMap((area) => area.norms);
 
-function markdownFiles(dir) {
+function markdownFiles(dir: string): string[] {
   return readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
     const path = join(dir, entry.name);
     if (entry.isDirectory()) return markdownFiles(path);
@@ -21,12 +24,14 @@ function markdownFiles(dir) {
   });
 }
 
+const byName = (a: string, b: string) => a.localeCompare(b);
+
 const ENFORCEMENT = ["void-build", "lint", "lint-types", "lint-partial", "skill"];
 
 describe("the norms catalog", () => {
   it("covers every page of the installed Void docs, each exactly once", () => {
-    const listed = areas.flatMap((area) => area.pages.map((page) => page.doc)).sort();
-    expect(listed).toEqual(markdownFiles(docsRoot).sort());
+    const listed = areas.flatMap((area) => area.pages.map((page) => page.doc)).sort(byName);
+    expect(listed).toEqual(markdownFiles(docsRoot).sort(byName));
   });
 
   it("quotes the docs verbatim, at the line it says", () => {
@@ -47,7 +52,7 @@ describe("the norms catalog", () => {
 });
 
 describe("the rules", () => {
-  const cited = new Map();
+  const cited = new Map<string, string[]>();
   for (const [name, rule] of Object.entries(rules))
     for (const id of rule.meta.docs.norms) cited.set(id, [...(cited.get(id) ?? []), name]);
 
