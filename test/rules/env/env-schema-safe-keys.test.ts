@@ -9,19 +9,25 @@ new RuleTester().run("env-schema-safe-keys", rule, {
       filename: "env.ts",
     },
     {
-      code: "export default defineEnv({ VITE_PUBLISHABLE_KEY: z.string() });",
+      code: "import { defineEnv } from 'void/env';\nexport default defineEnv({ VITE_PUBLISHABLE_KEY: z.string() });",
       filename: "env.ts",
     },
     { code: "const u = import.meta.env.VITE_API_URL;", filename: "pages/a.tsx" },
     {
-      code: "export default defineEnv({ API_KEY: z.string(), REGION: z.string().default('eu') });",
+      code: "import { defineEnv } from 'void/env';\nexport default defineEnv({ API_KEY: z.string(), REGION: z.string().default('eu') });",
       filename: "env.ts",
     },
-    { code: "export default defineEnv({ MODE: z.string().default('dev') });", filename: "env.ts" },
-    { code: "export default defineEnv({ VITE_SITE_URL: z.string() });", filename: "env.ts" },
+    {
+      code: "import { defineEnv } from 'void/env';\nexport default defineEnv({ MODE: z.string().default('dev') });",
+      filename: "env.ts",
+    },
+    {
+      code: "import { defineEnv } from 'void/env';\nexport default defineEnv({ VITE_SITE_URL: z.string() });",
+      filename: "env.ts",
+    },
     // A file the rule does not govern: PUBLIC_ outside env.ts.
     {
-      code: "export default defineEnv({ PUBLIC_SITE_URL: z.string() });",
+      code: "import { defineEnv } from 'void/env';\nexport default defineEnv({ PUBLIC_SITE_URL: z.string() });",
       filename: "lib/other.ts",
     },
     {
@@ -37,13 +43,13 @@ export default defineEnv({
     },
     {
       // guide/env-vars.md line 95: a client value with a default.
-      code: "export default defineEnv({ VITE_API_ORIGIN: url().default('https://api.example.com') });",
+      code: "import { defineEnv } from 'void/env';\nexport default defineEnv({ VITE_API_ORIGIN: url().default('https://api.example.com') });",
       filename: "env.ts",
     },
   ],
   invalid: [
     {
-      code: "export default defineEnv({ VITE_STRIPE_SECRET: z.string() });",
+      code: "import { defineEnv } from 'void/env';\nexport default defineEnv({ VITE_STRIPE_SECRET: z.string() });",
       filename: "env.ts",
       errors: [{ messageId: "secretClient" }],
     },
@@ -53,17 +59,17 @@ export default defineEnv({
       errors: [{ messageId: "secretClient" }],
     },
     {
-      code: "export default defineEnv({ API_KEY: z.string().default('abc123') });",
+      code: "import { defineEnv } from 'void/env';\nexport default defineEnv({ API_KEY: z.string().default('abc123') });",
       filename: "env.ts",
       errors: [{ messageId: "secretDefault" }],
     },
     {
-      code: "export default defineEnv({ SESSION_SECRET: z.string().default('x') });",
+      code: "import { defineEnv } from 'void/env';\nexport default defineEnv({ SESSION_SECRET: z.string().default('x') });",
       filename: "env.ts",
       errors: [{ messageId: "secretDefault" }],
     },
     {
-      code: "export default defineEnv({ PUBLIC_SITE_URL: z.string() });",
+      code: "import { defineEnv } from 'void/env';\nexport default defineEnv({ PUBLIC_SITE_URL: z.string() });",
       filename: "env.ts",
       errors: [{ messageId: "publicPrefix" }],
     },

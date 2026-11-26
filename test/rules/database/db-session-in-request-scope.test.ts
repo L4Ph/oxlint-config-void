@@ -4,14 +4,17 @@ import { RuleTester } from "../../rule-tester.ts";
 new RuleTester().run("db-session-in-request-scope", rule, {
   valid: [
     {
-      code: "export default defineMiddleware(async (c, next) => { setSession('first-primary'); await next(); });",
+      code: "import { createDb, db, getBookmark, setSession } from 'void/db';\nimport { defineMiddleware } from 'void';\nexport default defineMiddleware(async (c, next) => { setSession('first-primary'); await next(); });",
       filename: "middleware/01.db.ts",
     },
     {
-      code: "export const GET = defineHandler((c) => { const d = createDb(c.env.DB, { session: 'first-primary' }); return 1; });",
+      code: "import { createDb, db, getBookmark, setSession } from 'void/db';\nimport { defineMiddleware } from 'void';\nexport const GET = defineHandler((c) => { const d = createDb(c.env.DB, { session: 'first-primary' }); return 1; });",
       filename: "routes/a.ts",
     },
-    { code: "const f = () => setSession('first-primary');", filename: "lib/other.ts" },
+    {
+      code: "import { createDb, db, getBookmark, setSession } from 'void/db';\nimport { defineMiddleware } from 'void';\nconst f = () => setSession('first-primary');",
+      filename: "lib/other.ts",
+    },
     {
       // reference/api/database.md line 36: a module-level client without a session option.
       code: "import { env } from 'cloudflare:workers';\nimport { createDb } from 'void/db';\nconst db = createDb(env.MY_OTHER_DB);",
@@ -29,17 +32,17 @@ export const GET = defineHandler(async () => {
   ],
   invalid: [
     {
-      code: "setSession('first-primary');",
+      code: "import { createDb, db, getBookmark, setSession } from 'void/db';\nimport { defineMiddleware } from 'void';\nsetSession('first-primary');",
       filename: "middleware/01.db.ts",
       errors: [{ messageId: "setSession" }],
     },
     {
-      code: "const fresh = createDb(env.DB, { session: 'first-primary' });",
+      code: "import { createDb, db, getBookmark, setSession } from 'void/db';\nimport { defineMiddleware } from 'void';\nconst fresh = createDb(env.DB, { session: 'first-primary' });",
       filename: "routes/a.ts",
       errors: [{ messageId: "createDb" }],
     },
     {
-      code: "const b = getBookmark();",
+      code: "import { createDb, db, getBookmark, setSession } from 'void/db';\nimport { defineMiddleware } from 'void';\nconst b = getBookmark();",
       filename: "lib/a.ts",
       errors: [{ messageId: "getBookmark" }],
     },

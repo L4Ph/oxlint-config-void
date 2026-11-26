@@ -4,11 +4,17 @@ import { RuleTester } from "../../rule-tester.ts";
 new RuleTester().run("db-bookmark-returned", rule, {
   valid: [
     {
-      code: "const client = createDb(env.DB2, { session: { bookmark: b } });\nc.header('x-bookmark', getBookmark(client));",
+      code: "import { createDb, db, getBookmark, setSession } from 'void/db';\nimport { defineMiddleware } from 'void';\nconst client = createDb(env.DB2, { session: { bookmark: b } });\nc.header('x-bookmark', getBookmark(client));",
       filename: "routes/a.ts",
     },
-    { code: "const c2 = createDb(env.DB2);", filename: "routes/a.ts" },
-    { code: "const c2 = createDb(env.DB, { session: 'first-primary' });", filename: "routes/a.ts" },
+    {
+      code: "import { createDb, db, getBookmark, setSession } from 'void/db';\nimport { defineMiddleware } from 'void';\nconst c2 = createDb(env.DB2);",
+      filename: "routes/a.ts",
+    },
+    {
+      code: "import { createDb, db, getBookmark, setSession } from 'void/db';\nimport { defineMiddleware } from 'void';\nconst c2 = createDb(env.DB, { session: 'first-primary' });",
+      filename: "routes/a.ts",
+    },
     {
       // guide/database/d1.md line 324: the createDb example.
       code: `import { users } from '@schema';
@@ -30,17 +36,17 @@ export async function readUsers(request, binding) {
   ],
   invalid: [
     {
-      code: "const client = createDb(env.DB2, { session: { bookmark: b } });\nreturn c.json(await client.query.users.findMany());",
+      code: "import { createDb, db, getBookmark, setSession } from 'void/db';\nimport { defineMiddleware } from 'void';\nconst client = createDb(env.DB2, { session: { bookmark: b } });\nreturn c.json(await client.query.users.findMany());",
       filename: "routes/a.ts",
       errors: [{ messageId: "missing" }],
     },
     {
-      code: "const x = createDb(env.DB, { session: { bookmark } });",
+      code: "import { createDb, db, getBookmark, setSession } from 'void/db';\nimport { defineMiddleware } from 'void';\nconst x = createDb(env.DB, { session: { bookmark } });",
       filename: "routes/a.ts",
       errors: [{ messageId: "missing" }],
     },
     {
-      code: "const a = createDb(B1, { session: { bookmark: i } });\nconst b = createDb(B2, { session: { bookmark: i } });\nc.header('x', getBookmark(a));",
+      code: "import { createDb, db, getBookmark, setSession } from 'void/db';\nimport { defineMiddleware } from 'void';\nconst a = createDb(B1, { session: { bookmark: i } });\nconst b = createDb(B2, { session: { bookmark: i } });\nc.header('x', getBookmark(a));",
       filename: "routes/a.ts",
       errors: [{ messageId: "missing" }],
     },

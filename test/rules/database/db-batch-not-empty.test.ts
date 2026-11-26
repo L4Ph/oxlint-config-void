@@ -3,8 +3,11 @@ import { RuleTester } from "../../rule-tester.ts";
 
 new RuleTester().run("db-batch-not-empty", rule, {
   valid: [
-    { code: "await db.batch([db.insert(t).values(a)]);", filename: "routes/a.ts" },
-    { code: "await db.batch(queries);", filename: "routes/a.ts" },
+    {
+      code: "import { db } from 'void/db';\nawait db.batch([db.insert(t).values(a)]);",
+      filename: "routes/a.ts",
+    },
+    { code: "import { db } from 'void/db';\nawait db.batch(queries);", filename: "routes/a.ts" },
     // Not the Void db: imported from elsewhere.
     { code: "import { db } from './mine';\nawait db.batch([]);", filename: "routes/a.ts" },
     {
@@ -17,8 +20,16 @@ await db.batch(writes);`,
     },
   ],
   invalid: [
-    { code: "await db.batch([]);", filename: "routes/a.ts", errors: [{ messageId: "empty" }] },
-    { code: "await db.batch( [] );", filename: "routes/a.ts", errors: [{ messageId: "empty" }] },
+    {
+      code: "import { db } from 'void/db';\nawait db.batch([]);",
+      filename: "routes/a.ts",
+      errors: [{ messageId: "empty" }],
+    },
+    {
+      code: "import { db } from 'void/db';\nawait db.batch( [] );",
+      filename: "routes/a.ts",
+      errors: [{ messageId: "empty" }],
+    },
     {
       code: "import { db } from 'void/db';\nawait db.batch([] as never);",
       filename: "pages/a.server.ts",

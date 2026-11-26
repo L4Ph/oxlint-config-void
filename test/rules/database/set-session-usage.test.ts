@@ -3,17 +3,26 @@ import { RuleTester } from "../../rule-tester.ts";
 
 new RuleTester().run("set-session-usage", rule, {
   valid: [
-    { code: "setSession('first-primary');", filename: "middleware/01.db.ts" },
-    { code: "export const GET = defineHandler(() => 1);", filename: "routes/a.ts" },
     {
-      code: "export default defineMiddleware(async (c, next) => { setSession('first-primary'); await next(); c.header('x-bookmark', getBookmark()); });",
+      code: "import { createDb, db, getBookmark, setSession } from 'void/db';\nimport { defineMiddleware } from 'void';\nsetSession('first-primary');",
       filename: "middleware/01.db.ts",
     },
     {
-      code: "export default defineMiddleware(async (c, next) => next());",
+      code: "import { createDb, db, getBookmark, setSession } from 'void/db';\nimport { defineMiddleware } from 'void';\nexport const GET = defineHandler(() => 1);",
+      filename: "routes/a.ts",
+    },
+    {
+      code: "import { createDb, db, getBookmark, setSession } from 'void/db';\nimport { defineMiddleware } from 'void';\nexport default defineMiddleware(async (c, next) => { setSession('first-primary'); await next(); c.header('x-bookmark', getBookmark()); });",
       filename: "middleware/01.db.ts",
     },
-    { code: "setSession('first-primary');", filename: "lib/session.ts" },
+    {
+      code: "import { createDb, db, getBookmark, setSession } from 'void/db';\nimport { defineMiddleware } from 'void';\nexport default defineMiddleware(async (c, next) => next());",
+      filename: "middleware/01.db.ts",
+    },
+    {
+      code: "import { createDb, db, getBookmark, setSession } from 'void/db';\nimport { defineMiddleware } from 'void';\nsetSession('first-primary');",
+      filename: "lib/session.ts",
+    },
     {
       // guide/database/d1.md line 132: the cookie middleware, with its early `await next()` branch.
       code: `import { getCookie, setCookie } from 'hono/cookie';
@@ -42,37 +51,37 @@ export default defineMiddleware(async (c, next) => {
   ],
   invalid: [
     {
-      code: "setSession('first-primary');",
+      code: "import { createDb, db, getBookmark, setSession } from 'void/db';\nimport { defineMiddleware } from 'void';\nsetSession('first-primary');",
       filename: "routes/a.ts",
       errors: [{ messageId: "placement" }],
     },
     {
-      code: "setSession('first-unconstrained');",
+      code: "import { createDb, db, getBookmark, setSession } from 'void/db';\nimport { defineMiddleware } from 'void';\nsetSession('first-unconstrained');",
       filename: "pages/a.server.ts",
       errors: [{ messageId: "placement" }],
     },
     {
-      code: "export default defineMiddleware(async (c, next) => { await db.query.users.findMany(); setSession('first-primary'); await next(); });",
+      code: "import { createDb, db, getBookmark, setSession } from 'void/db';\nimport { defineMiddleware } from 'void';\nexport default defineMiddleware(async (c, next) => { await db.query.users.findMany(); setSession('first-primary'); await next(); });",
       filename: "middleware/01.db.ts",
       errors: [{ messageId: "afterDb" }],
     },
     {
-      code: "export default defineMiddleware(async (c, next) => { await next(); setSession('first-primary'); });",
+      code: "import { createDb, db, getBookmark, setSession } from 'void/db';\nimport { defineMiddleware } from 'void';\nexport default defineMiddleware(async (c, next) => { await next(); setSession('first-primary'); });",
       filename: "middleware/01.db.ts",
       errors: [{ messageId: "afterNext" }],
     },
     {
-      code: "export default defineMiddleware(async (c, next) => { const b = getBookmark(); await next(); });",
+      code: "import { createDb, db, getBookmark, setSession } from 'void/db';\nimport { defineMiddleware } from 'void';\nexport default defineMiddleware(async (c, next) => { const b = getBookmark(); await next(); });",
       filename: "middleware/01.db.ts",
       errors: [{ messageId: "bookmarkBeforeNext" }],
     },
     {
-      code: "setSession('first-secondary');",
+      code: "import { createDb, db, getBookmark, setSession } from 'void/db';\nimport { defineMiddleware } from 'void';\nsetSession('first-secondary');",
       filename: "middleware/01.db.ts",
       errors: [{ messageId: "badName" }],
     },
     {
-      code: "setSession(c.req.header('X-DB-Bookmark'));",
+      code: "import { createDb, db, getBookmark, setSession } from 'void/db';\nimport { defineMiddleware } from 'void';\nsetSession(c.req.header('X-DB-Bookmark'));",
       filename: "middleware/01.db.ts",
       errors: [{ messageId: "unwrapped" }],
     },
