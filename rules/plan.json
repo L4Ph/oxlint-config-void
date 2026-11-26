@@ -900,33 +900,6 @@
       "partial": "Needs package.json (a lib helper reading it once per root) to know the framework; Astro API routes use cloudflare:workers legitimately and are not covered."
     },
     {
-      "name": "no-default-binding-via-env",
-      "family": "imports",
-      "summary": "Default bindings (KV, STORAGE, AI, SANDBOX) are used through the void/kv, void/storage, void/ai and void/sandbox clients, not through c.env.",
-      "norms": [
-        "reference/resources/1",
-        "services/kv/1",
-        "services/storage/1",
-        "services/sandboxes/12"
-      ],
-      "files": "routes/**, pages/**/*.server.*, middleware/**, crons/**, queues/**",
-      "detect": "MemberExpression `<x>.env.KV`, `<x>.env.STORAGE`, `<x>.env.AI`, `<x>.env.SANDBOX` (also computed with those literal keys) and destructuring `const { KV } = c.env` of the same four names, where <x> is `c` or `context`.",
-      "reports": "the member expression",
-      "allowed": [
-        "import { kv } from 'void/kv';\nawait kv.get('a');",
-        "const { DB } = c.env;"
-      ],
-      "reported": [
-        "const v = await c.env.KV.get('a');",
-        "const bucket = c.env.STORAGE;"
-      ],
-      "options": [],
-      "scope": "void",
-      "adapter": "all",
-      "typeAware": false,
-      "partial": "Custom-named bindings (declared through cloudflare config) are legitimate on c.env and are not reported; the quotes only name the default proxies, so keep this at warning level."
-    },
-    {
       "name": "no-redefine-auth-tables",
       "family": "imports",
       "summary": "db/schema.ts does not redefine Better Auth's user, session, account or verification tables.",
@@ -1382,30 +1355,6 @@
       "partial": "The 3xx-with-res redirect form is a separate rule (http-exception-redirect-res)."
     },
     {
-      "name": "no-reserved-void-route",
-      "family": "handlers",
-      "summary": "Apps define no routes under /__void.",
-      "norms": [
-        "reference/handlers/8"
-      ],
-      "files": "routes/**",
-      "detect": "Path below routes/ whose first segment is `__void` or whose file is `__void.*`.",
-      "reports": "the Program",
-      "allowed": [
-        "// routes/health.ts\nexport const GET = defineHandler(() => 'ok');",
-        "// routes/_void/x.ts\nexport {};"
-      ],
-      "reported": [
-        "// routes/__void/status.ts\nexport const GET = defineHandler(() => 'ok');",
-        "// routes/__void.ts\nexport const GET = defineHandler(() => 'ok');"
-      ],
-      "options": [],
-      "scope": "void",
-      "adapter": "all",
-      "typeAware": false,
-      "partial": "Rewrites or header patterns that target /__void are not seen."
-    },
-    {
       "name": "redirect-after-mutation-303",
       "family": "handlers",
       "summary": "A redirect after a mutation uses status 303, so the next request is a GET.",
@@ -1452,34 +1401,6 @@
       "adapter": "react",
       "typeAware": false,
       "partial": "Apps using Hono's own JSX runtime (jsxImportSource: hono/jsx) are valid and would be reported."
-    },
-    {
-      "name": "validated-input-not-raw",
-      "family": "handlers",
-      "summary": "Request bodies are validated with defineHandler.withValidator and read from its second argument, not parsed raw in the handler.",
-      "norms": [
-        "reference/handlers/5",
-        "guide-core/server-routing/13",
-        "pages-routing/actions-and-forms/3",
-        "guide-core/type-safety/4",
-        "services/database/16"
-      ],
-      "files": "routes/**, pages/**/*.server.*",
-      "detect": "Inside a function passed to `defineHandler(...)` that is not the result of `withValidator(...)(...)`: calls `c.req.json()`, `c.req.parseBody()`, `c.req.formData()`. Inside a withValidator handler: the same calls for the `body` slot, or a handler with a single parameter.",
-      "reports": "the raw read",
-      "allowed": [
-        "export const POST = defineHandler.withValidator({ body })((c, { body }) => body);",
-        "export const GET = defineHandler((c) => ({ ok: true }));"
-      ],
-      "reported": [
-        "export const POST = defineHandler(async (c) => { const b = await c.req.json(); return b; });",
-        "export const action = defineHandler(async (c) => { const f = await c.req.formData(); return f; });"
-      ],
-      "options": [],
-      "scope": "void",
-      "adapter": "all",
-      "typeAware": false,
-      "partial": "c.req.query() and c.req.param() are not reported: pages docs read `c.req.param()` raw (type-safety/11), so only body reads are flagged; helpers that wrap the read escape."
     },
     {
       "name": "with-validator-shape",
@@ -1717,55 +1638,6 @@
       "adapter": "all",
       "typeAware": false,
       "partial": "Vue and Svelte templates are not parsed by oxlint, so only JSX Link usage is seen; a method held in a variable escapes. data passed as a variable escapes."
-    },
-    {
-      "name": "link-use-link-component",
-      "family": "pages",
-      "summary": "Internal navigation between pages uses the adapter's Link, not a plain <a href=\"/path\">.",
-      "norms": [
-        "pages-routing/overview/15"
-      ],
-      "files": "page components and layouts that are not island pages (not *.island.*)",
-      "detect": "JSXOpeningElement `<a>` with an `href` string literal that starts with a single `/`, has no file extension and does not start with `/api/`, and no `download`, `target` or `rel=external` attribute.",
-      "reports": "the element",
-      "allowed": [
-        "<Link href=\"/about\">About</Link>",
-        "<a href=\"https://example.com\">Out</a>"
-      ],
-      "reported": [
-        "<a href=\"/about\">About</a>",
-        "<a href=\"/users/me\">Me</a>"
-      ],
-      "options": [],
-      "scope": "void",
-      "adapter": "all",
-      "typeAware": false,
-      "partial": "Links to routes/ endpoints with no extension (`/logout`, `/feed`) are reported falsely; hrefs built from variables and links in components imported from elsewhere escape. Low confidence."
-    },
-    {
-      "name": "loader-props-type-export",
-      "family": "pages",
-      "summary": "The .server file that exports loader also exports `type Props = InferProps<typeof loader>`.",
-      "norms": [
-        "pages-routing/loaders/9",
-        "guide-core/type-safety/2"
-      ],
-      "files": "pages/**/*.server.{ts,tsx,js,jsx,mts,mjs}",
-      "detect": "Module with a named export `loader` and no exported type alias or interface named `Props`.",
-      "reports": "the loader export",
-      "allowed": [
-        "// pages/a.server.ts\nexport const loader = defineHandler(() => ({ n: 1 }));\nexport type Props = InferProps<typeof loader>;",
-        "// pages/b.server.ts\nexport const action = defineHandler(() => ({}));"
-      ],
-      "reported": [
-        "// pages/a.server.ts\nexport const loader = defineHandler(() => ({ n: 1 }));",
-        "// pages/a.server.ts\nexport const loader = defineHandler(() => ({}));\nexport type Data = InferProps<typeof loader>;"
-      ],
-      "options": [],
-      "scope": "void",
-      "adapter": "all",
-      "typeAware": false,
-      "partial": "Pages whose component takes no props are reported; keep at warning level. loaders/3's stricter 'must be InferProps' is not enforced because head.md hand-writes Props."
     },
     {
       "name": "loader-return-serializable",
@@ -2359,55 +2231,6 @@
       "partial": "A first middleware legitimately sets the whole value; the numeric prefix is the only signal for 'first'."
     },
     {
-      "name": "head-define-head",
-      "family": "head",
-      "summary": "head is exported from the page's .server file as defineHead(...).",
-      "norms": [
-        "pages-routing/head/1",
-        "reference/handlers/14"
-      ],
-      "files": "pages/**/*.server.{ts,tsx,js,jsx,mts,mjs}",
-      "detect": "`export const head` / `export function head` whose value is not a call to `defineHead` (an arrow or function expression is reported).",
-      "reports": "the export",
-      "allowed": [
-        "// pages/a.server.ts\nexport const head = defineHead<Props>((c, props) => ({ title: props.title }));",
-        "// pages/a.server.ts\nexport const head = defineHead(() => ({ title: 'A' }));"
-      ],
-      "reported": [
-        "// pages/a.server.ts\nexport const head = (c, props) => ({ title: props.title });",
-        "// pages/a.server.ts\nexport function head() { return { title: 'A' }; }"
-      ],
-      "options": [],
-      "scope": "void",
-      "adapter": "all",
-      "typeAware": false,
-      "partial": "head in a non-.server file is page-exports-in-server-file's job."
-    },
-    {
-      "name": "head-relative-social-image",
-      "family": "head",
-      "summary": "og:image, twitter:image and the other social URLs are relative paths; Void makes them absolute.",
-      "norms": [
-        "pages-routing/head/8"
-      ],
-      "files": "pages/**/*.server.*",
-      "detect": "In a head descriptor `meta` array: an object with `property`/`name` in {og:image, og:url, twitter:image, ...} whose `content` is a string Literal starting with http:// or https://.",
-      "reports": "the content literal",
-      "allowed": [
-        "export const head = defineHead(() => ({ meta: [{ property: 'og:image', content: '/og/home.png' }] }));",
-        "export const head = defineHead(() => ({ meta: [{ name: 'description', content: 'x' }] }));"
-      ],
-      "reported": [
-        "export const head = defineHead(() => ({ meta: [{ property: 'og:image', content: 'https://site.dev/og.png' }] }));",
-        "export const head = defineHead(() => ({ meta: [{ name: 'twitter:image', content: 'https://cdn.dev/a.png' }] }));"
-      ],
-      "options": [],
-      "scope": "void",
-      "adapter": "all",
-      "typeAware": false,
-      "partial": "An image hosted on a different origin (a CDN) legitimately needs an absolute URL and is reported."
-    },
-    {
       "name": "no-browser-api-in-head",
       "family": "head",
       "summary": "head() runs on the server only: it uses no window, document, localStorage or navigator.",
@@ -2868,54 +2691,6 @@
       "partial": "Modules imported by auth.ts are not checked."
     },
     {
-      "name": "loader-require-auth-redirect",
-      "family": "auth",
-      "summary": "A page loader that requires sign-in passes throwRedirect with the login URL.",
-      "norms": [
-        "guide-core/auth/4"
-      ],
-      "files": "pages/**/*.server.*",
-      "detect": "`requireAuth(c)` with one argument inside a `loader` handler.",
-      "reports": "the call",
-      "allowed": [
-        "// pages/a.server.ts\nexport const loader = defineHandler((c) => { requireAuth(c, { throwRedirect: '/login' }); return {}; });",
-        "// pages/b.server.ts\nexport const loader = defineHandler((c) => ({ user: getUser() }));"
-      ],
-      "reported": [
-        "// pages/a.server.ts\nexport const loader = defineHandler((c) => { requireAuth(c); return {}; });",
-        "// pages/a.server.ts\nexport const loader = defineHandler(async (c) => { const u = requireAuth(c); return { u }; });"
-      ],
-      "options": [],
-      "scope": "void",
-      "adapter": "all",
-      "typeAware": false,
-      "partial": "A page that wants the raw 401 on purpose is reported."
-    },
-    {
-      "name": "no-public-cache-on-user-pages",
-      "family": "auth",
-      "summary": "Pages and routes that read the signed-in user keep the default no-store Cache-Control.",
-      "norms": [
-        "guide-core/auth/20"
-      ],
-      "files": "pages/**/*.server.*, routes/**",
-      "detect": "`c.header('Cache-Control', <string containing 'public' or 's-maxage'>)` in a file that also calls getUser, getSession or requireAuth.",
-      "reports": "the header call",
-      "allowed": [
-        "// pages/a.server.ts\nconst u = getUser(c);\nc.header('Cache-Control', 'private, no-store');",
-        "// routes/pub.ts\nc.header('Cache-Control', 'public, max-age=60');"
-      ],
-      "reported": [
-        "// pages/a.server.ts\nconst u = getUser(c);\nc.header('Cache-Control', 'public, max-age=60');",
-        "// routes/me.ts\nrequireAuth(c);\nc.header('Cache-Control', 's-maxage=30');"
-      ],
-      "options": [],
-      "scope": "void",
-      "adapter": "all",
-      "typeAware": false,
-      "partial": ""
-    },
-    {
       "name": "no-x-forwarded-for-in-auth",
       "family": "auth",
       "summary": "auth.ts does not read the client IP from x-forwarded-for; rate-limit bypass uses a secret header check.",
@@ -2986,30 +2761,6 @@
       "adapter": "all",
       "typeAware": false,
       "partial": "Validation done in another function escapes; a constant held in a variable is not followed."
-    },
-    {
-      "name": "env-key-declared",
-      "family": "env",
-      "summary": "Every key read from `env` (void/env) is declared in env.ts.",
-      "norms": [
-        "reference/env/2"
-      ],
-      "files": "any file importing env from 'void/env'",
-      "detect": "MemberExpression on the `env` binding whose resulting type is `unknown` (the key is not in the generated env types).",
-      "reports": "the member expression",
-      "allowed": [
-        "import { env } from 'void/env';\nconst k = env.API_KEY;   // declared",
-        "import { env } from 'void/env';\nconst r = env.REGION;   // declared"
-      ],
-      "reported": [
-        "import { env } from 'void/env';\nconst k = env.NOT_DECLARED;",
-        "import { env } from 'void/env';\nconst k = env['TYPO_KEY'];"
-      ],
-      "options": [],
-      "scope": "void",
-      "adapter": "all",
-      "typeAware": true,
-      "partial": "Needs the generated types from `void prepare`."
     },
     {
       "name": "env-schema-safe-keys",
@@ -4756,30 +4507,6 @@
       "partial": "Meaningful only on a Void platform."
     },
     {
-      "name": "routing-isr-disabled-conflict",
-      "family": "edge",
-      "summary": "routing.isr: false is not combined with revalidate or prerender settings, which it disables.",
-      "norms": [
-        "reference/config/48"
-      ],
-      "files": "void.config.ts",
-      "detect": "`routing.isr: false` in a config object that also has `routing.revalidate` or `routing.prerender`.",
-      "reports": "the isr property",
-      "allowed": [
-        "export default defineConfig({ routing: { isr: false } });",
-        "export default defineConfig({ routing: { revalidate: 60 } });"
-      ],
-      "reported": [
-        "export default defineConfig({ routing: { isr: false, revalidate: 60 } });",
-        "export default defineConfig({ routing: { isr: false, prerender: ['/'] } });"
-      ],
-      "options": [],
-      "scope": "void",
-      "adapter": "all",
-      "typeAware": false,
-      "partial": "Page-level revalidate/prerender exports in other files are not seen."
-    },
-    {
       "name": "routing-option-values",
       "family": "edge",
       "summary": "routing.revalidate, routing.prerender and routing.notFound hold values of the documented shape.",
@@ -4897,30 +4624,6 @@
       "adapter": "all",
       "typeAware": false,
       "partial": "Rules from a `_redirects` file are not seen."
-    },
-    {
-      "name": "static-looking-route-cache-control",
-      "family": "edge",
-      "summary": "A route that serves dynamic content at a static-looking URL (avatar.jpg.ts) sets Cache-Control private or no-store.",
-      "norms": [
-        "edge-integrations/static-assets/4"
-      ],
-      "files": "routes/** whose file name before the script extension ends in a static extension (.jpg, .png, .svg, .css, .js, .json, .txt, .xml, ...)",
-      "detect": "File with such a name and no `Cache-Control` header set via `c.header`, `new Response(..., { headers })` or `headers.set` with `private` or `no-store`.",
-      "reports": "the Program",
-      "allowed": [
-        "// routes/avatar.jpg.ts\nexport const GET = defineHandler((c) => { c.header('Cache-Control', 'private'); return c.body(b); });",
-        "// routes/users.ts\nexport const GET = defineHandler(() => []);"
-      ],
-      "reported": [
-        "// routes/avatar.jpg.ts\nexport const GET = defineHandler((c) => c.body(b));",
-        "// routes/feed.xml.ts\nexport const GET = defineHandler((c) => c.text(x));"
-      ],
-      "options": [],
-      "scope": "void",
-      "adapter": "all",
-      "typeAware": false,
-      "partial": "Headers set by middleware escape."
     },
     {
       "name": "email-test-harness",
@@ -5277,30 +4980,6 @@
       "adapter": "svelte",
       "typeAware": false,
       "partial": ".svelte script blocks only."
-    },
-    {
-      "name": "sveltekit-void-tsconfig",
-      "family": "frameworks",
-      "summary": "On SvelteKit 2 the sveltekit() options add typescript.config: withVoidTSConfig() from 'void/sveltekit'.",
-      "norms": [
-        "edge-integrations/frameworks-sveltekit/11"
-      ],
-      "files": "vite.config.* calling sveltekit()",
-      "detect": "`sveltekit({...})` options with no `typescript.config` property that is a call to `withVoidTSConfig`.",
-      "reports": "the sveltekit call",
-      "allowed": [
-        "export default { plugins: [voidPlugin(), sveltekit({ typescript: { config: withVoidTSConfig() } })] };",
-        "export default { plugins: [voidPlugin()] };"
-      ],
-      "reported": [
-        "export default { plugins: [voidPlugin(), sveltekit({})] };",
-        "export default { plugins: [voidPlugin(), sveltekit()] };"
-      ],
-      "options": [],
-      "scope": "framework:sveltekit",
-      "adapter": "svelte",
-      "typeAware": false,
-      "partial": "The SvelteKit major version is not visible; the rule is for SvelteKit 2. With svelte.config.* the option lives under kit and is not checked."
     },
     {
       "name": "tanstack-void-in-server-fn",
@@ -5783,6 +5462,116 @@
       "norm": "reference/auth/10",
       "kind": "weak-quote",
       "reason": "The quote only says throwRedirect 'works in loaders, actions, and middleware'; it does not say it fails in routes/ handlers, so a placement rule would invent the prohibition."
+    },
+    {
+      "norm": "reference/resources/1",
+      "kind": "docs-do-not-require",
+      "reason": "Planned as `no-default-binding-via-env`, not written. integrations/cloudflare.md:53-55, reference/resource-inference.md:15-18 and kv.md:100 give c.env.KV / STORAGE / AI as documented alternatives."
+    },
+    {
+      "norm": "services/kv/1",
+      "kind": "docs-do-not-require",
+      "reason": "Planned as `no-default-binding-via-env`, not written. integrations/cloudflare.md:53-55, reference/resource-inference.md:15-18 and kv.md:100 give c.env.KV / STORAGE / AI as documented alternatives."
+    },
+    {
+      "norm": "services/storage/1",
+      "kind": "docs-do-not-require",
+      "reason": "Planned as `no-default-binding-via-env`, not written. integrations/cloudflare.md:53-55, reference/resource-inference.md:15-18 and kv.md:100 give c.env.KV / STORAGE / AI as documented alternatives."
+    },
+    {
+      "norm": "services/sandboxes/12",
+      "kind": "docs-do-not-require",
+      "reason": "Planned as `no-default-binding-via-env`, not written. integrations/cloudflare.md:53-55, reference/resource-inference.md:15-18 and kv.md:100 give c.env.KV / STORAGE / AI as documented alternatives."
+    },
+    {
+      "norm": "reference/handlers/8",
+      "kind": "docs-do-not-require",
+      "reason": "Planned as `no-reserved-void-route`, not written. server-routing.md:16 excludes _-prefixed files and directories from routing, so routes/__void can never become a route that collides with /__void."
+    },
+    {
+      "norm": "reference/handlers/5",
+      "kind": "docs-own-example",
+      "reason": "Planned as `validated-input-not-raw`, not written. The docs read the body raw in their own examples (server-routing.md:73, hono.md:50, actions-and-forms.md:362 and :469, queues.md:47, ai.md:44); the cited lines only say validated input arrives as the second argument."
+    },
+    {
+      "norm": "guide-core/server-routing/13",
+      "kind": "docs-own-example",
+      "reason": "Planned as `validated-input-not-raw`, not written. The docs read the body raw in their own examples (server-routing.md:73, hono.md:50, actions-and-forms.md:362 and :469, queues.md:47, ai.md:44); the cited lines only say validated input arrives as the second argument."
+    },
+    {
+      "norm": "pages-routing/actions-and-forms/3",
+      "kind": "docs-own-example",
+      "reason": "Planned as `validated-input-not-raw`, not written. The docs read the body raw in their own examples (server-routing.md:73, hono.md:50, actions-and-forms.md:362 and :469, queues.md:47, ai.md:44); the cited lines only say validated input arrives as the second argument."
+    },
+    {
+      "norm": "guide-core/type-safety/4",
+      "kind": "docs-own-example",
+      "reason": "Planned as `validated-input-not-raw`, not written. The docs read the body raw in their own examples (server-routing.md:73, hono.md:50, actions-and-forms.md:362 and :469, queues.md:47, ai.md:44); the cited lines only say validated input arrives as the second argument."
+    },
+    {
+      "norm": "services/database/16",
+      "kind": "docs-own-example",
+      "reason": "Planned as `validated-input-not-raw`, not written. The docs read the body raw in their own examples (server-routing.md:73, hono.md:50, actions-and-forms.md:362 and :469, queues.md:47, ai.md:44); the cited lines only say validated input arrives as the second argument."
+    },
+    {
+      "norm": "pages-routing/overview/15",
+      "kind": "docs-own-example",
+      "reason": "Planned as `link-use-link-component`, not written. The docs use a plain <a> on internal paths: errors.md:21 in _error.tsx, rewrites.md:115 for a full server request, islands.md:360 in an island."
+    },
+    {
+      "norm": "pages-routing/loaders/9",
+      "kind": "docs-own-example",
+      "reason": "Planned as `loader-props-type-export`, not written. Loaders in loaders.md:38-47, errors.md:76-81 and :97-105 and head.md have no Props export."
+    },
+    {
+      "norm": "guide-core/type-safety/2",
+      "kind": "docs-own-example",
+      "reason": "Planned as `loader-props-type-export`, not written. Loaders in loaders.md:38-47, errors.md:76-81 and :97-105 and head.md have no Props export."
+    },
+    {
+      "norm": "pages-routing/head/1",
+      "kind": "docs-do-not-require",
+      "reason": "Planned as `head-define-head`, not written. head.md:12 says to export a head() function and reference/api/handlers.md calls defineHead a type-safe wrapper; a plain head function is valid."
+    },
+    {
+      "norm": "reference/handlers/14",
+      "kind": "docs-do-not-require",
+      "reason": "Planned as `head-define-head`, not written. head.md:12 says to export a head() function and reference/api/handlers.md calls defineHead a type-safe wrapper; a plain head function is valid."
+    },
+    {
+      "norm": "pages-routing/head/8",
+      "kind": "docs-do-not-require",
+      "reason": "Planned as `head-relative-social-image`, not written. head.md:142 keeps absolute URLs as written and asks for an absolute URL on prerendered pages; a lint cannot tell which pages are prerendered."
+    },
+    {
+      "norm": "guide-core/auth/4",
+      "kind": "docs-do-not-require",
+      "reason": "Planned as `loader-require-auth-redirect`, not written. reference/api/auth.md:100 documents that a bare requireAuth(c) in a loader shows the _error page; that is a supported choice."
+    },
+    {
+      "norm": "guide-core/auth/20",
+      "kind": "docs-do-not-require",
+      "reason": "Planned as `no-public-cache-on-user-pages`, not written. The quote asks only to keep the default no-store, and auth.md:193 says Void already applies no-store to signed-in responses."
+    },
+    {
+      "norm": "reference/env/2",
+      "kind": "needs-other-file-or-config",
+      "reason": "Planned as `env-key-declared`, not written. Needs the keys declared in env.ts or the generated env types; oxlint gives a JS plugin no type information, and reference/api/env.md:27 says unknown keys pass through as unknown."
+    },
+    {
+      "norm": "reference/config/48",
+      "kind": "intent-or-false-positives",
+      "reason": "Planned as `routing-isr-disabled-conflict`, not written. revalidation.md:12 and reference/config.md:484-495 treat routing.isr: false as an intended switch that keeps per-page settings."
+    },
+    {
+      "norm": "edge-integrations/static-assets/4",
+      "kind": "docs-do-not-require",
+      "reason": "Planned as `static-looking-route-cache-control`, not written. static-assets.md:66 says you can prevent caching with Cache-Control: private; it is a permission, not a duty."
+    },
+    {
+      "norm": "edge-integrations/frameworks-sveltekit/11",
+      "kind": "needs-other-file-or-config",
+      "reason": "Planned as `sveltekit-void-tsconfig`, not written. The right setup depends on the SvelteKit major version (sveltekit.md:29-45 for 3, :124-138 for 2), which one file does not show; the rule would report the docs' main example."
     }
   ]
 }

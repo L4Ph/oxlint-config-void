@@ -1,4 +1,4 @@
-import { readFileSync } from "node:fs";
+import { readdirSync, readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vite-plus/test";
 import { rules } from "../src/plugin/index.ts";
@@ -25,5 +25,29 @@ describe("every rule in the plugin", () => {
       );
     });
     expect(different.map(([name]) => name)).toEqual([]);
+  });
+});
+
+describe("the plan", () => {
+  type Norm = { id: string; enforcement: string };
+  const waived: { norm: string }[] = JSON.parse(
+    readFileSync(fileURLToPath(new URL("../rules/plan.json", import.meta.url)), "utf8"),
+  ).waived;
+  const normsDir = fileURLToPath(new URL("../norms", import.meta.url));
+  const lintable = readdirSync(normsDir)
+    .filter((name) => name.endsWith(".json"))
+    .flatMap((name): Norm[] => JSON.parse(readFileSync(`${normsDir}/${name}`, "utf8")).norms)
+    .filter((norm) => norm.enforcement.startsWith("lint"))
+    .map((norm) => norm.id);
+
+  it("is fully written: every planned rule is in the plugin", () => {
+    expect(plan.rules.map((rule) => rule.name).filter((name) => !(name in rules))).toEqual([]);
+  });
+
+  it("leaves no norm a lint can check unaccounted for: a rule cites it, or it is waived with a reason", () => {
+    const cited = new Set(Object.values(rules).flatMap((rule) => rule.meta.docs.norms));
+    const set = new Set(waived.map((entry) => entry.norm));
+    expect(lintable.filter((id) => !cited.has(id) && !set.has(id))).toEqual([]);
+    expect(lintable.filter((id) => cited.has(id) && set.has(id))).toEqual([]);
   });
 });
